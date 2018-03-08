@@ -319,7 +319,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://haokaiyang.com/linux/">
+    <link itemprop="mainEntityOfPage" href="http://haokaiyang.com/2018/01/18/linux/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="郝凯阳">
@@ -338,7 +338,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/linux/" itemprop="url">Linux查看服务器上所有crontab</a></h1>
+                <a class="post-title-link" href="/2018/01/18/linux/" itemprop="url">Linux查看服务器上所有crontab</a></h1>
         
 
         <div class="post-meta">
@@ -464,7 +464,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://haokaiyang.com/docker/">
+    <link itemprop="mainEntityOfPage" href="http://haokaiyang.com/2017/12/01/docker/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="郝凯阳">
@@ -483,7 +483,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/docker/" itemprop="url">Docker常用命令</a></h1>
+                <a class="post-title-link" href="/2017/12/01/docker/" itemprop="url">Docker常用命令</a></h1>
         
 
         <div class="post-meta">
@@ -581,7 +581,7 @@
 <p>6.自己组织列<br><figure class="highlight llvm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">docker images --format <span class="string">"&#123;&#123;.ID&#125;&#125;: &#123;&#123;.Repository&#125;&#125;"</span></span><br><span class="line">f<span class="number">2</span>a<span class="number">91732366</span><span class="keyword">c</span>: hello-world</span><br><span class="line"><span class="number">0</span>d<span class="number">7</span>d<span class="number">9</span>d<span class="number">3</span>a<span class="number">5480</span>: huginn/huginn</span><br><span class="line"><span class="number">965</span>b<span class="number">5</span>ad<span class="number">08</span>ad<span class="number">9</span>: cantino/huginn</span><br><span class="line"><span class="keyword">c</span><span class="number">37</span>d<span class="number">0</span>b<span class="number">3</span>f<span class="number">1860</span>: wonderfall/nextcloud</span><br><span class="line"><span class="keyword">c</span><span class="number">4</span>f<span class="number">44e4</span>b<span class="number">15</span>b<span class="number">8</span>: wahyd<span class="number">4</span>/aria<span class="number">2</span>-ariang</span><br><span class="line">$ docker images --format <span class="string">"table &#123;&#123;.ID&#125;&#125;\t&#123;&#123;.Repository&#125;&#125;\t&#123;&#123;.Tag&#125;&#125;"</span></span><br><span class="line">IMAGE ID            REPOSITORY          TAG</span><br><span class="line"><span class="number">5</span>f<span class="number">515359</span><span class="keyword">c</span><span class="number">7</span>f<span class="number">8</span>        redis               latest</span><br><span class="line"><span class="number">05</span>a<span class="number">60462</span>f<span class="number">8</span>ba        nginx               latest</span><br><span class="line">fe<span class="number">9198</span><span class="keyword">c</span><span class="number">04</span>d<span class="number">62</span>        mongo               <span class="number">3.2</span></span><br><span class="line"><span class="number">00285</span>df<span class="number">0</span>df<span class="number">87</span>        &lt;none&gt;              &lt;none&gt;</span><br><span class="line">f<span class="number">753707788</span><span class="keyword">c</span><span class="number">5</span>        ubuntu              <span class="number">16.04</span></span><br><span class="line">f<span class="number">753707788</span><span class="keyword">c</span><span class="number">5</span>        ubuntu              latest</span><br><span class="line"><span class="number">1e0</span><span class="keyword">c</span><span class="number">3</span>dd<span class="number">64</span>ccd        ubuntu              <span class="number">14.04</span></span><br></pre></td></tr></table></figure></p>
 <p>7.查看变动<br><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">docker diff webserver</span></span><br></pre></td></tr></table></figure></p>
 <p>8.docker commit 的语法格式为：<br><figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker commit [选项] &lt;容器ID或容器名&gt; <span class="meta">[&lt;仓库名&gt;[:&lt;标签&gt;]</span>]</span><br></pre></td></tr></table></figure></p>
-<p>9.查看commit历史<br><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">docker</span> history nginx:<span class="built_in">v2</span></span><br></pre></td></tr></table></figure></p>
+<p>9.查看commit历史<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">history</span> nginx:v2</span><br></pre></td></tr></table></figure></p>
 <p>10.<br><figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">image</span> build</span><br></pre></td></tr></table></figure></p>
 <p>11.Dockerfile 指令<br>COPY &lt;源路径&gt;… &lt;目标路径&gt;<br>ADD<br>CMD</p>
 
@@ -637,7 +637,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://haokaiyang.com/centos7-learning-notes-6/">
+    <link itemprop="mainEntityOfPage" href="http://haokaiyang.com/2017/03/14/centos7-learning-notes-6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="郝凯阳">
@@ -656,7 +656,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/centos7-learning-notes-6/" itemprop="url">《鸟哥的Linux私房菜》正则表达式学习笔记</a></h1>
+                <a class="post-title-link" href="/2017/03/14/centos7-learning-notes-6/" itemprop="url">《鸟哥的Linux私房菜》正则表达式学习笔记</a></h1>
         
 
         <div class="post-meta">
@@ -1055,7 +1055,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://haokaiyang.com/centos7-learning-notes-5/">
+    <link itemprop="mainEntityOfPage" href="http://haokaiyang.com/2017/03/13/centos7-learning-notes-5/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="郝凯阳">
@@ -1074,7 +1074,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/centos7-learning-notes-5/" itemprop="url">《鸟哥的Linux私房菜》认识与学习Bash学习笔记</a></h1>
+                <a class="post-title-link" href="/2017/03/13/centos7-learning-notes-5/" itemprop="url">《鸟哥的Linux私房菜》认识与学习Bash学习笔记</a></h1>
         
 
         <div class="post-meta">
@@ -1726,7 +1726,7 @@ n 数字,意思是 要列出最近的n笔命令列出的意思
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://haokaiyang.com/centos7-learning-notes-4/">
+    <link itemprop="mainEntityOfPage" href="http://haokaiyang.com/2017/03/08/centos7-learning-notes-4/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="郝凯阳">
@@ -1745,7 +1745,7 @@ n 数字,意思是 要列出最近的n笔命令列出的意思
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/centos7-learning-notes-4/" itemprop="url">《鸟哥的Linux私房菜》文件与文件系统的压缩、打包与备份学习笔记</a></h1>
+                <a class="post-title-link" href="/2017/03/08/centos7-learning-notes-4/" itemprop="url">《鸟哥的Linux私房菜》文件与文件系统的压缩、打包与备份学习笔记</a></h1>
         
 
         <div class="post-meta">
@@ -2064,7 +2064,7 @@ n 数字,意思是 要列出最近的n笔命令列出的意思
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://haokaiyang.com/centos7-learning-notes-3/">
+    <link itemprop="mainEntityOfPage" href="http://haokaiyang.com/2017/03/07/centos7-learning-notes-3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="郝凯阳">
@@ -2083,7 +2083,7 @@ n 数字,意思是 要列出最近的n笔命令列出的意思
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/centos7-learning-notes-3/" itemprop="url">《鸟哥的Linux私房菜》硬盘与文件系统管理学习笔记</a></h1>
+                <a class="post-title-link" href="/2017/03/07/centos7-learning-notes-3/" itemprop="url">《鸟哥的Linux私房菜》硬盘与文件系统管理学习笔记</a></h1>
         
 
         <div class="post-meta">
@@ -2606,7 +2606,7 @@ Minor 次要装置代码
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://haokaiyang.com/centos7-learning-notes-2/">
+    <link itemprop="mainEntityOfPage" href="http://haokaiyang.com/2017/03/01/centos7-learning-notes-2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="郝凯阳">
@@ -2625,7 +2625,7 @@ Minor 次要装置代码
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/centos7-learning-notes-2/" itemprop="url">《鸟哥的Linux私房菜》文件与目录管理学习笔记</a></h1>
+                <a class="post-title-link" href="/2017/03/01/centos7-learning-notes-2/" itemprop="url">《鸟哥的Linux私房菜》文件与目录管理学习笔记</a></h1>
         
 
         <div class="post-meta">
@@ -3049,7 +3049,7 @@ Minor 次要装置代码
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://haokaiyang.com/centos7-learning-notes-1/">
+    <link itemprop="mainEntityOfPage" href="http://haokaiyang.com/2017/02/28/centos7-learning-notes-1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="郝凯阳">
@@ -3068,7 +3068,7 @@ Minor 次要装置代码
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/centos7-learning-notes-1/" itemprop="url">《鸟哥的Linux私房菜》文件权限与目录配置学习笔记</a></h1>
+                <a class="post-title-link" href="/2017/02/28/centos7-learning-notes-1/" itemprop="url">《鸟哥的Linux私房菜》文件权限与目录配置学习笔记</a></h1>
         
 
         <div class="post-meta">
@@ -3284,7 +3284,7 @@ chmod a-x .bashrc
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://haokaiyang.com/centos7-learning-notes/">
+    <link itemprop="mainEntityOfPage" href="http://haokaiyang.com/2017/02/27/centos7-learning-notes/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="郝凯阳">
@@ -3303,7 +3303,7 @@ chmod a-x .bashrc
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/centos7-learning-notes/" itemprop="url">《鸟哥的Linux私房菜》主机规划与硬盘分区学习笔记</a></h1>
+                <a class="post-title-link" href="/2017/02/27/centos7-learning-notes/" itemprop="url">《鸟哥的Linux私房菜》主机规划与硬盘分区学习笔记</a></h1>
         
 
         <div class="post-meta">
@@ -3525,7 +3525,7 @@ chmod a-x .bashrc
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://haokaiyang.com/linux-learning-notes/">
+    <link itemprop="mainEntityOfPage" href="http://haokaiyang.com/2017/02/26/linux-learning-notes/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="郝凯阳">
@@ -3544,7 +3544,7 @@ chmod a-x .bashrc
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/linux-learning-notes/" itemprop="url">​Linux下的一些简单命令</a></h1>
+                <a class="post-title-link" href="/2017/02/26/linux-learning-notes/" itemprop="url">​Linux下的一些简单命令</a></h1>
         
 
         <div class="post-meta">

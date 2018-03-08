@@ -1,0 +1,1446 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="google84e34793b41f97d4" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.4" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.0.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":true},
+    fancybox: true,
+    fastclick: true,
+    lazyload: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  
+  <meta name="keywords" content="学习笔记,Linux," />
+
+
+<meta name="description" content="压缩的原理:把文件的二进制代码压缩,把相邻的0,1减少,比如说000000，可以把它写成6个0的写法60，来减少该文件的空间。 压缩比:压缩与压缩后的文件所占用的硬盘空间大小 Linux常见压缩文件后缀名*.Z *.zip       zip 压缩文件 *.gz        gzip 压缩文件 *.bz2       bzip2 压缩文件 *.xz        xz 压缩文件 *.tar">
+<meta name="keywords" content="学习笔记,Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《鸟哥的Linux私房菜》文件与文件系统的压缩、打包与备份学习笔记">
+<meta property="og:url" content="http://haokaiyang.com/2017/03/08/centos7-learning-notes-4/index.html">
+<meta property="og:site_name" content="郝凯阳">
+<meta property="og:description" content="压缩的原理:把文件的二进制代码压缩,把相邻的0,1减少,比如说000000，可以把它写成6个0的写法60，来减少该文件的空间。 压缩比:压缩与压缩后的文件所占用的硬盘空间大小 Linux常见压缩文件后缀名*.Z *.zip       zip 压缩文件 *.gz        gzip 压缩文件 *.bz2       bzip2 压缩文件 *.xz        xz 压缩文件 *.tar">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-03-08T15:56:10.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="《鸟哥的Linux私房菜》文件与文件系统的压缩、打包与备份学习笔记">
+<meta name="twitter:description" content="压缩的原理:把文件的二进制代码压缩,把相邻的0,1减少,比如说000000，可以把它写成6个0的写法60，来减少该文件的空间。 压缩比:压缩与压缩后的文件所占用的硬盘空间大小 Linux常见压缩文件后缀名*.Z *.zip       zip 压缩文件 *.gz        gzip 压缩文件 *.bz2       bzip2 压缩文件 *.xz        xz 压缩文件 *.tar">
+
+
+
+
+
+
+  <link rel="canonical" href="http://haokaiyang.com/2017/03/08/centos7-learning-notes-4/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+  <title>《鸟哥的Linux私房菜》文件与文件系统的压缩、打包与备份学习笔记 | 郝凯阳</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">郝凯阳</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-bookmarks">
+          <a href="/bookmarks" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-bookmark"></i> <br />书签</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于</a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+    <div class="reading-progress-bar"></div>
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://haokaiyang.com/2017/03/08/centos7-learning-notes-4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="郝凯阳">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="郝凯阳">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">《鸟哥的Linux私房菜》文件与文件系统的压缩、打包与备份学习笔记</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-08T23:56:00+08:00">2017-03-08</time>
+            
+
+            
+            
+              
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/学习笔记/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="压缩的原理"><a href="#压缩的原理" class="headerlink" title="压缩的原理:"></a>压缩的原理:</h2><p>把文件的二进制代码压缩,把相邻的0,1减少,比如说000000，可以把它写成6个0的写法60，来减少该文件的空间。</p>
+<h2 id="压缩比"><a href="#压缩比" class="headerlink" title="压缩比:"></a>压缩比:</h2><p>压缩与压缩后的文件所占用的硬盘空间大小</p>
+<h2 id="Linux常见压缩文件后缀名"><a href="#Linux常见压缩文件后缀名" class="headerlink" title="Linux常见压缩文件后缀名"></a>Linux常见压缩文件后缀名</h2><pre><code>*.Z
+*.zip       zip 压缩文件
+*.gz        gzip 压缩文件
+*.bz2       bzip2 压缩文件
+*.xz        xz 压缩文件
+*.tar       tar 程序打包的文件,并没有压缩程式打包的資料，并没有压缩过
+*.tar.gz    tar 程序打包的文件，并且经过 gzip 的压缩
+*.tar.bz2   tar 程序打包的文件，并且经过 bzip2 的压缩
+*.tar.xz    tar 程序打包的文件，并且经过 xz 的压缩
+</code></pre><h2 id="Linux常见压缩命令"><a href="#Linux常见压缩命令" class="headerlink" title="Linux常见压缩命令"></a>Linux常见压缩命令</h2><h3 id="gzip-zcat-zmore-zelss-zgrep"><a href="#gzip-zcat-zmore-zelss-zgrep" class="headerlink" title="gzip,zcat/zmore/zelss/zgrep"></a>gzip,zcat/zmore/zelss/zgrep</h3><pre><code>命令:gzip [-cdtv#] 文件名
+    zcat 文件名.gz
+选项及参数:
+    -c 将压缩的资料输出到屏幕上,可以通过资料流重导向来处理
+    -d 解压缩的参数
+    -t 可以用来检验一个压缩文件的一致性，看文件有无错误
+    -v 可以显示出原文件/压缩文件的压缩比等信息
+    -# #为数字的意思，代表压缩等级，-1最快，但是压缩比最差，-9最慢，但是压缩比最好,默认为6
+</code></pre><p>例子1:<br><figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#gzip压缩</span></span><br><span class="line">[root@CentOS7 tmp]<span class="comment"># cp /etc/services .</span></span><br><span class="line">[root@CentOS7 tmp]<span class="comment"># gzip -v services</span></span><br><span class="line">services:  79.7% -- replaced with services.gz</span><br><span class="line">[root@CentOS7 tmp]<span class="comment"># ll /etc/services /tmp/services*</span></span><br><span class="line">-rw-r--r--.<span class="number"> 1 </span>root root<span class="number"> 670293 </span>6月  <span class="number"> 7 </span>2013 /etc/services</span><br><span class="line">-rw-r--r--.<span class="number"> 1 </span>root root<span class="number"> 136088 </span>3月  <span class="number"> 8 </span>10:00 /tmp/services.gz</span><br></pre></td></tr></table></figure></p>
+<p>gzip 进行压缩时候,在默认的状态下原本的文件会被压缩成为.gz的文件名,原始文件不存在了。</p>
+<p>例子2:<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">由于<span class="selector-tag">services</span>是文本文件,请将<span class="selector-tag">services</span><span class="selector-class">.gz</span>读出来</span><br><span class="line"><span class="selector-attr">[root@CentOS7 tmp]</span># <span class="selector-tag">zcat</span> <span class="selector-tag">services</span><span class="selector-class">.gz</span></span><br></pre></td></tr></table></figure></p>
+<p>例子3:解压缩<br><figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@CentOS7 tmp]<span class="comment"># gzip -d services.gz</span></span><br><span class="line">[root@CentOS7 tmp]<span class="comment"># ll ./services*</span></span><br><span class="line">-rw-r--r--.<span class="number"> 1 </span>root root<span class="number"> 670293 </span>3月  <span class="number"> 8 </span>10:00 ./services</span><br></pre></td></tr></table></figure></p>
+<p>gzip -d 会将原来的.gz删除,恢复到原来的services</p>
+<p>例子4:将services用最佳压缩比压缩,并保留原来的文件<br><figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@CentOS7 tmp]<span class="comment"># gzip -9 -c services &gt; services.gz</span></span><br><span class="line">[root@CentOS7 tmp]<span class="comment"># ll ./services*</span></span><br><span class="line">-rw-r--r--.<span class="number"> 1 </span>root root<span class="number"> 670293 </span>3月  <span class="number"> 8 </span>10:00 ./services</span><br><span class="line">-rw-r--r--.<span class="number"> 1 </span>root root<span class="number"> 135489 </span>3月  <span class="number"> 8 </span>10:15 ./services.gz</span><br></pre></td></tr></table></figure></p>
+<p>例子5:在services中,找出http关键字在哪几行<br><figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@CentOS7</span> tmp]<span class="meta"># zgrep -n <span class="string">'http'</span> services.gz</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="bzip2-bzcat-bzmore-bzless-bzgrep"><a href="#bzip2-bzcat-bzmore-bzless-bzgrep" class="headerlink" title="bzip2,bzcat/bzmore/bzless/bzgrep"></a>bzip2,bzcat/bzmore/bzless/bzgrep</h3><pre><code>命令:bzip2 [-cdkzv#] 文件名
+     bzcat 文件名.bz2
+选项及参数:
+    -c 将压缩的资料输出到屏幕上,可以通过资料流重导向来处理
+    -d 解压缩的参数
+    -k 保留原始档案，而不会删除原始的文件
+    -z 压缩参数(默认值，可以不加)
+    -v 可以显示出原文件/压缩文件的压缩比等信息
+    -# #为数字的意思，代表压缩等级，-1最快，但是压缩比最差，-9最慢，但是压缩比最好
+</code></pre><p>例子1:<br><figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#gzip2压缩</span></span><br><span class="line">[root@CentOS7 tmp]<span class="comment"># bzip2 -v services</span></span><br><span class="line">  services:  5.409:1,  1.479 bits/byte, 81.51% saved,<span class="number"> 670293 </span>in,<span class="number"> 123932 </span>out.</span><br><span class="line">[root@CentOS7 tmp]<span class="comment"># ll services*</span></span><br><span class="line">-rw-r--r--.<span class="number"> 1 </span>root root<span class="number"> 123932 </span>3月  <span class="number"> 8 </span>10:00 services.bz2</span><br><span class="line">-rw-r--r--.<span class="number"> 1 </span>root root<span class="number"> 135489 </span>3月  <span class="number"> 8 </span>10:15 services.gz</span><br></pre></td></tr></table></figure></p>
+<p>bzip2的压缩比比gzip好压缩比由79%提升到81%</p>
+<p>例子2:<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">将<span class="selector-tag">services</span><span class="selector-class">.gz2</span>读出来</span><br><span class="line"><span class="selector-attr">[root@CentOS7 tmp]</span># <span class="selector-tag">zcat</span> <span class="selector-tag">services</span><span class="selector-class">.bz2</span></span><br></pre></td></tr></table></figure></p>
+<p>例子3:解压缩<br><figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@CentOS7</span> tmp]<span class="meta"># bzip2 -d services.bz2</span></span><br></pre></td></tr></table></figure></p>
+<p>例子4:将services用最佳压缩比压缩,并保留原来的文件<br><figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@CentOS7</span> tmp]<span class="meta"># bzip2 -9 -c services &gt; services.bz2</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="xz-xcat-xzmore-xzless-xzgrep"><a href="#xz-xcat-xzmore-xzless-xzgrep" class="headerlink" title="xz,xcat/xzmore/xzless/xzgrep"></a>xz,xcat/xzmore/xzless/xzgrep</h3><pre><code>命令:xz [-dtlkc#] 文件名
+    xcat 文件名.bz2
+选项及参数:
+    -d 解压缩的参数
+    -t 测试压缩文件完整性,看有无错误
+    -l 列出压缩文件的相关资讯
+    -k 保留原始档案，而不会删除原始的文件
+    -c 将压缩的资料输出到屏幕上,可以通过资料流重导向来处理
+    -# #为数字的意思，代表压缩等级，-1最快，但是压缩比最差，-9最慢，但是压缩比最好
+</code></pre><figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#压缩</span></span><br><span class="line">[root@CentOS7 tmp]<span class="comment"># xz -v services</span></span><br><span class="line">services (1/1)</span><br><span class="line"> <span class="number"> 100 </span>%        97.3 KiB / 654.6 KiB = 0.149</span><br><span class="line">[root@CentOS7 tmp]<span class="comment"># ll services*</span></span><br><span class="line">-rw-r--r--.<span class="number"> 1 </span>root root<span class="number"> 123932 </span>3月  <span class="number"> 8 </span>10:00 services.bz2</span><br><span class="line">-rw-r--r--.<span class="number"> 1 </span>root root<span class="number"> 135489 </span>3月  <span class="number"> 8 </span>10:34 services.gz</span><br><span class="line">-rw-r--r--.<span class="number"> 1 </span>root root  99608 3月  <span class="number"> 8 </span>10:15 services.xz</span><br><span class="line"><span class="comment">#列出压缩文件内容</span></span><br><span class="line">[root@CentOS7 tmp]<span class="comment"># xz -l services.xz </span></span><br><span class="line">Strms  Blocks   Compressed Uncompressed  Ratio  Check   Filename</span><br><span class="line">   <span class="number"> 1 </span>     <span class="number"> 1 </span>    97.3 KiB    654.6 KiB  0.149  CRC64   services.xz</span><br><span class="line"><span class="comment">#查看压缩文件</span></span><br><span class="line">[root@CentOS7 tmp]<span class="comment"># xzcat services.xz </span></span><br><span class="line"><span class="comment">#解压缩</span></span><br><span class="line">[root@CentOS7 tmp]<span class="comment"># xz -d services.xz</span></span><br><span class="line"><span class="comment">#保留原始文件并压缩</span></span><br><span class="line">[root@CentOS7 tmp]<span class="comment"># xz -k services</span></span><br></pre></td></tr></table></figure>
+<h2 id="打包命令tar"><a href="#打包命令tar" class="headerlink" title="打包命令tar"></a>打包命令tar</h2><h3 id="tar命令的使用"><a href="#tar命令的使用" class="headerlink" title="tar命令的使用"></a>tar命令的使用</h3><pre><code>命令:tar [-z|-j|-J] [cv] [-f 待建立的新文件名] filename... &lt;==打包与压缩
+    tar [-z|-j|-J] [tv] [-f 已经有的tar文件名]             &lt;==查看文件名
+    tar [-z|-j|-J] [xv] [-f 已经有的tar文件名] [-C 目录]   &lt;==解压缩
+选项及参数:
+    -c 建立打包文件,可搭配-v来查看过程中被打包的文件名
+    -t 查看打包文件的内容含有哪些文件名，重点在查看文件名
+    -x  解压缩，可以搭配-C，特别留意的是，-c， -t，-x不能同时出现在一个命令中
+    -z  ：通过 gzip  的支持进行压缩/解压缩：此时文件名最好为 *.tar.gz
+    -j  ：通过 bzip2 的支持进行压缩/解压缩：此时文件名最好为 *.tar.bz2
+    -J  ：通过 xz    的支持进行压缩/解压缩：此时文件名最好为 *.tar.xz
+          特别留意， -z, -j, -J 不能同时出现在一个命令中
+    -v  ：在压缩/解压缩的过程中，将正在处理的文件名显示出来
+    -f filename：-f 后面接被处理的文件名，建议单独写一个选项
+    -C 目录 这个选项用在解压缩，若要在特定目录解压缩，可以使用这个选项
+    -p(小写) ：保留被封资料的原本权限与属性，常用语被封(-c)的重要设置
+    -P(大写) ：保留绝对路径，允许备份资料中含有根目录
+    --exclude=FILE 在压缩过程中，不要将FILE打包
+</code></pre><p>常用:</p>
+<pre><code>压缩:tar -jcv -f filename.tar.bz2 要被压缩的文件或目录名
+查询:tar -jtv -f filename.tar.bz2
+解压缩:tar -jxv -f filename.tar.bz2 -C 欲解压的目录
+</code></pre><p>例子:</p>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#备份/etc目录</span></span><br><span class="line">[root@CentOS7 ~]<span class="comment"># time tar -zpcv -f /root/etc.tar.gz /etc/</span></span><br><span class="line">tar: 从成员名中删除开头的“/”</span><br><span class="line"><span class="string">/etc/</span></span><br><span class="line"><span class="string">/etc/fstab</span></span><br><span class="line"><span class="string">...</span>省略<span class="string">...</span></span><br><span class="line"><span class="string">/etc/trusted-key.key</span></span><br><span class="line"><span class="string">/etc/nanorc</span></span><br><span class="line"></span><br><span class="line">real  0m6.938s</span><br><span class="line">user  0m1.293s</span><br><span class="line">sys 0m0.254s</span><br><span class="line">[root@CentOS7 ~]<span class="comment"># time tar -jpcv -f /root/etc.tar.bz2 /etc</span></span><br><span class="line">tar: 从成员名中删除开头的“/”</span><br><span class="line"><span class="string">/etc/</span></span><br><span class="line"><span class="string">/etc/fstab</span></span><br><span class="line"><span class="string">...</span>省略<span class="string">...</span></span><br><span class="line"><span class="string">/etc/trusted-key.key</span></span><br><span class="line"><span class="string">/etc/nanorc</span></span><br><span class="line"></span><br><span class="line">real  0m4.732s</span><br><span class="line">user  0m3.237s</span><br><span class="line">sys 0m0.050s</span><br><span class="line">[root@CentOS7 ~]<span class="comment"># time tar -Jpcv -f /root/etc.tar.xz /etc</span></span><br><span class="line">tar: 从成员名中删除开头的“/”</span><br><span class="line"><span class="string">/etc/</span></span><br><span class="line"><span class="string">/etc/fstab</span></span><br><span class="line"><span class="string">...</span>省略<span class="string">...</span></span><br><span class="line"><span class="string">/etc/trusted-key.key</span></span><br><span class="line"><span class="string">/etc/nanorc</span></span><br><span class="line"></span><br><span class="line">real  0m20.195s</span><br><span class="line">user  0m14.515s</span><br><span class="line"></span><br><span class="line">[root@CentOS7 ~]<span class="comment"># ll -h ./etc*</span></span><br><span class="line">-rw-r<span class="params">--r--</span>. 1 root root 15M 3月   8 11<span class="function">:02</span> <span class="string">./etc.tar.bz2</span></span><br><span class="line">-rw-r<span class="params">--r--</span>. 1 root root 16M 3月   8 11<span class="function">:02</span> <span class="string">./etc.tar.gz</span></span><br><span class="line">-rw-r<span class="params">--r--</span>. 1 root root 13M 3月   8 11<span class="function">:03</span> <span class="string">./etc.tar.xz</span></span><br><span class="line">[root@CentOS7 ~]<span class="comment"># du -sm /etc/</span></span><br><span class="line">48  <span class="string">/etc/</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#查看tar文件的资料内容,与备份文件名是否根目录的意义</span></span><br><span class="line">[root@CentOS7 ~]<span class="comment"># tar -jtv -f ./etc.tar.bz2</span></span><br><span class="line"><span class="string">...</span>省略<span class="string">...</span></span><br><span class="line">drwxr-x<span class="params">---</span> root/root         0 2016-11-06 07<span class="function">:14</span> etc/sudoers.d/</span><br><span class="line">-rw-r<span class="params">--r--</span> root/root      4760 2014-06-10 04<span class="function">:10</span> etc/enscript.cfg</span><br><span class="line">-rw-r<span class="params">--r--</span> root/root       375 2016-11-12 02<span class="function">:00</span> etc/trusted-key.key</span><br><span class="line">-rw-r<span class="params">--r--</span> root/root      8892 2014-06-10 12<span class="function">:47</span> etc/nanorc</span><br><span class="line"><span class="comment">#可以看到每个文件名都没有根目录了</span></span><br><span class="line"><span class="comment">#拿掉根目录的原因:</span></span><br><span class="line"><span class="comment">#tar所记录的文件名就是解压缩后的实际文件名，如果拿掉根目录,在/tmp解开，那么解压缩后的文件名就是/tmp/etc/xxx，如果不拿去，那解压后的文件名就是绝对路径,意味着压缩后的文件一定会被放到/etc/xxx去，原先的文件就会被覆盖。</span></span><br><span class="line"></span><br><span class="line">[root@CentOS7 ~]<span class="comment"># tar -jpPcv -f /root/etc.and.root.tar.bz2 /etc/</span></span><br><span class="line">[root@CentOS7 ~]<span class="comment"># tar -jtf ./etc.and.root.tar.bz2</span></span><br><span class="line"><span class="string">...</span>省略<span class="string">...</span></span><br><span class="line"><span class="string">/etc/trusted-key.key</span></span><br><span class="line"><span class="string">/etc/nanorc</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#解压缩到特定目录</span></span><br><span class="line">[root@CentOS7 tmp]<span class="comment"># tar -jxv -f /root/etc.tar.bz2 -C /tmp</span></span><br><span class="line">[root@CentOS7 tmp]<span class="comment"># ll /tmp/</span></span><br><span class="line">总用量 1536</span><br><span class="line"><span class="string">...</span>省略<span class="string">...</span></span><br><span class="line">drwxr-xr-x. 134 root       root         8192 3月   7 16<span class="function">:49</span> etc</span><br><span class="line"><span class="string">...</span>省略<span class="string">...</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#只解压单一文件</span></span><br><span class="line">[root@CentOS7 ~]<span class="comment"># tar -jxv -f ./etc.tar.bz2 etc/shadow</span></span><br><span class="line">etc/shadow</span><br><span class="line">[root@CentOS7 ~]<span class="comment"># ll etc</span></span><br><span class="line">总用量 4</span><br><span class="line"><span class="params">----------</span>. 1 root root 1315 3月   1 18<span class="function">:07</span> shadow</span><br><span class="line"><span class="comment">#打包某个目录,但不含该目录下某个文件</span></span><br><span class="line">[root@CentOS7 ~]<span class="comment"># tar -jcv -f /root/system.tar.bz2 --exclude=/root/etc* --exclude=/root/system.tar.bz2 /etc/ /root</span></span><br><span class="line"><span class="comment">#仅备份比某个时刻还要新的文件</span></span><br><span class="line"><span class="comment">#找出比passwd新的文件</span></span><br><span class="line">[root@CentOS7 ~]<span class="comment"># find /etc/ -newer /etc/passwd</span></span><br><span class="line"><span class="comment">#查看passwd的mtime</span></span><br><span class="line">[root@CentOS7 ~]<span class="comment"># ll /etc/passwd</span></span><br><span class="line">-rw-r<span class="params">--r--</span>. 1 root root 2328 3月   1 18<span class="function">:07</span> <span class="string">/etc/passwd</span></span><br><span class="line"><span class="comment">#使用tar压缩</span></span><br><span class="line">[root@CentOS7 ~]<span class="comment"># tar -jcv -f /root/etc.newer.then.passwd.tar.bz2 --newer-mtime="2017/03/01" /etc/*</span></span><br><span class="line"><span class="comment">#显示出压缩文件内结尾非/的文件名</span></span><br><span class="line">[root@CentOS7 ~]<span class="comment"># tar -jtv -f /root/etc.newer.then.passwd.tar.bz2 | grep -v '/$'</span></span><br></pre></td></tr></table></figure>
+<h3 id="tarfile与tarball"><a href="#tarfile与tarball" class="headerlink" title="tarfile与tarball"></a>tarfile与tarball</h3><p>tar打包出来的文件如果仅是打包而且，我们称呼为tarfile.</p>
+<pre><code>tar -cv file.tar
+</code></pre><p>如果压缩了，我们称呼为tarball</p>
+<pre><code>tar -jcv file.tar.bz2
+</code></pre><h3 id="管道与资料流"><a href="#管道与资料流" class="headerlink" title="管道与资料流"></a>管道与资料流</h3><p>将/etc目录一边打包，一边在/tmp解开<br><figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tar -cvf - /etc <span class="string">| tar -xvf -</span></span><br><span class="line"><span class="meta">#-分别代表standard output, standard input</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="解压缩后的SELinux"><a href="#解压缩后的SELinux" class="headerlink" title="解压缩后的SELinux"></a>解压缩后的SELinux</h3><p>//todo 看完16章后添加</p>
+<h2 id="XFS文件系统的备份与还原"><a href="#XFS文件系统的备份与还原" class="headerlink" title="XFS文件系统的备份与还原"></a>XFS文件系统的备份与还原</h2><h3 id="xfs文件系统备份-xfsdump"><a href="#xfs文件系统备份-xfsdump" class="headerlink" title="xfs文件系统备份 xfsdump"></a>xfs文件系统备份 xfsdump</h3><p>xfsdump不仅可以进行文件系统的完整备份，还可以进行增量备份</p>
+<p>xfs有以下限制:</p>
+<ul>
+<li>xfsdump只能支持已经挂载的文件系统备份</li>
+<li>xfsdump 必须使用root权限才能操作</li>
+<li>xfsdump 只能备份xfs文件系统</li>
+<li>xfsdump 备份下来的资料只能让xfsrestore解析</li>
+<li><p>xfsdump是通过文件系统的UUID来分辨备份文件的，因此不能备份两个具有相同UUID的文件系统</p>
+<p>  命令:xfsdump [-L S_label] [-M M_label] [-l #] [-f 备份文件] 待备份资料</p>
+<pre><code>xfsdump -I
+</code></pre><p>  选项及参数:</p>
+<pre><code>-L xfsdump 会记录每次备份的session标头,这里可以填写针对此文件系统的简易说明
+-M xfsdump 可以记录储存媒体的标头,这里可以填写此媒体的简易说明
+-l 指定等级有0-9 10个等级,默认为0，即完整备份
+-f 有点类似tar，后面接产生的文件，也可以接/dev/st0设备名或其他一般文件名等
+-I 从/var/lib/xfsdump/inventory列出目前备份的信息状态
+</code></pre></li>
+</ul>
+<p>xfsdump 默认仅支持文件系统的备份，并不支持特定目录的备份，所以你不能用xfsdump去备份/etc/因为/etc不是独立的文件系统</p>
+<h4 id="用xfsdump备份完整的文件系统"><a href="#用xfsdump备份完整的文件系统" class="headerlink" title="用xfsdump备份完整的文件系统"></a>用xfsdump备份完整的文件系统</h4><figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#1.先确定/boot是独立的文件系统</span></span><br><span class="line">[root@CentOS7 ~]<span class="meta"># df -h /boot</span></span><br><span class="line">文件系统        容量  已用  可用 已用% 挂载点</span><br><span class="line"><span class="meta-keyword">/dev/</span>sda2      <span class="number">1014</span>M  <span class="number">172</span>M  <span class="number">843</span>M   <span class="number">17</span>% /boot</span><br><span class="line"><span class="meta">#2.将完成备份的文件名记录成/srv/boot.dump</span></span><br><span class="line">[root@CentOS7 ~]<span class="meta"># xfsdump -l 0 -L boot_all -M boot_all -f /srv/boot.dump /boot</span></span><br><span class="line"><span class="symbol">xfsdump:</span> using file dump (drive_simple) strategy</span><br><span class="line"><span class="symbol">xfsdump:</span> version <span class="number">3.1</span><span class="number">.4</span> (dump format <span class="number">3.0</span>) - type ^C for status and control</span><br><span class="line"><span class="symbol">xfsdump:</span> level <span class="number">0</span> dump of CentOS7.study:/boot                     <span class="meta">#开始备份本机/toot系统</span></span><br><span class="line"><span class="symbol">xfsdump:</span> dump date: Wed Mar  <span class="number">8</span> <span class="number">13</span>:<span class="number">36</span>:<span class="number">04</span> <span class="number">2017</span>                     <span class="meta">#备份时间</span></span><br><span class="line"><span class="symbol">xfsdump:</span> session id: <span class="number">32</span>afd6db-c3a0<span class="number">-49</span>b4<span class="number">-9</span>bcc<span class="number">-6</span>b72496e948d        <span class="meta">#本地dump的ID</span></span><br><span class="line"><span class="symbol">xfsdump:</span> session label: <span class="string">"boot_all"</span>                               <span class="meta">#名字标记</span></span><br><span class="line"><span class="symbol">xfsdump:</span> ino map phase <span class="number">1</span>: constructing initial dump list         <span class="meta">#开始备份程序</span></span><br><span class="line"><span class="symbol">xfsdump:</span> ino map phase <span class="number">2</span>: skipping (no pruning necessary)</span><br><span class="line"><span class="symbol">xfsdump:</span> ino map phase <span class="number">3</span>: skipping (only one dump stream)</span><br><span class="line"><span class="symbol">xfsdump:</span> ino map construction complete</span><br><span class="line"><span class="symbol">xfsdump:</span> estimated dump size: <span class="number">146061824</span> bytes</span><br><span class="line"><span class="symbol">xfsdump:</span> <span class="meta-keyword">/var/</span>lib<span class="meta-keyword">/xfsdump/</span>inventory created</span><br><span class="line"><span class="symbol">xfsdump:</span> creating dump session media file <span class="number">0</span> (media <span class="number">0</span>, file <span class="number">0</span>)</span><br><span class="line"><span class="symbol">xfsdump:</span> dumping ino map</span><br><span class="line"><span class="symbol">xfsdump:</span> dumping directories</span><br><span class="line"><span class="symbol">xfsdump:</span> dumping non-directory files</span><br><span class="line"><span class="symbol">xfsdump:</span> ending media file</span><br><span class="line"><span class="symbol">xfsdump:</span> media file size <span class="number">145732712</span> bytes</span><br><span class="line"><span class="symbol">xfsdump:</span> dump size (non-dir files) : <span class="number">145497552</span> bytes</span><br><span class="line"><span class="symbol">xfsdump:</span> dump complete: <span class="number">6</span> seconds elapsed</span><br><span class="line"><span class="symbol">xfsdump:</span> Dump Summary:</span><br><span class="line"><span class="symbol">xfsdump:</span>   stream <span class="number">0</span> <span class="meta-keyword">/srv/</span>boot.dump OK (success)</span><br><span class="line"><span class="symbol">xfsdump:</span> Dump Status: SUCCESS</span><br><span class="line">[root@CentOS7 ~]<span class="meta"># ll /srv/boot.dump</span></span><br><span class="line">-rw-r--r--. <span class="number">1</span> root root <span class="number">145732712</span> <span class="number">3</span>月   <span class="number">8</span> <span class="number">13</span>:<span class="number">36</span> <span class="meta-keyword">/srv/</span>boot.dump</span><br><span class="line">[root@CentOS7 ~]<span class="meta"># ll /var/lib/xfsdump/inventory/</span></span><br><span class="line">总用量 <span class="number">16</span></span><br><span class="line">-rw-r--r--. <span class="number">1</span> root root  <span class="number">312</span> <span class="number">3</span>月   <span class="number">8</span> <span class="number">13</span>:<span class="number">36</span> <span class="number">87f</span>dbc5c<span class="number">-2</span>b5d<span class="number">-4</span>f09-b26c<span class="number">-88</span>bdcd4d2144.InvIndex</span><br><span class="line">-rw-r--r--. <span class="number">1</span> root root <span class="number">5080</span> <span class="number">3</span>月   <span class="number">8</span> <span class="number">13</span>:<span class="number">36</span> bd80ea3a-a2ff<span class="number">-462</span>a-b1d1-a07d1b4570d2.StObj</span><br><span class="line">-rw-r--r--. <span class="number">1</span> root root  <span class="number">576</span> <span class="number">3</span>月   <span class="number">8</span> <span class="number">13</span>:<span class="number">36</span> fstab</span><br><span class="line"><span class="meta">#使用了xfsdump之后会有/var/lib/inventory内的文件产生</span></span><br></pre></td></tr></table></figure>
+<h4 id="用xfsdump进行增量备份"><a href="#用xfsdump进行增量备份" class="headerlink" title="用xfsdump进行增量备份"></a>用xfsdump进行增量备份</h4><p>一定要进行过完整备份后才能够继续使用增量备份<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 看下有没有文件系统被xfsdump备份过</span></span><br><span class="line"><span class="string">[root@CentOS7</span> <span class="string">~]#</span> <span class="string">xfsdump</span> <span class="bullet">-I</span></span><br><span class="line"><span class="string">file</span> <span class="string">system</span> <span class="number">0</span><span class="string">:</span></span><br><span class="line">  <span class="string">fs</span> <span class="attr">id:</span>    <span class="number">87</span><span class="string">fdbc5c-2b5d-4f09-b26c-88bdcd4d2144</span></span><br><span class="line">  <span class="string">session</span> <span class="number">0</span><span class="string">:</span></span><br><span class="line">    <span class="string">mount</span> <span class="attr">point:</span>  <span class="string">CentOS7.study:/boot</span></span><br><span class="line">    <span class="attr">device:</span>   <span class="string">CentOS7.study:/dev/sda2</span></span><br><span class="line">    <span class="attr">time:</span>   <span class="string">Wed</span> <span class="string">Mar</span>  <span class="number">8</span> <span class="number">13</span><span class="string">:36:04</span> <span class="number">2017</span></span><br><span class="line">    <span class="string">session</span> <span class="attr">label:</span>  <span class="string">"boot_all"</span></span><br><span class="line">    <span class="string">session</span> <span class="attr">id:</span> <span class="number">32</span><span class="string">afd6db-c3a0-49b4-9bcc-6b72496e948d</span></span><br><span class="line">    <span class="attr">level:</span>    <span class="number">0</span></span><br><span class="line">    <span class="attr">resumed:</span>  <span class="literal">NO</span></span><br><span class="line">    <span class="attr">subtree:</span>  <span class="literal">NO</span></span><br><span class="line">    <span class="attr">streams:</span>  <span class="number">1</span></span><br><span class="line">    <span class="string">stream</span> <span class="number">0</span><span class="string">:</span></span><br><span class="line">      <span class="attr">pathname:</span> <span class="string">/srv/boot.dump</span></span><br><span class="line">      <span class="attr">start:</span>    <span class="string">ino</span> <span class="number">68</span> <span class="string">offset</span> <span class="number">0</span></span><br><span class="line">      <span class="attr">end:</span>    <span class="string">ino</span> <span class="number">1069123</span> <span class="string">offset</span> <span class="number">0</span></span><br><span class="line">      <span class="attr">interrupted:</span>  <span class="literal">NO</span></span><br><span class="line">      <span class="string">media</span> <span class="attr">files:</span>  <span class="number">1</span></span><br><span class="line">      <span class="string">media</span> <span class="string">file</span> <span class="number">0</span><span class="string">:</span></span><br><span class="line">        <span class="string">mfile</span> <span class="attr">index:</span>  <span class="number">0</span></span><br><span class="line">        <span class="string">mfile</span> <span class="attr">type:</span> <span class="string">data</span></span><br><span class="line">        <span class="string">mfile</span> <span class="attr">size:</span> <span class="number">145732712</span></span><br><span class="line">        <span class="string">mfile</span> <span class="attr">start:</span>  <span class="string">ino</span> <span class="number">68</span> <span class="string">offset</span> <span class="number">0</span></span><br><span class="line">        <span class="string">mfile</span> <span class="attr">end:</span>  <span class="string">ino</span> <span class="number">1069123</span> <span class="string">offset</span> <span class="number">0</span></span><br><span class="line">        <span class="string">media</span> <span class="attr">label:</span>  <span class="string">"boot_all"</span></span><br><span class="line">        <span class="string">media</span> <span class="attr">id:</span> <span class="number">5</span><span class="string">b94361d-67d9-4bfb-850d-11e982be1753</span></span><br><span class="line"><span class="attr">xfsdump:</span> <span class="string">Dump</span> <span class="attr">Status:</span> <span class="string">SUCCESS</span></span><br><span class="line"><span class="comment">#看到有个session 0的备份资料，而且是level 0</span></span><br><span class="line"><span class="string">在/boot中建立一个10MB的文件</span></span><br><span class="line"><span class="string">[root@CentOS7</span> <span class="string">~]#</span> <span class="string">dd</span> <span class="string">if=/dev/zero</span> <span class="string">of=/boot/testing.img</span> <span class="string">bs=1M</span> <span class="string">count=10</span></span><br><span class="line"><span class="string">记录了10+0</span> <span class="string">的读入</span></span><br><span class="line"><span class="string">记录了10+0</span> <span class="string">的写出</span></span><br><span class="line"><span class="number">10485760</span><span class="string">字节(10</span> <span class="string">MB)已复制，0.0384233</span> <span class="string">秒，273</span> <span class="string">MB/秒</span></span><br><span class="line"><span class="comment">#建立个备份</span></span><br><span class="line"><span class="string">[root@CentOS7</span> <span class="string">~]#</span> <span class="string">xfsdump</span> <span class="bullet">-l</span> <span class="number">1</span> <span class="bullet">-L</span> <span class="string">boot_2</span> <span class="bullet">-M</span> <span class="string">boot_2</span> <span class="bullet">-f</span> <span class="string">/srv/boot.dump1</span> <span class="string">/boot</span></span><br><span class="line"><span class="attr">xfsdump:</span> <span class="string">using</span> <span class="string">file</span> <span class="string">dump</span> <span class="string">(drive_simple)</span> <span class="string">strategy</span></span><br><span class="line"><span class="attr">xfsdump:</span> <span class="string">version</span> <span class="number">3.1</span><span class="number">.4</span> <span class="string">(dump</span> <span class="string">format</span> <span class="number">3.0</span><span class="string">)</span> <span class="bullet">-</span> <span class="string">type</span> <span class="string">^C</span> <span class="string">for</span> <span class="string">status</span> <span class="string">and</span> <span class="string">control</span></span><br><span class="line"><span class="attr">xfsdump:</span> <span class="string">level</span> <span class="number">1</span> <span class="string">incremental</span> <span class="string">dump</span> <span class="string">of</span> <span class="string">CentOS7.study:/boot</span> <span class="string">based</span> <span class="string">on</span> <span class="string">level</span> <span class="number">0</span> <span class="string">dump</span> <span class="string">begun</span> <span class="string">Wed</span> <span class="string">Mar</span>  <span class="number">8</span> <span class="number">13</span><span class="string">:36:04</span> <span class="number">2017</span></span><br><span class="line"><span class="attr">xfsdump:</span> <span class="string">dump</span> <span class="attr">date:</span> <span class="string">Wed</span> <span class="string">Mar</span>  <span class="number">8</span> <span class="number">13</span><span class="string">:45:03</span> <span class="number">2017</span></span><br><span class="line"><span class="attr">xfsdump:</span> <span class="string">session</span> <span class="attr">id:</span> <span class="string">be007ca7-de4a-4cf7-89a2-16a27ffffddb</span></span><br><span class="line"><span class="attr">xfsdump:</span> <span class="string">session</span> <span class="attr">label:</span> <span class="string">"boot_2"</span></span><br><span class="line"><span class="attr">xfsdump:</span> <span class="string">ino</span> <span class="string">map</span> <span class="string">phase</span> <span class="number">1</span><span class="string">:</span> <span class="string">constructing</span> <span class="string">initial</span> <span class="string">dump</span> <span class="string">list</span></span><br><span class="line"><span class="attr">xfsdump:</span> <span class="string">ino</span> <span class="string">map</span> <span class="string">phase</span> <span class="number">2</span><span class="string">:</span> <span class="string">pruning</span> <span class="string">unneeded</span> <span class="string">subtrees</span></span><br><span class="line"><span class="attr">xfsdump:</span> <span class="string">ino</span> <span class="string">map</span> <span class="string">phase</span> <span class="number">3</span><span class="string">:</span> <span class="string">skipping</span> <span class="string">(only</span> <span class="string">one</span> <span class="string">dump</span> <span class="string">stream)</span></span><br><span class="line"><span class="attr">xfsdump:</span> <span class="string">ino</span> <span class="string">map</span> <span class="string">construction</span> <span class="string">complete</span></span><br><span class="line"><span class="attr">xfsdump:</span> <span class="string">estimated</span> <span class="string">dump</span> <span class="attr">size:</span> <span class="number">10506880</span> <span class="string">bytes</span></span><br><span class="line"><span class="attr">xfsdump:</span> <span class="string">creating</span> <span class="string">dump</span> <span class="string">session</span> <span class="string">media</span> <span class="string">file</span> <span class="number">0</span> <span class="string">(media</span> <span class="number">0</span><span class="string">,</span> <span class="string">file</span> <span class="number">0</span><span class="string">)</span></span><br><span class="line"><span class="attr">xfsdump:</span> <span class="string">dumping</span> <span class="string">ino</span> <span class="string">map</span></span><br><span class="line"><span class="attr">xfsdump:</span> <span class="string">dumping</span> <span class="string">directories</span></span><br><span class="line"><span class="attr">xfsdump:</span> <span class="string">dumping</span> <span class="string">non-directory</span> <span class="string">files</span></span><br><span class="line"><span class="attr">xfsdump:</span> <span class="string">ending</span> <span class="string">media</span> <span class="string">file</span></span><br><span class="line"><span class="attr">xfsdump:</span> <span class="string">media</span> <span class="string">file</span> <span class="string">size</span> <span class="number">10510952</span> <span class="string">bytes</span></span><br><span class="line"><span class="attr">xfsdump:</span> <span class="string">dump</span> <span class="string">size</span> <span class="string">(non-dir</span> <span class="string">files)</span> <span class="string">:</span> <span class="number">10488336</span> <span class="string">bytes</span></span><br><span class="line"><span class="attr">xfsdump:</span> <span class="string">dump</span> <span class="attr">complete:</span> <span class="number">21</span> <span class="string">seconds</span> <span class="string">elapsed</span></span><br><span class="line"><span class="attr">xfsdump:</span> <span class="string">Dump</span> <span class="attr">Summary:</span></span><br><span class="line"><span class="attr">xfsdump:</span>   <span class="string">stream</span> <span class="number">0</span> <span class="string">/srv/boot.dump1</span> <span class="string">OK</span> <span class="string">(success)</span></span><br><span class="line"><span class="attr">xfsdump:</span> <span class="string">Dump</span> <span class="attr">Status:</span> <span class="string">SUCCESS</span></span><br><span class="line"><span class="comment">#查看文件</span></span><br><span class="line"><span class="string">[root@CentOS7</span> <span class="string">~]#</span> <span class="string">ll</span> <span class="string">/srv/boot*</span></span><br><span class="line"><span class="bullet">-</span><span class="string">rw-r--r--.</span> <span class="number">1</span> <span class="string">root</span> <span class="string">root</span> <span class="number">145732712</span> <span class="number">3</span><span class="string">月</span>   <span class="number">8</span> <span class="number">13</span><span class="string">:36</span> <span class="string">/srv/boot.dump</span></span><br><span class="line"><span class="bullet">-</span><span class="string">rw-r--r--.</span> <span class="number">1</span> <span class="string">root</span> <span class="string">root</span>  <span class="number">10510952</span> <span class="number">3</span><span class="string">月</span>   <span class="number">8</span> <span class="number">13</span><span class="string">:45</span> <span class="string">/srv/boot.dump1</span></span><br><span class="line"><span class="comment">#最后看下是否有记录level  1 备份的时间点</span></span><br><span class="line"><span class="string">[root@CentOS7</span> <span class="string">~]#</span> <span class="string">xfsdump</span> <span class="bullet">-I</span></span><br><span class="line"><span class="string">file</span> <span class="string">system</span> <span class="number">0</span><span class="string">:</span></span><br><span class="line">  <span class="string">fs</span> <span class="attr">id:</span>    <span class="number">87</span><span class="string">fdbc5c-2b5d-4f09-b26c-88bdcd4d2144</span></span><br><span class="line">  <span class="string">session</span> <span class="number">0</span><span class="string">:</span></span><br><span class="line">    <span class="string">mount</span> <span class="attr">point:</span>  <span class="string">CentOS7.study:/boot</span></span><br><span class="line">    <span class="attr">device:</span>   <span class="string">CentOS7.study:/dev/sda2</span></span><br><span class="line">    <span class="attr">time:</span>   <span class="string">Wed</span> <span class="string">Mar</span>  <span class="number">8</span> <span class="number">13</span><span class="string">:36:04</span> <span class="number">2017</span></span><br><span class="line">    <span class="string">session</span> <span class="attr">label:</span>  <span class="string">"boot_all"</span></span><br><span class="line">    <span class="string">session</span> <span class="attr">id:</span> <span class="number">32</span><span class="string">afd6db-c3a0-49b4-9bcc-6b72496e948d</span></span><br><span class="line">    <span class="attr">level:</span>    <span class="number">0</span></span><br><span class="line">    <span class="attr">resumed:</span>  <span class="literal">NO</span></span><br><span class="line">    <span class="attr">subtree:</span>  <span class="literal">NO</span></span><br><span class="line">    <span class="attr">streams:</span>  <span class="number">1</span></span><br><span class="line">    <span class="string">stream</span> <span class="number">0</span><span class="string">:</span></span><br><span class="line">      <span class="attr">pathname:</span> <span class="string">/srv/boot.dump</span></span><br><span class="line">      <span class="attr">start:</span>    <span class="string">ino</span> <span class="number">68</span> <span class="string">offset</span> <span class="number">0</span></span><br><span class="line">      <span class="attr">end:</span>    <span class="string">ino</span> <span class="number">1069123</span> <span class="string">offset</span> <span class="number">0</span></span><br><span class="line">      <span class="attr">interrupted:</span>  <span class="literal">NO</span></span><br><span class="line">      <span class="string">media</span> <span class="attr">files:</span>  <span class="number">1</span></span><br><span class="line">      <span class="string">media</span> <span class="string">file</span> <span class="number">0</span><span class="string">:</span></span><br><span class="line">        <span class="string">mfile</span> <span class="attr">index:</span>  <span class="number">0</span></span><br><span class="line">        <span class="string">mfile</span> <span class="attr">type:</span> <span class="string">data</span></span><br><span class="line">        <span class="string">mfile</span> <span class="attr">size:</span> <span class="number">145732712</span></span><br><span class="line">        <span class="string">mfile</span> <span class="attr">start:</span>  <span class="string">ino</span> <span class="number">68</span> <span class="string">offset</span> <span class="number">0</span></span><br><span class="line">        <span class="string">mfile</span> <span class="attr">end:</span>  <span class="string">ino</span> <span class="number">1069123</span> <span class="string">offset</span> <span class="number">0</span></span><br><span class="line">        <span class="string">media</span> <span class="attr">label:</span>  <span class="string">"boot_all"</span></span><br><span class="line">        <span class="string">media</span> <span class="attr">id:</span> <span class="number">5</span><span class="string">b94361d-67d9-4bfb-850d-11e982be1753</span></span><br><span class="line">  <span class="string">session</span> <span class="number">1</span><span class="string">:</span></span><br><span class="line">    <span class="string">mount</span> <span class="attr">point:</span>  <span class="string">CentOS7.study:/boot</span></span><br><span class="line">    <span class="attr">device:</span>   <span class="string">CentOS7.study:/dev/sda2</span></span><br><span class="line">    <span class="attr">time:</span>   <span class="string">Wed</span> <span class="string">Mar</span>  <span class="number">8</span> <span class="number">13</span><span class="string">:45:03</span> <span class="number">2017</span></span><br><span class="line">    <span class="string">session</span> <span class="attr">label:</span>  <span class="string">"boot_2"</span></span><br><span class="line">    <span class="string">session</span> <span class="attr">id:</span> <span class="string">be007ca7-de4a-4cf7-89a2-16a27ffffddb</span></span><br><span class="line">    <span class="attr">level:</span>    <span class="number">1</span></span><br><span class="line">    <span class="attr">resumed:</span>  <span class="literal">NO</span></span><br><span class="line">    <span class="attr">subtree:</span>  <span class="literal">NO</span></span><br><span class="line">    <span class="attr">streams:</span>  <span class="number">1</span></span><br><span class="line">    <span class="string">stream</span> <span class="number">0</span><span class="string">:</span></span><br><span class="line">      <span class="attr">pathname:</span> <span class="string">/srv/boot.dump1</span></span><br><span class="line">      <span class="attr">start:</span>    <span class="string">ino</span> <span class="number">237726</span> <span class="string">offset</span> <span class="number">0</span></span><br><span class="line">      <span class="attr">end:</span>    <span class="string">ino</span> <span class="number">237727</span> <span class="string">offset</span> <span class="number">0</span></span><br><span class="line">      <span class="attr">interrupted:</span>  <span class="literal">NO</span></span><br><span class="line">      <span class="string">media</span> <span class="attr">files:</span>  <span class="number">1</span></span><br><span class="line">      <span class="string">media</span> <span class="string">file</span> <span class="number">0</span><span class="string">:</span></span><br><span class="line">        <span class="string">mfile</span> <span class="attr">index:</span>  <span class="number">0</span></span><br><span class="line">        <span class="string">mfile</span> <span class="attr">type:</span> <span class="string">data</span></span><br><span class="line">        <span class="string">mfile</span> <span class="attr">size:</span> <span class="number">10510952</span></span><br><span class="line">        <span class="string">mfile</span> <span class="attr">start:</span>  <span class="string">ino</span> <span class="number">237726</span> <span class="string">offset</span> <span class="number">0</span></span><br><span class="line">        <span class="string">mfile</span> <span class="attr">end:</span>  <span class="string">ino</span> <span class="number">237727</span> <span class="string">offset</span> <span class="number">0</span></span><br><span class="line">        <span class="string">media</span> <span class="attr">label:</span>  <span class="string">"boot_2"</span></span><br><span class="line">        <span class="string">media</span> <span class="attr">id:</span> <span class="number">9275</span><span class="string">f0c5-0205-4f2e-b947-c6f318d3d854</span></span><br><span class="line"><span class="attr">xfsdump:</span> <span class="string">Dump</span> <span class="attr">Status:</span> <span class="string">SUCCESS</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="XFS文件系统还原-xfsrestore"><a href="#XFS文件系统还原-xfsrestore" class="headerlink" title="XFS文件系统还原 xfsrestore"></a>XFS文件系统还原 xfsrestore</h3><pre><code>命令:xfsrestore -I                                       &lt;==查看备份文件资料
+    xfsrestore [-f 备份文件] [-L S_label] [-s] 待复原目录 &lt;==单一文件系统全部复原
+    xfsrestore [-f 备份文件] -r 待复原目录                &lt;==通过增量备份还原系统
+    xfsrestore [-f 备份文件] -i 待复原目录                &lt;==进行互动模式
+选项及参数:
+    -I 和xfsdump输入一样,可以查询备份资料，包括Label名称与备份时间等
+    -f 后面接备份文件,服务器上很有可能会接/dev/st0等磁带机，我们这里接文件名
+    -L 就是 Session 的 Label name 喔！可用 -I 查询到的资料，在这个选项后输入
+    -s 需要接特定目录,亦即仅复原某一个文件或目录的意思
+    -r 如果是用文件来储存备份资料，那这个就不需要使用，如果是一个磁带内有多个文件，需要这东西    来达成   增量复原
+    -i  ：进行互动模式
+</code></pre><h4 id="用xfsrestore观察xfsdump后的备份资料内容"><a href="#用xfsrestore观察xfsdump后的备份资料内容" class="headerlink" title="用xfsrestore观察xfsdump后的备份资料内容"></a>用xfsrestore观察xfsdump后的备份资料内容</h4><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">[root@CentOS7</span> <span class="string">~]#</span> <span class="string">xfsrestore</span> <span class="bullet">-I</span></span><br><span class="line"><span class="string">file</span> <span class="string">system</span> <span class="number">0</span><span class="string">:</span></span><br><span class="line">  <span class="string">fs</span> <span class="attr">id:</span>    <span class="number">87</span><span class="string">fdbc5c-2b5d-4f09-b26c-88bdcd4d2144</span></span><br><span class="line">  <span class="string">session</span> <span class="number">0</span><span class="string">:</span></span><br><span class="line">    <span class="string">mount</span> <span class="attr">point:</span>  <span class="string">CentOS7.study:/boot</span></span><br><span class="line">    <span class="attr">device:</span>   <span class="string">CentOS7.study:/dev/sda2</span></span><br><span class="line">    <span class="attr">time:</span>   <span class="string">Wed</span> <span class="string">Mar</span>  <span class="number">8</span> <span class="number">13</span><span class="string">:36:04</span> <span class="number">2017</span></span><br><span class="line">    <span class="string">session</span> <span class="attr">label:</span>  <span class="string">"boot_all"</span></span><br><span class="line">    <span class="string">session</span> <span class="attr">id:</span> <span class="number">32</span><span class="string">afd6db-c3a0-49b4-9bcc-6b72496e948d</span></span><br><span class="line">    <span class="attr">level:</span>    <span class="number">0</span></span><br><span class="line">    <span class="attr">resumed:</span>  <span class="literal">NO</span></span><br><span class="line">    <span class="attr">subtree:</span>  <span class="literal">NO</span></span><br><span class="line">    <span class="attr">streams:</span>  <span class="number">1</span></span><br><span class="line">    <span class="string">stream</span> <span class="number">0</span><span class="string">:</span></span><br><span class="line">      <span class="attr">pathname:</span> <span class="string">/srv/boot.dump</span></span><br><span class="line">      <span class="attr">start:</span>    <span class="string">ino</span> <span class="number">68</span> <span class="string">offset</span> <span class="number">0</span></span><br><span class="line">      <span class="attr">end:</span>    <span class="string">ino</span> <span class="number">1069123</span> <span class="string">offset</span> <span class="number">0</span></span><br><span class="line">      <span class="attr">interrupted:</span>  <span class="literal">NO</span></span><br><span class="line">      <span class="string">media</span> <span class="attr">files:</span>  <span class="number">1</span></span><br><span class="line">      <span class="string">media</span> <span class="string">file</span> <span class="number">0</span><span class="string">:</span></span><br><span class="line">        <span class="string">mfile</span> <span class="attr">index:</span>  <span class="number">0</span></span><br><span class="line">        <span class="string">mfile</span> <span class="attr">type:</span> <span class="string">data</span></span><br><span class="line">        <span class="string">mfile</span> <span class="attr">size:</span> <span class="number">145732712</span></span><br><span class="line">        <span class="string">mfile</span> <span class="attr">start:</span>  <span class="string">ino</span> <span class="number">68</span> <span class="string">offset</span> <span class="number">0</span></span><br><span class="line">        <span class="string">mfile</span> <span class="attr">end:</span>  <span class="string">ino</span> <span class="number">1069123</span> <span class="string">offset</span> <span class="number">0</span></span><br><span class="line">        <span class="string">media</span> <span class="attr">label:</span>  <span class="string">"boot_all"</span></span><br><span class="line">        <span class="string">media</span> <span class="attr">id:</span> <span class="number">5</span><span class="string">b94361d-67d9-4bfb-850d-11e982be1753</span></span><br><span class="line">  <span class="string">session</span> <span class="number">1</span><span class="string">:</span></span><br><span class="line">    <span class="string">mount</span> <span class="attr">point:</span>  <span class="string">CentOS7.study:/boot</span></span><br><span class="line">    <span class="attr">device:</span>   <span class="string">CentOS7.study:/dev/sda2</span></span><br><span class="line">    <span class="attr">time:</span>   <span class="string">Wed</span> <span class="string">Mar</span>  <span class="number">8</span> <span class="number">13</span><span class="string">:45:03</span> <span class="number">2017</span></span><br><span class="line">    <span class="string">session</span> <span class="attr">label:</span>  <span class="string">"boot_2"</span></span><br><span class="line">    <span class="string">session</span> <span class="attr">id:</span> <span class="string">be007ca7-de4a-4cf7-89a2-16a27ffffddb</span></span><br><span class="line">    <span class="attr">level:</span>    <span class="number">1</span></span><br><span class="line">    <span class="attr">resumed:</span>  <span class="literal">NO</span></span><br><span class="line">    <span class="attr">subtree:</span>  <span class="literal">NO</span></span><br><span class="line">    <span class="attr">streams:</span>  <span class="number">1</span></span><br><span class="line">    <span class="string">stream</span> <span class="number">0</span><span class="string">:</span></span><br><span class="line">      <span class="attr">pathname:</span> <span class="string">/srv/boot.dump1</span></span><br><span class="line">      <span class="attr">start:</span>    <span class="string">ino</span> <span class="number">237726</span> <span class="string">offset</span> <span class="number">0</span></span><br><span class="line">      <span class="attr">end:</span>    <span class="string">ino</span> <span class="number">237727</span> <span class="string">offset</span> <span class="number">0</span></span><br><span class="line">      <span class="attr">interrupted:</span>  <span class="literal">NO</span></span><br><span class="line">      <span class="string">media</span> <span class="attr">files:</span>  <span class="number">1</span></span><br><span class="line">      <span class="string">media</span> <span class="string">file</span> <span class="number">0</span><span class="string">:</span></span><br><span class="line">        <span class="string">mfile</span> <span class="attr">index:</span>  <span class="number">0</span></span><br><span class="line">        <span class="string">mfile</span> <span class="attr">type:</span> <span class="string">data</span></span><br><span class="line">        <span class="string">mfile</span> <span class="attr">size:</span> <span class="number">10510952</span></span><br><span class="line">        <span class="string">mfile</span> <span class="attr">start:</span>  <span class="string">ino</span> <span class="number">237726</span> <span class="string">offset</span> <span class="number">0</span></span><br><span class="line">        <span class="string">mfile</span> <span class="attr">end:</span>  <span class="string">ino</span> <span class="number">237727</span> <span class="string">offset</span> <span class="number">0</span></span><br><span class="line">        <span class="string">media</span> <span class="attr">label:</span>  <span class="string">"boot_2"</span></span><br><span class="line">        <span class="string">media</span> <span class="attr">id:</span> <span class="number">9275</span><span class="string">f0c5-0205-4f2e-b947-c6f318d3d854</span></span><br><span class="line"><span class="attr">xfsrestore:</span> <span class="string">Restore</span> <span class="attr">Status:</span> <span class="string">SUCCESS</span></span><br><span class="line"><span class="comment">#简单复原level 0 的文件系统</span></span><br><span class="line"><span class="comment">#把资料覆盖回去</span></span><br><span class="line"><span class="string">[root@CentOS7</span> <span class="string">~]#</span> <span class="string">xfsrestore</span> <span class="bullet">-f</span> <span class="string">/srv/boot.dump</span> <span class="bullet">-L</span> <span class="string">boot_all</span> <span class="string">/boot</span></span><br><span class="line"><span class="attr">xfsrestore:</span> <span class="string">using</span> <span class="string">file</span> <span class="string">dump</span> <span class="string">(drive_simple)</span> <span class="string">strategy</span></span><br><span class="line"><span class="attr">xfsrestore:</span> <span class="string">version</span> <span class="number">3.1</span><span class="number">.4</span> <span class="string">(dump</span> <span class="string">format</span> <span class="number">3.0</span><span class="string">)</span> <span class="bullet">-</span> <span class="string">type</span> <span class="string">^C</span> <span class="string">for</span> <span class="string">status</span> <span class="string">and</span> <span class="string">control</span></span><br><span class="line"><span class="attr">xfsrestore:</span> <span class="string">using</span> <span class="string">online</span> <span class="string">session</span> <span class="string">inventory</span></span><br><span class="line"><span class="attr">xfsrestore:</span> <span class="string">searching</span> <span class="string">media</span> <span class="string">for</span> <span class="string">directory</span> <span class="string">dump</span></span><br><span class="line"><span class="attr">xfsrestore:</span> <span class="string">examining</span> <span class="string">media</span> <span class="string">file</span> <span class="number">0</span></span><br><span class="line"><span class="attr">xfsrestore:</span> <span class="string">reading</span> <span class="string">directories</span></span><br><span class="line"><span class="attr">xfsrestore:</span> <span class="number">8</span> <span class="string">directories</span> <span class="string">and</span> <span class="number">327</span> <span class="string">entries</span> <span class="string">processed</span></span><br><span class="line"><span class="attr">xfsrestore:</span> <span class="string">directory</span> <span class="string">post-processing</span></span><br><span class="line"><span class="attr">xfsrestore:</span> <span class="string">restoring</span> <span class="string">non-directory</span> <span class="string">files</span></span><br><span class="line"><span class="attr">xfsrestore:</span> <span class="string">restore</span> <span class="attr">complete:</span> <span class="number">0</span> <span class="string">seconds</span> <span class="string">elapsed</span></span><br><span class="line"><span class="attr">xfsrestore:</span> <span class="string">Restore</span> <span class="attr">Summary:</span></span><br><span class="line"><span class="attr">xfsrestore:</span>   <span class="string">stream</span> <span class="number">0</span> <span class="string">/srv/boot.dump</span> <span class="string">OK</span> <span class="string">(success)</span></span><br><span class="line"><span class="attr">xfsrestore:</span> <span class="string">Restore</span> <span class="attr">Status:</span> <span class="string">SUCCESS</span></span><br><span class="line"><span class="comment">#把备份资料在/tmp/boot底下解开</span></span><br><span class="line"><span class="string">[root@CentOS7</span> <span class="string">~]#</span> <span class="string">mkdir</span> <span class="string">/tmp/boot</span></span><br><span class="line"><span class="string">[root@CentOS7</span> <span class="string">~]#</span> <span class="string">xfsrestore</span> <span class="bullet">-f</span> <span class="string">/srv/boot.dump</span> <span class="bullet">-L</span> <span class="string">boot_all</span> <span class="string">/tmp/boot</span></span><br><span class="line"><span class="attr">xfsrestore:</span> <span class="string">using</span> <span class="string">file</span> <span class="string">dump</span> <span class="string">(drive_simple)</span> <span class="string">strategy</span></span><br><span class="line"><span class="attr">xfsrestore:</span> <span class="string">version</span> <span class="number">3.1</span><span class="number">.4</span> <span class="string">(dump</span> <span class="string">format</span> <span class="number">3.0</span><span class="string">)</span> <span class="bullet">-</span> <span class="string">type</span> <span class="string">^C</span> <span class="string">for</span> <span class="string">status</span> <span class="string">and</span> <span class="string">control</span></span><br><span class="line"><span class="attr">xfsrestore:</span> <span class="string">using</span> <span class="string">online</span> <span class="string">session</span> <span class="string">inventory</span></span><br><span class="line"><span class="attr">xfsrestore:</span> <span class="string">searching</span> <span class="string">media</span> <span class="string">for</span> <span class="string">directory</span> <span class="string">dump</span></span><br><span class="line"><span class="attr">xfsrestore:</span> <span class="string">examining</span> <span class="string">media</span> <span class="string">file</span> <span class="number">0</span></span><br><span class="line"><span class="attr">xfsrestore:</span> <span class="string">reading</span> <span class="string">directories</span></span><br><span class="line"><span class="attr">xfsrestore:</span> <span class="number">8</span> <span class="string">directories</span> <span class="string">and</span> <span class="number">327</span> <span class="string">entries</span> <span class="string">processed</span></span><br><span class="line"><span class="attr">xfsrestore:</span> <span class="string">directory</span> <span class="string">post-processing</span></span><br><span class="line"><span class="attr">xfsrestore:</span> <span class="string">restoring</span> <span class="string">non-directory</span> <span class="string">files</span></span><br><span class="line"><span class="attr">xfsrestore:</span> <span class="string">restore</span> <span class="attr">complete:</span> <span class="number">0</span> <span class="string">seconds</span> <span class="string">elapsed</span></span><br><span class="line"><span class="attr">xfsrestore:</span> <span class="string">Restore</span> <span class="attr">Summary:</span></span><br><span class="line"><span class="attr">xfsrestore:</span>   <span class="string">stream</span> <span class="number">0</span> <span class="string">/srv/boot.dump</span> <span class="string">OK</span> <span class="string">(success)</span></span><br><span class="line"><span class="attr">xfsrestore:</span> <span class="string">Restore</span> <span class="attr">Status:</span> <span class="string">SUCCESS</span></span><br><span class="line"><span class="string">[root@CentOS7</span> <span class="string">~]#</span> <span class="string">du</span> <span class="bullet">-sm</span> <span class="string">/boot/</span> <span class="string">/tmp/boot/</span></span><br><span class="line"><span class="number">150</span> <span class="string">/boot/</span></span><br><span class="line"><span class="number">140</span> <span class="string">/tmp/boot/</span></span><br><span class="line"><span class="string">[root@CentOS7</span> <span class="string">~]#</span> <span class="string">diff</span> <span class="bullet">-r</span> <span class="string">/boot/</span> <span class="string">/tmp/boot</span></span><br><span class="line"><span class="string">只在</span> <span class="string">/boot/</span> <span class="string">存在：testing.img</span></span><br><span class="line"><span class="comment">#仅复原备份文件内的grub2到/tmp/boot2里面</span></span><br><span class="line"><span class="string">[root@CentOS7</span> <span class="string">~]#</span> <span class="string">xfsrestore</span> <span class="bullet">-f</span> <span class="string">/srv/boot.dump</span> <span class="bullet">-L</span> <span class="string">boot_all</span> <span class="bullet">-s</span> <span class="string">grub2</span> <span class="string">/tmp/boot2</span></span><br></pre></td></tr></table></figure>
+<h4 id="复原增量备份资料"><a href="#复原增量备份资料" class="headerlink" title="复原增量备份资料"></a>复原增量备份资料</h4><figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@CentOS7</span> ~]<span class="meta"># xfsrestore -f /srv/boot.dump1 /tmp/boot</span></span><br></pre></td></tr></table></figure>
+<h4 id="仅还原部分文件的xfsrestore互动模式"><a href="#仅还原部分文件的xfsrestore互动模式" class="headerlink" title="仅还原部分文件的xfsrestore互动模式"></a>仅还原部分文件的xfsrestore互动模式</h4><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#先进入备份文件内,准备找出要备份的文件名资料,同时预设还原到/tmp/boot3中</span></span><br><span class="line"><span class="string">[root@CentOS7</span> <span class="string">~]#</span> <span class="string">mkdir</span> <span class="string">/tmp/boot3</span></span><br><span class="line"><span class="string">[root@CentOS7</span> <span class="string">~]#</span> <span class="string">xfsrestore</span> <span class="bullet">-f</span> <span class="string">/srv/boot.dump</span> <span class="bullet">-i</span> <span class="string">/tmp/boot3</span></span><br><span class="line"><span class="attr">xfsrestore:</span> <span class="string">using</span> <span class="string">file</span> <span class="string">dump</span> <span class="string">(drive_simple)</span> <span class="string">strategy</span></span><br><span class="line"><span class="attr">xfsrestore:</span> <span class="string">version</span> <span class="number">3.1</span><span class="number">.4</span> <span class="string">(dump</span> <span class="string">format</span> <span class="number">3.0</span><span class="string">)</span> <span class="bullet">-</span> <span class="string">type</span> <span class="string">^C</span> <span class="string">for</span> <span class="string">status</span> <span class="string">and</span> <span class="string">control</span></span><br><span class="line"><span class="attr">xfsrestore:</span> <span class="string">searching</span> <span class="string">media</span> <span class="string">for</span> <span class="string">dump</span></span><br><span class="line"><span class="attr">xfsrestore:</span> <span class="string">examining</span> <span class="string">media</span> <span class="string">file</span> <span class="number">0</span></span><br><span class="line"><span class="attr">xfsrestore:</span> <span class="string">dump</span> <span class="attr">description:</span> </span><br><span class="line"><span class="attr">xfsrestore:</span> <span class="attr">hostname:</span> <span class="string">CentOS7.study</span></span><br><span class="line"><span class="attr">xfsrestore:</span> <span class="string">mount</span> <span class="attr">point:</span> <span class="string">/boot</span></span><br><span class="line"><span class="attr">xfsrestore:</span> <span class="attr">volume:</span> <span class="string">/dev/sda2</span></span><br><span class="line"><span class="attr">xfsrestore:</span> <span class="string">session</span> <span class="attr">time:</span> <span class="string">Wed</span> <span class="string">Mar</span>  <span class="number">8</span> <span class="number">13</span><span class="string">:36:04</span> <span class="number">2017</span></span><br><span class="line"><span class="attr">xfsrestore:</span> <span class="attr">level:</span> <span class="number">0</span></span><br><span class="line"><span class="attr">xfsrestore:</span> <span class="string">session</span> <span class="attr">label:</span> <span class="string">"boot_all"</span></span><br><span class="line"><span class="attr">xfsrestore:</span> <span class="string">media</span> <span class="attr">label:</span> <span class="string">"boot_all"</span></span><br><span class="line"><span class="attr">xfsrestore:</span> <span class="string">file</span> <span class="string">system</span> <span class="attr">id:</span> <span class="number">87</span><span class="string">fdbc5c-2b5d-4f09-b26c-88bdcd4d2144</span></span><br><span class="line"><span class="attr">xfsrestore:</span> <span class="string">session</span> <span class="attr">id:</span> <span class="number">32</span><span class="string">afd6db-c3a0-49b4-9bcc-6b72496e948d</span></span><br><span class="line"><span class="attr">xfsrestore:</span> <span class="string">media</span> <span class="attr">id:</span> <span class="number">5</span><span class="string">b94361d-67d9-4bfb-850d-11e982be1753</span></span><br><span class="line"><span class="attr">xfsrestore:</span> <span class="string">using</span> <span class="string">online</span> <span class="string">session</span> <span class="string">inventory</span></span><br><span class="line"><span class="attr">xfsrestore:</span> <span class="string">searching</span> <span class="string">media</span> <span class="string">for</span> <span class="string">directory</span> <span class="string">dump</span></span><br><span class="line"><span class="attr">xfsrestore:</span> <span class="string">reading</span> <span class="string">directories</span></span><br><span class="line"><span class="attr">xfsrestore:</span> <span class="number">8</span> <span class="string">directories</span> <span class="string">and</span> <span class="number">327</span> <span class="string">entries</span> <span class="string">processed</span></span><br><span class="line"><span class="attr">xfsrestore:</span> <span class="string">directory</span> <span class="string">post-processing</span></span><br><span class="line"></span><br><span class="line"> <span class="string">==========================</span> <span class="string">subtree</span> <span class="string">selection</span> <span class="string">dialog</span> <span class="string">==========================</span></span><br><span class="line"></span><br><span class="line"><span class="string">the</span> <span class="string">following</span> <span class="string">commands</span> <span class="string">are</span> <span class="attr">available:</span></span><br><span class="line">  <span class="string">pwd</span> </span><br><span class="line">  <span class="string">ls</span> <span class="string">[</span> <span class="string">&lt;path&gt;</span> <span class="string">]</span></span><br><span class="line">  <span class="string">cd</span> <span class="string">[</span> <span class="string">&lt;path&gt;</span> <span class="string">]</span></span><br><span class="line">  <span class="string">add</span> <span class="string">[</span> <span class="string">&lt;path&gt;</span> <span class="string">]</span></span><br><span class="line">  <span class="string">delete</span> <span class="string">[</span> <span class="string">&lt;path&gt;</span> <span class="string">]</span></span><br><span class="line">  <span class="string">extract</span> </span><br><span class="line">  <span class="string">quit</span> </span><br><span class="line">  <span class="string">help</span> </span><br><span class="line"></span><br><span class="line"> <span class="bullet">-&gt;</span> <span class="string">ls</span></span><br><span class="line">          <span class="number">237725</span> <span class="string">initramfs-3.10.0-514.el7.x86_64kdump.img</span> </span><br><span class="line">              <span class="number">74</span> <span class="string">initramfs-3.10.0-514.el7.x86_64.img</span> </span><br><span class="line">              <span class="number">77</span> <span class="string">initrd-plymouth.img</span> </span><br><span class="line">              <span class="number">76</span> <span class="string">vmlinuz-0-rescue-c786248929994674b1dfe44ce3aacb2e</span> </span><br><span class="line">              <span class="number">75</span> <span class="string">initramfs-0-rescue-c786248929994674b1dfe44ce3aacb2e.img</span> </span><br><span class="line">          <span class="number">524352</span> <span class="string">grub2/</span></span><br><span class="line">              <span class="number">73</span> <span class="string">vmlinuz-3.10.0-514.el7.x86_64</span> </span><br><span class="line">              <span class="number">72</span> <span class="string">symvers-3.10.0-514.el7.x86_64.gz</span> </span><br><span class="line">              <span class="number">71</span> <span class="string">config-3.10.0-514.el7.x86_64</span> </span><br><span class="line">              <span class="number">70</span> <span class="string">System.map-3.10.0-514.el7.x86_64</span> </span><br><span class="line">              <span class="number">69</span> <span class="string">.vmlinuz-3.10.0-514.el7.x86_64.hmac</span> </span><br><span class="line">              <span class="number">67</span> <span class="string">grub/</span></span><br><span class="line"></span><br><span class="line"> <span class="bullet">-&gt;</span> <span class="string">add</span> <span class="string">grub</span></span><br><span class="line"></span><br><span class="line"> <span class="bullet">-&gt;</span> <span class="string">add</span> <span class="string">grub2</span></span><br><span class="line"></span><br><span class="line"> <span class="bullet">-&gt;</span> <span class="string">add</span> <span class="string">config-3.10.0-514.el7.x86_64</span></span><br><span class="line"></span><br><span class="line"> <span class="bullet">-&gt;</span> <span class="string">extract</span></span><br><span class="line"></span><br><span class="line"> <span class="bullet">---------------------------------</span> <span class="string">end</span> <span class="string">dialog</span> <span class="bullet">---------------------------------</span></span><br><span class="line"></span><br><span class="line"><span class="attr">xfsrestore:</span> <span class="string">restoring</span> <span class="string">non-directory</span> <span class="string">files</span></span><br><span class="line"><span class="attr">xfsrestore:</span> <span class="string">restore</span> <span class="attr">complete:</span> <span class="number">58</span> <span class="string">seconds</span> <span class="string">elapsed</span></span><br><span class="line"><span class="attr">xfsrestore:</span> <span class="string">Restore</span> <span class="attr">Summary:</span></span><br><span class="line"><span class="attr">xfsrestore:</span>   <span class="string">stream</span> <span class="number">0</span> <span class="string">/srv/boot.dump</span> <span class="string">OK</span> <span class="string">(success)</span></span><br><span class="line"><span class="attr">xfsrestore:</span> <span class="string">Restore</span> <span class="attr">Status:</span> <span class="string">SUCCESS</span></span><br><span class="line"><span class="string">[root@CentOS7</span> <span class="string">~]#</span> <span class="string">ls</span> <span class="bullet">-l</span> <span class="string">/tmp/boot3</span></span><br><span class="line"><span class="string">总用量</span> <span class="number">136</span></span><br><span class="line"><span class="bullet">-</span><span class="string">rw-r--r--.</span> <span class="number">1</span> <span class="string">root</span> <span class="string">root</span> <span class="number">137696</span> <span class="number">11</span><span class="string">月</span> <span class="number">23</span> <span class="number">00</span><span class="string">:53</span> <span class="string">config-3.10.0-514.el7.x86_64</span></span><br><span class="line"><span class="string">drwxr-xr-x.</span> <span class="number">2</span> <span class="string">root</span> <span class="string">root</span>     <span class="number">27</span> <span class="number">2</span><span class="string">月</span>  <span class="number">27</span> <span class="number">17</span><span class="string">:14</span> <span class="string">grub</span></span><br><span class="line"><span class="string">drwx------.</span> <span class="number">6</span> <span class="string">root</span> <span class="string">root</span>    <span class="number">111</span> <span class="number">2</span><span class="string">月</span>  <span class="number">27</span> <span class="number">18</span><span class="string">:05</span> <span class="string">grub2</span></span><br></pre></td></tr></table></figure>
+<h2 id="光盘写入工具"><a href="#光盘写入工具" class="headerlink" title="光盘写入工具"></a>光盘写入工具</h2><p>文字模式的烧录行为通常的做法:<br>先将所需要备份的资料建置为一个镜像文件(iso)，利用mkisofs命令来处理<br>将镜像文件烧录到光盘或者DVD中，利用cdrecord命令来处理</p>
+<h3 id="mkisofs：建立镜像文件"><a href="#mkisofs：建立镜像文件" class="headerlink" title="mkisofs：建立镜像文件"></a>mkisofs：建立镜像文件</h3><p>制作一般资料光盘镜像</p>
+<pre><code>命令:mkisofs [-o 镜像文件] [-Jrv] [-V vol] [-m file] 待备份文件... -graft-point    isodir=systemdir ...
+选项及参数：
+    -o ：后面接你想要产生的那个镜像文件名
+    -J ：生成兼容Windows机器的文件名结构，可增加文件名长度到64个unicode字元
+    -r ：通过 Rock Ridge 生成支持 Unix/Linux 的文件资料，可支持更多的信息(如 UID/    GID等) ；
+    -v ：显示建立ISO文件的过程
+    -V vol  ：建立 Volume，有点像 Windows 在资源管理器里看到的 CD title 的东西
+    -m file ：-m 为排除文件 (exclude) 的意思，后面的文件不备份到镜像中，也能使用*万用字符
+    -graft-point：graft有移植的意思
+</code></pre><p>光盘的格式一般为ISO9660，这种格式一般支持旧版的DOS文件名，即文件名只能以8.3(文件名8个字符，后缀名3个字符)的方式存在</p>
+<p>默认情况下:所有要被加入到镜像中的文件都会被放置到镜像文件的根目录,这样可能会造成烧录后的文件分类不易的情况，所以，可以使用-graft-point这个选项<br>可以使用下列办法来定义镜像文件中的目录:</p>
+<ul>
+<li>镜像中的目录所在=实际Linux文件系统的目录所在</li>
+<li>/movies/=/srv/movies/(在Linux的/srv/movies内的文件，加到镜像文件中的/movies/目录)</li>
+<li>/linux/etc=/etc(将Linux中/etc/内的所有资料备份到镜像文件中的/linux/etc/目录中)</li>
+</ul>
+<p>例子1:<br><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-attr">[root@CentOS7 ~]</span># <span class="selector-tag">mkisofs</span> <span class="selector-tag">-r</span> <span class="selector-tag">-v</span> <span class="selector-tag">-o</span> /<span class="selector-tag">tmp</span>/<span class="selector-tag">system</span><span class="selector-class">.img</span> /<span class="selector-tag">root</span> /<span class="selector-tag">home</span> /<span class="selector-tag">etc</span></span><br><span class="line"><span class="selector-tag">I</span>: <span class="selector-tag">-input-charset</span> <span class="selector-tag">not</span> <span class="selector-tag">specified</span>, <span class="selector-tag">using</span> <span class="selector-tag">utf-8</span> (detected in locale settings)</span><br><span class="line"><span class="selector-tag">genisoimage</span> <span class="selector-tag">1</span><span class="selector-class">.1</span><span class="selector-class">.11</span> (Linux)</span><br><span class="line"><span class="selector-tag">Scanning</span> /<span class="selector-tag">etc</span>/<span class="selector-tag">selinux</span>/<span class="selector-tag">targeted</span>/<span class="selector-tag">active</span>/<span class="selector-tag">modules</span>/<span class="selector-tag">100</span>/<span class="selector-tag">ptchown</span></span><br><span class="line">...省略...</span><br><span class="line"><span class="selector-tag">Scanning</span> /<span class="selector-tag">etc</span>/<span class="selector-tag">sudoers</span><span class="selector-class">.d</span></span><br><span class="line"><span class="selector-tag">Using</span> <span class="selector-tag">SYSTE000</span>.;<span class="selector-tag">1</span> <span class="selector-tag">for</span>  /<span class="selector-tag">system-release-cpe</span> (system-release)</span><br><span class="line"><span class="selector-tag">Using</span> <span class="selector-tag">CENTO000</span>.;<span class="selector-tag">1</span> <span class="selector-tag">for</span>  /<span class="selector-tag">centos-release-upstream</span> (centos-release)</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">Using</span> <span class="selector-tag">65_0_000</span><span class="selector-class">.CON</span>;<span class="selector-tag">1</span> <span class="selector-tag">for</span>  /<span class="selector-tag">root</span>/<span class="selector-tag">etc</span>/<span class="selector-tag">fonts</span>/<span class="selector-tag">conf</span><span class="selector-class">.d</span>/<span class="selector-tag">65-0-lohit-gujarati</span><span class="selector-class">.conf</span> (<span class="number">65</span>-<span class="number">0</span>-lohit-assamese.conf)</span><br><span class="line">...省略...</span><br><span class="line"><span class="selector-tag">Using</span> <span class="selector-tag">98SYS000</span>.;<span class="selector-tag">1</span> <span class="selector-tag">for</span>  /<span class="selector-tag">etc</span>/<span class="selector-tag">setuptool</span><span class="selector-class">.d</span>/<span class="selector-tag">98system-config-keyboard</span> (<span class="number">98s</span>ystem-config-display)</span><br><span class="line"><span class="selector-tag">Using</span> <span class="selector-tag">98SYS001</span>.;<span class="selector-tag">1</span> <span class="selector-tag">for</span>  /<span class="selector-tag">etc</span>/<span class="selector-tag">setuptool</span><span class="selector-class">.d</span>/<span class="selector-tag">98system-config-display</span> (<span class="number">98s</span>ystem-config-authentication)</span><br><span class="line"><span class="selector-tag">Writing</span>:   <span class="selector-tag">Initial</span> <span class="selector-tag">Padblock</span>                        <span class="selector-tag">Start</span> <span class="selector-tag">Block</span> <span class="selector-tag">0</span></span><br><span class="line"><span class="selector-tag">Done</span> <span class="selector-tag">with</span>: <span class="selector-tag">Initial</span> <span class="selector-tag">Padblock</span>                        <span class="selector-tag">Block</span>(s)    <span class="selector-tag">16</span></span><br><span class="line"><span class="selector-tag">Writing</span>:   <span class="selector-tag">Primary</span> <span class="selector-tag">Volume</span> <span class="selector-tag">Descriptor</span>               <span class="selector-tag">Start</span> <span class="selector-tag">Block</span> <span class="selector-tag">16</span></span><br><span class="line"><span class="selector-tag">Done</span> <span class="selector-tag">with</span>: <span class="selector-tag">Primary</span> <span class="selector-tag">Volume</span> <span class="selector-tag">Descriptor</span>               <span class="selector-tag">Block</span>(s)    <span class="selector-tag">1</span></span><br><span class="line"><span class="selector-tag">Writing</span>:   <span class="selector-tag">End</span> <span class="selector-tag">Volume</span> <span class="selector-tag">Descriptor</span>                   <span class="selector-tag">Start</span> <span class="selector-tag">Block</span> <span class="selector-tag">17</span></span><br><span class="line"><span class="selector-tag">Done</span> <span class="selector-tag">with</span>: <span class="selector-tag">End</span> <span class="selector-tag">Volume</span> <span class="selector-tag">Descriptor</span>                   <span class="selector-tag">Block</span>(s)    <span class="selector-tag">1</span></span><br><span class="line"><span class="selector-tag">Writing</span>:   <span class="selector-tag">Version</span> <span class="selector-tag">block</span>                           <span class="selector-tag">Start</span> <span class="selector-tag">Block</span> <span class="selector-tag">18</span></span><br><span class="line"><span class="selector-tag">Done</span> <span class="selector-tag">with</span>: <span class="selector-tag">Version</span> <span class="selector-tag">block</span>                           <span class="selector-tag">Block</span>(s)    <span class="selector-tag">1</span></span><br><span class="line"><span class="selector-tag">Writing</span>:   <span class="selector-tag">Path</span> <span class="selector-tag">table</span>                              <span class="selector-tag">Start</span> <span class="selector-tag">Block</span> <span class="selector-tag">19</span></span><br><span class="line"><span class="selector-tag">Done</span> <span class="selector-tag">with</span>: <span class="selector-tag">Path</span> <span class="selector-tag">table</span>                              <span class="selector-tag">Block</span>(s)    <span class="selector-tag">36</span></span><br><span class="line"><span class="selector-tag">Writing</span>:   <span class="selector-tag">Directory</span> <span class="selector-tag">tree</span>                          <span class="selector-tag">Start</span> <span class="selector-tag">Block</span> <span class="selector-tag">55</span></span><br><span class="line"><span class="selector-tag">Done</span> <span class="selector-tag">with</span>: <span class="selector-tag">Directory</span> <span class="selector-tag">tree</span>                          <span class="selector-tag">Block</span>(s)    <span class="selector-tag">2641</span></span><br><span class="line"><span class="selector-tag">Writing</span>:   <span class="selector-tag">Directory</span> <span class="selector-tag">tree</span> <span class="selector-tag">cleanup</span>                  <span class="selector-tag">Start</span> <span class="selector-tag">Block</span> <span class="selector-tag">2696</span></span><br><span class="line"><span class="selector-tag">Done</span> <span class="selector-tag">with</span>: <span class="selector-tag">Directory</span> <span class="selector-tag">tree</span> <span class="selector-tag">cleanup</span>                  <span class="selector-tag">Block</span>(s)    <span class="selector-tag">0</span></span><br><span class="line"><span class="selector-tag">Writing</span>:   <span class="selector-tag">Extension</span> <span class="selector-tag">record</span>                        <span class="selector-tag">Start</span> <span class="selector-tag">Block</span> <span class="selector-tag">2696</span></span><br><span class="line"><span class="selector-tag">Done</span> <span class="selector-tag">with</span>: <span class="selector-tag">Extension</span> <span class="selector-tag">record</span>                        <span class="selector-tag">Block</span>(s)    <span class="selector-tag">1</span></span><br><span class="line"><span class="selector-tag">Writing</span>:   <span class="selector-tag">The</span> <span class="selector-tag">File</span>(s)                             <span class="selector-tag">Start</span> <span class="selector-tag">Block</span> <span class="selector-tag">2697</span></span><br><span class="line">  <span class="selector-tag">5</span><span class="selector-class">.71</span>% <span class="selector-tag">done</span>, <span class="selector-tag">estimate</span> <span class="selector-tag">finish</span> <span class="selector-tag">Wed</span> <span class="selector-tag">Mar</span>  <span class="selector-tag">8</span> <span class="selector-tag">15</span><span class="selector-pseudo">:11</span><span class="selector-pseudo">:01</span> <span class="selector-tag">2017</span></span><br><span class="line"> <span class="selector-tag">11</span><span class="selector-class">.42</span>% <span class="selector-tag">done</span>, <span class="selector-tag">estimate</span> <span class="selector-tag">finish</span> <span class="selector-tag">Wed</span> <span class="selector-tag">Mar</span>  <span class="selector-tag">8</span> <span class="selector-tag">15</span><span class="selector-pseudo">:11</span><span class="selector-pseudo">:01</span> <span class="selector-tag">2017</span></span><br><span class="line"> <span class="selector-tag">17</span><span class="selector-class">.13</span>% <span class="selector-tag">done</span>, <span class="selector-tag">estimate</span> <span class="selector-tag">finish</span> <span class="selector-tag">Wed</span> <span class="selector-tag">Mar</span>  <span class="selector-tag">8</span> <span class="selector-tag">15</span><span class="selector-pseudo">:11</span><span class="selector-pseudo">:01</span> <span class="selector-tag">2017</span></span><br><span class="line"> <span class="selector-tag">22</span><span class="selector-class">.82</span>% <span class="selector-tag">done</span>, <span class="selector-tag">estimate</span> <span class="selector-tag">finish</span> <span class="selector-tag">Wed</span> <span class="selector-tag">Mar</span>  <span class="selector-tag">8</span> <span class="selector-tag">15</span><span class="selector-pseudo">:11</span><span class="selector-pseudo">:01</span> <span class="selector-tag">2017</span></span><br><span class="line"> <span class="selector-tag">28</span><span class="selector-class">.53</span>% <span class="selector-tag">done</span>, <span class="selector-tag">estimate</span> <span class="selector-tag">finish</span> <span class="selector-tag">Wed</span> <span class="selector-tag">Mar</span>  <span class="selector-tag">8</span> <span class="selector-tag">15</span><span class="selector-pseudo">:11</span><span class="selector-pseudo">:01</span> <span class="selector-tag">2017</span></span><br><span class="line"> <span class="selector-tag">34</span><span class="selector-class">.24</span>% <span class="selector-tag">done</span>, <span class="selector-tag">estimate</span> <span class="selector-tag">finish</span> <span class="selector-tag">Wed</span> <span class="selector-tag">Mar</span>  <span class="selector-tag">8</span> <span class="selector-tag">15</span><span class="selector-pseudo">:11</span><span class="selector-pseudo">:01</span> <span class="selector-tag">2017</span></span><br><span class="line"> <span class="selector-tag">39</span><span class="selector-class">.93</span>% <span class="selector-tag">done</span>, <span class="selector-tag">estimate</span> <span class="selector-tag">finish</span> <span class="selector-tag">Wed</span> <span class="selector-tag">Mar</span>  <span class="selector-tag">8</span> <span class="selector-tag">15</span><span class="selector-pseudo">:11</span><span class="selector-pseudo">:01</span> <span class="selector-tag">2017</span></span><br><span class="line"> <span class="selector-tag">45</span><span class="selector-class">.65</span>% <span class="selector-tag">done</span>, <span class="selector-tag">estimate</span> <span class="selector-tag">finish</span> <span class="selector-tag">Wed</span> <span class="selector-tag">Mar</span>  <span class="selector-tag">8</span> <span class="selector-tag">15</span><span class="selector-pseudo">:11</span><span class="selector-pseudo">:01</span> <span class="selector-tag">2017</span></span><br><span class="line"> <span class="selector-tag">51</span><span class="selector-class">.36</span>% <span class="selector-tag">done</span>, <span class="selector-tag">estimate</span> <span class="selector-tag">finish</span> <span class="selector-tag">Wed</span> <span class="selector-tag">Mar</span>  <span class="selector-tag">8</span> <span class="selector-tag">15</span><span class="selector-pseudo">:11</span><span class="selector-pseudo">:02</span> <span class="selector-tag">2017</span></span><br><span class="line"> <span class="selector-tag">57</span><span class="selector-class">.04</span>% <span class="selector-tag">done</span>, <span class="selector-tag">estimate</span> <span class="selector-tag">finish</span> <span class="selector-tag">Wed</span> <span class="selector-tag">Mar</span>  <span class="selector-tag">8</span> <span class="selector-tag">15</span><span class="selector-pseudo">:11</span><span class="selector-pseudo">:02</span> <span class="selector-tag">2017</span></span><br><span class="line"> <span class="selector-tag">62</span><span class="selector-class">.75</span>% <span class="selector-tag">done</span>, <span class="selector-tag">estimate</span> <span class="selector-tag">finish</span> <span class="selector-tag">Wed</span> <span class="selector-tag">Mar</span>  <span class="selector-tag">8</span> <span class="selector-tag">15</span><span class="selector-pseudo">:11</span><span class="selector-pseudo">:02</span> <span class="selector-tag">2017</span></span><br><span class="line"> <span class="selector-tag">68</span><span class="selector-class">.47</span>% <span class="selector-tag">done</span>, <span class="selector-tag">estimate</span> <span class="selector-tag">finish</span> <span class="selector-tag">Wed</span> <span class="selector-tag">Mar</span>  <span class="selector-tag">8</span> <span class="selector-tag">15</span><span class="selector-pseudo">:11</span><span class="selector-pseudo">:02</span> <span class="selector-tag">2017</span></span><br><span class="line"> <span class="selector-tag">74</span><span class="selector-class">.17</span>% <span class="selector-tag">done</span>, <span class="selector-tag">estimate</span> <span class="selector-tag">finish</span> <span class="selector-tag">Wed</span> <span class="selector-tag">Mar</span>  <span class="selector-tag">8</span> <span class="selector-tag">15</span><span class="selector-pseudo">:11</span><span class="selector-pseudo">:02</span> <span class="selector-tag">2017</span></span><br><span class="line"> <span class="selector-tag">79</span><span class="selector-class">.86</span>% <span class="selector-tag">done</span>, <span class="selector-tag">estimate</span> <span class="selector-tag">finish</span> <span class="selector-tag">Wed</span> <span class="selector-tag">Mar</span>  <span class="selector-tag">8</span> <span class="selector-tag">15</span><span class="selector-pseudo">:11</span><span class="selector-pseudo">:02</span> <span class="selector-tag">2017</span></span><br><span class="line"> <span class="selector-tag">85</span><span class="selector-class">.57</span>% <span class="selector-tag">done</span>, <span class="selector-tag">estimate</span> <span class="selector-tag">finish</span> <span class="selector-tag">Wed</span> <span class="selector-tag">Mar</span>  <span class="selector-tag">8</span> <span class="selector-tag">15</span><span class="selector-pseudo">:11</span><span class="selector-pseudo">:02</span> <span class="selector-tag">2017</span></span><br><span class="line"> <span class="selector-tag">91</span><span class="selector-class">.27</span>% <span class="selector-tag">done</span>, <span class="selector-tag">estimate</span> <span class="selector-tag">finish</span> <span class="selector-tag">Wed</span> <span class="selector-tag">Mar</span>  <span class="selector-tag">8</span> <span class="selector-tag">15</span><span class="selector-pseudo">:11</span><span class="selector-pseudo">:02</span> <span class="selector-tag">2017</span></span><br><span class="line"> <span class="selector-tag">96</span><span class="selector-class">.99</span>% <span class="selector-tag">done</span>, <span class="selector-tag">estimate</span> <span class="selector-tag">finish</span> <span class="selector-tag">Wed</span> <span class="selector-tag">Mar</span>  <span class="selector-tag">8</span> <span class="selector-tag">15</span><span class="selector-pseudo">:11</span><span class="selector-pseudo">:02</span> <span class="selector-tag">2017</span></span><br><span class="line"><span class="selector-tag">Total</span> <span class="selector-tag">translation</span> <span class="selector-tag">table</span> <span class="selector-tag">size</span>: <span class="selector-tag">0</span></span><br><span class="line"><span class="selector-tag">Total</span> <span class="selector-tag">rockridge</span> <span class="selector-tag">attributes</span> <span class="selector-tag">bytes</span>: <span class="selector-tag">1174762</span></span><br><span class="line"><span class="selector-tag">Total</span> <span class="selector-tag">directory</span> <span class="selector-tag">bytes</span>: <span class="selector-tag">5337088</span></span><br><span class="line"><span class="selector-tag">Path</span> <span class="selector-tag">table</span> <span class="selector-tag">size</span>(bytes): <span class="selector-tag">34932</span></span><br><span class="line"><span class="selector-tag">Done</span> <span class="selector-tag">with</span>: <span class="selector-tag">The</span> <span class="selector-tag">File</span>(s)                             <span class="selector-tag">Block</span>(s)    <span class="selector-tag">84805</span></span><br><span class="line"><span class="selector-tag">Writing</span>:   <span class="selector-tag">Ending</span> <span class="selector-tag">Padblock</span>                         <span class="selector-tag">Start</span> <span class="selector-tag">Block</span> <span class="selector-tag">87502</span></span><br><span class="line"><span class="selector-tag">Done</span> <span class="selector-tag">with</span>: <span class="selector-tag">Ending</span> <span class="selector-tag">Padblock</span>                         <span class="selector-tag">Block</span>(s)    <span class="selector-tag">150</span></span><br><span class="line"><span class="selector-tag">Max</span> <span class="selector-tag">brk</span> <span class="selector-tag">space</span> <span class="selector-tag">used</span> <span class="selector-tag">b2f000</span></span><br><span class="line"><span class="selector-tag">87652</span> <span class="selector-tag">extents</span> <span class="selector-tag">written</span> (<span class="number">171</span> MB)</span><br><span class="line"><span class="selector-attr">[root@CentOS7 ~]</span># <span class="selector-tag">ll</span> <span class="selector-tag">-h</span> /<span class="selector-tag">tmp</span>/<span class="selector-tag">system</span><span class="selector-class">.img</span></span><br><span class="line"><span class="selector-tag">-rw-r--r--</span>. <span class="selector-tag">1</span> <span class="selector-tag">root</span> <span class="selector-tag">root</span> <span class="selector-tag">172M</span> <span class="selector-tag">3</span>月   <span class="selector-tag">8</span> <span class="selector-tag">15</span><span class="selector-pseudo">:11</span> /<span class="selector-tag">tmp</span>/<span class="selector-tag">system</span><span class="selector-class">.img</span></span><br><span class="line"><span class="selector-attr">[root@CentOS7 ~]</span># <span class="selector-tag">mount</span> <span class="selector-tag">-o</span> <span class="selector-tag">loop</span> /<span class="selector-tag">tmp</span>/<span class="selector-tag">system</span><span class="selector-class">.img</span> /<span class="selector-tag">mnt</span></span><br><span class="line"><span class="selector-tag">mount</span>: /<span class="selector-tag">dev</span>/<span class="selector-tag">loop0</span> 写保护，将以只读方式挂载</span><br><span class="line"><span class="selector-attr">[root@CentOS7 ~]</span># <span class="selector-tag">df</span> <span class="selector-tag">-h</span> /<span class="selector-tag">mnt</span></span><br><span class="line">文件系统        容量  已用  可用 已用% 挂载点</span><br><span class="line">/<span class="selector-tag">dev</span>/<span class="selector-tag">loop0</span>      <span class="selector-tag">172M</span>  <span class="selector-tag">172M</span>     <span class="selector-tag">0</span>  <span class="selector-tag">100%</span> /<span class="selector-tag">mnt</span></span><br><span class="line"><span class="selector-attr">[root@CentOS7 ~]</span># <span class="selector-tag">ls</span> /<span class="selector-tag">mnt</span>/</span><br><span class="line">...省略...</span><br><span class="line"><span class="selector-attr">[root@CentOS7 ~]</span># <span class="selector-tag">umount</span> /<span class="selector-tag">mnt</span>/</span><br></pre></td></tr></table></figure></p>
+<p>例子2:<br><figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#使用-graft-point处理</span></span><br><span class="line">[root@CentOS7 ~]<span class="comment"># mkisofs -r -V 'linux_file' -o /tmp/system.img -m /root/etc -graft-point /root=/root /home=/home /etc=/etc</span></span><br><span class="line">[root@CentOS7 ~]<span class="comment"># ll -h /tmp/system.img</span></span><br><span class="line">-rw-r--r--.<span class="number"> 1 </span>root root 127M 3月  <span class="number"> 8 </span>15:20 /tmp/system.img</span><br><span class="line">[root@CentOS7 ~]<span class="comment"># mount -o loop /tmp/system.img /mnt</span></span><br><span class="line">mount: /dev/loop0 写保护，将以只读方式挂载</span><br><span class="line">[root@CentOS7 ~]<span class="comment"># ll /mnt</span></span><br><span class="line">总用量 42</span><br><span class="line">dr-xr-xr-x.<span class="number"> 134 </span>root root<span class="number"> 36864 </span>3月  <span class="number"> 7 </span>16:49 etc</span><br><span class="line">dr-xr-xr-x.  <span class="number"> 5 </span>root root  2048 3月  <span class="number"> 1 </span>18:07 home</span><br><span class="line">dr-xr-xr-x.  <span class="number"> 5 </span>root root  4096 3月  <span class="number"> 8 </span>15:10 root</span><br><span class="line">[root@CentOS7 ~]<span class="comment"># umount /mnt</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="制作可开机光盘镜像"><a href="#制作可开机光盘镜像" class="headerlink" title="制作可开机光盘镜像"></a>制作可开机光盘镜像</h4><p>//todo 晚上添加</p>
+<h3 id="cdrecord：关盘烧录工具"><a href="#cdrecord：关盘烧录工具" class="headerlink" title="cdrecord：关盘烧录工具"></a>cdrecord：关盘烧录工具</h3><p>Centos7使用wodim这个命令来进行烧录</p>
+<pre><code>命令:wodim --devices dev=/dev/sr0...               &lt;==查询烧录机的 BUS 位置
+    wodim -v dev=/dev/sr0 blank=[fast|all]        &lt;==抹除重复写读片
+    wodim -v dev=/dev/sr0 -format                 &lt;==格式化DVD+RW
+    wodim -v dev=/dev/sr0 [可用选项功能] file.iso
+选项及参数:
+    --devices       ：用在扫描磁盘区流排并找出可用的烧录机，后续的装置为ATA界面
+    -v              ：在 cdrecord 运行过程中，显示过程
+    dev=/dev/sr0    ：可以找出此光碟机的 bus 位址，非常重要！
+    blank=[fast|all]：blank 为抹除可重复写入的CD/DVD-RW，使用fast较快，all较完整
+    -format         ：对光碟片进行格式化，但是仅针对 DVD+RW 这种格式的 DVD 而已；
+    [可用选项功能] 主要是写入 CD/DVD 时可使用的选项，常見的选项包括有：
+       -data   ：指定后面的文件以资料格式写入，不是以CD音轨(-audio)方式写入
+       speed=X ：指定烧录速度，例如CD可用 speed=40 为40倍数，DVD则可用 speed=4 之类
+       -eject  ：指定烧录完毕后自动退出光碟
+       fs=Ym   ：指定多少缓冲内存，可用在将镜像文件县暂存至缓冲内存。默认为 4m，
+                 一般建议可增加到 8m ，不过，还是得视你的烧录机而定。
+    针对 DVD 的选项功能：
+       driveropts=burnfree ：打开 Buffer Underrun Free 模式的写入功能
+       -sao                ：支持 DVD-RW 的格式
+</code></pre><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#检测烧录机位置</span></span><br><span class="line"><span class="string">[root@CentOS7</span> <span class="string">~]#</span> <span class="string">ll</span> <span class="string">/dev/sr0</span> </span><br><span class="line"><span class="string">brw-rw----+</span> <span class="number">1</span> <span class="string">root</span> <span class="string">cdrom</span> <span class="number">11</span><span class="string">,</span> <span class="number">0</span> <span class="number">3</span><span class="string">月</span>   <span class="number">8</span> <span class="number">15</span><span class="string">:45</span> <span class="string">/dev/sr0</span></span><br><span class="line"><span class="string">[root@CentOS7</span> <span class="string">~]#</span> <span class="string">wodim</span> <span class="bullet">--devices</span> <span class="string">dev=/dev/sr0</span></span><br><span class="line"><span class="attr">wodim:</span> <span class="string">Overview</span> <span class="string">of</span> <span class="string">accessible</span> <span class="string">drives</span> <span class="string">(1</span> <span class="string">found)</span> <span class="string">:</span></span><br><span class="line"><span class="bullet">-</span><span class="bullet">------------------------------------------------------------------------</span></span><br><span class="line"> <span class="number">0</span>  <span class="string">dev='/dev/sr0'</span>  <span class="string">rwrw--</span> <span class="string">:</span> <span class="string">'VBOX'</span> <span class="string">'CD-ROM'</span></span><br><span class="line"><span class="bullet">-</span><span class="bullet">------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment">#进行烧录</span></span><br><span class="line"><span class="string">抹除光盘原始内容(非可重复读写可以跳过此步骤)</span></span><br><span class="line"><span class="string">[root@CentOS7</span> <span class="string">~]#</span> <span class="string">wodim</span> <span class="bullet">-v</span> <span class="string">dev=/dev/sr0</span> <span class="string">blank=fast</span></span><br><span class="line"><span class="string">TOC</span> <span class="attr">Type:</span> <span class="number">1</span> <span class="string">=</span> <span class="string">CD-ROM</span></span><br><span class="line"><span class="attr">scsidev:</span> <span class="string">'/dev/sr0'</span></span><br><span class="line"><span class="attr">devname:</span> <span class="string">'/dev/sr0'</span></span><br><span class="line"><span class="attr">scsibus:</span> <span class="bullet">-2</span> <span class="attr">target:</span> <span class="bullet">-2</span> <span class="attr">lun:</span> <span class="bullet">-2</span></span><br><span class="line"><span class="string">Linux</span> <span class="string">sg</span> <span class="string">driver</span> <span class="attr">version:</span> <span class="number">3.5</span><span class="number">.27</span></span><br><span class="line"><span class="string">Wodim</span> <span class="attr">version:</span> <span class="number">1.1</span><span class="number">.11</span></span><br><span class="line"><span class="string">SCSI</span> <span class="string">buffer</span> <span class="attr">size:</span> <span class="number">64512</span></span><br><span class="line"><span class="string">Device</span> <span class="string">type</span>    <span class="string">:</span> <span class="string">Removable</span> <span class="string">CD-ROM</span></span><br><span class="line"><span class="string">Version</span>        <span class="string">:</span> <span class="number">5</span></span><br><span class="line"><span class="string">Response</span> <span class="attr">Format:</span> <span class="number">2</span></span><br><span class="line"><span class="string">Capabilities</span>   <span class="string">:</span> </span><br><span class="line"><span class="string">Vendor_info</span>    <span class="string">:</span> <span class="string">'VBOX    '</span></span><br><span class="line"><span class="string">Identification</span> <span class="string">:</span> <span class="string">'CD-ROM          '</span></span><br><span class="line"><span class="string">Revision</span>       <span class="string">:</span> <span class="string">'1.0 '</span></span><br><span class="line"><span class="string">Device</span> <span class="string">seems</span> <span class="string">to</span> <span class="attr">be:</span> <span class="string">Generic</span> <span class="string">CD-ROM.</span></span><br><span class="line"><span class="attr">wodim:</span> <span class="string">Sorry,</span> <span class="literal">no</span> <span class="string">CD/DVD-Recorder</span> <span class="string">or</span> <span class="string">unsupported</span> <span class="string">CD/DVD-Recorder</span> <span class="string">found</span> <span class="string">on</span> <span class="string">this</span> <span class="string">target.</span></span><br><span class="line"><span class="string">Using</span> <span class="string">generic</span> <span class="string">SCSI-2</span>       <span class="string">CD-ROM</span> <span class="string">driver</span> <span class="string">(scsi2_cd).</span></span><br><span class="line"><span class="string">Driver</span> <span class="string">flags</span>   <span class="string">:</span> </span><br><span class="line"><span class="string">Supported</span> <span class="attr">modes:</span> </span><br><span class="line"><span class="string">Beginning</span> <span class="string">DMA</span> <span class="string">speed</span> <span class="string">test.</span> <span class="string">Set</span> <span class="string">CDR_NODMATEST</span> <span class="string">environment</span> <span class="string">variable</span> <span class="string">if</span> <span class="string">device</span></span><br><span class="line"><span class="string">communication</span> <span class="string">breaks</span> <span class="string">or</span> <span class="string">freezes</span> <span class="string">immediately</span> <span class="string">after</span> <span class="string">that.</span></span><br><span class="line"><span class="attr">Errno:</span> <span class="number">5</span> <span class="string">(Input/output</span> <span class="string">error),</span> <span class="string">test</span> <span class="string">unit</span> <span class="string">ready</span> <span class="string">scsi</span> <span class="attr">sendcmd:</span> <span class="literal">no</span> <span class="string">error</span></span><br><span class="line"><span class="attr">CDB:</span>  <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span></span><br><span class="line"><span class="attr">status:</span> <span class="number">0x2</span> <span class="string">(CHECK</span> <span class="string">CONDITION)</span></span><br><span class="line"><span class="string">Sense</span> <span class="attr">Bytes:</span> <span class="string">F0</span> <span class="number">00</span> <span class="number">02</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">0</span><span class="string">A</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">3</span><span class="string">A</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span></span><br><span class="line"><span class="string">Sense</span> <span class="attr">Key:</span> <span class="number">0x2</span> <span class="string">Not</span> <span class="string">Ready,</span> <span class="string">Segment</span> <span class="number">0</span></span><br><span class="line"><span class="string">Sense</span> <span class="attr">Code:</span> <span class="number">0x3A</span> <span class="string">Qual</span> <span class="number">0x00</span> <span class="string">(medium</span> <span class="string">not</span> <span class="string">present)</span> <span class="string">Fru</span> <span class="number">0x0</span></span><br><span class="line"><span class="string">Sense</span> <span class="attr">flags:</span> <span class="string">Blk</span> <span class="number">0</span> <span class="string">(valid)</span> </span><br><span class="line"><span class="string">cmd</span> <span class="string">finished</span> <span class="string">after</span> <span class="number">0.009</span><span class="string">s</span> <span class="string">timeout</span> <span class="number">40</span><span class="string">s</span></span><br><span class="line"><span class="attr">wodim:</span> <span class="literal">No</span> <span class="string">disk</span> <span class="string">/</span> <span class="string">Wrong</span> <span class="string">disk!</span></span><br><span class="line"><span class="attr">Errno:</span> <span class="number">5</span> <span class="string">(Input/output</span> <span class="string">error),</span> <span class="string">prevent/allow</span> <span class="string">medium</span> <span class="string">removal</span> <span class="string">scsi</span> <span class="attr">sendcmd:</span> <span class="literal">no</span> <span class="string">error</span></span><br><span class="line"><span class="attr">CDB:</span>  <span class="number">1</span><span class="string">E</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span></span><br><span class="line"><span class="attr">status:</span> <span class="number">0x2</span> <span class="string">(CHECK</span> <span class="string">CONDITION)</span></span><br><span class="line"><span class="string">Sense</span> <span class="attr">Bytes:</span> <span class="string">F0</span> <span class="number">00</span> <span class="number">02</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">0</span><span class="string">A</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">3</span><span class="string">A</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span></span><br><span class="line"><span class="string">Sense</span> <span class="attr">Key:</span> <span class="number">0x2</span> <span class="string">Not</span> <span class="string">Ready,</span> <span class="string">Segment</span> <span class="number">0</span></span><br><span class="line"><span class="string">Sense</span> <span class="attr">Code:</span> <span class="number">0x3A</span> <span class="string">Qual</span> <span class="number">0x00</span> <span class="string">(medium</span> <span class="string">not</span> <span class="string">present)</span> <span class="string">Fru</span> <span class="number">0x0</span></span><br><span class="line"><span class="string">Sense</span> <span class="attr">flags:</span> <span class="string">Blk</span> <span class="number">0</span> <span class="string">(valid)</span> </span><br><span class="line"><span class="string">cmd</span> <span class="string">finished</span> <span class="string">after</span> <span class="number">0.010</span><span class="string">s</span> <span class="string">timeout</span> <span class="number">40</span><span class="string">s</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#开始烧录</span></span><br><span class="line"><span class="string">[root@CentOS7</span> <span class="string">~]#</span> <span class="string">wodim</span> <span class="bullet">-v</span> <span class="string">dev=/dev/sr0</span> <span class="string">speed=4</span> <span class="bullet">-dummy</span> <span class="bullet">-eject</span> <span class="string">/tmp/system.img</span></span><br><span class="line"><span class="attr">wodim:</span> <span class="literal">No</span> <span class="string">write</span> <span class="string">mode</span> <span class="string">specified.</span></span><br><span class="line"><span class="attr">wodim:</span> <span class="string">Assuming</span> <span class="bullet">-tao</span> <span class="string">mode.</span></span><br><span class="line"><span class="attr">wodim:</span> <span class="string">Future</span> <span class="string">versions</span> <span class="string">of</span> <span class="string">wodim</span> <span class="string">may</span> <span class="string">have</span> <span class="string">different</span> <span class="string">drive</span> <span class="string">dependent</span> <span class="string">defaults.</span></span><br><span class="line"><span class="string">TOC</span> <span class="attr">Type:</span> <span class="number">1</span> <span class="string">=</span> <span class="string">CD-ROM</span></span><br><span class="line"><span class="attr">scsidev:</span> <span class="string">'/dev/sr0'</span></span><br><span class="line"><span class="attr">devname:</span> <span class="string">'/dev/sr0'</span></span><br><span class="line"><span class="attr">scsibus:</span> <span class="bullet">-2</span> <span class="attr">target:</span> <span class="bullet">-2</span> <span class="attr">lun:</span> <span class="bullet">-2</span></span><br><span class="line"><span class="string">Linux</span> <span class="string">sg</span> <span class="string">driver</span> <span class="attr">version:</span> <span class="number">3.5</span><span class="number">.27</span></span><br><span class="line"><span class="string">Wodim</span> <span class="attr">version:</span> <span class="number">1.1</span><span class="number">.11</span></span><br><span class="line"><span class="string">SCSI</span> <span class="string">buffer</span> <span class="attr">size:</span> <span class="number">64512</span></span><br><span class="line"><span class="string">Device</span> <span class="string">type</span>    <span class="string">:</span> <span class="string">Removable</span> <span class="string">CD-ROM</span></span><br><span class="line"><span class="string">Version</span>        <span class="string">:</span> <span class="number">5</span></span><br><span class="line"><span class="string">Response</span> <span class="attr">Format:</span> <span class="number">2</span></span><br><span class="line"><span class="string">Capabilities</span>   <span class="string">:</span></span><br><span class="line"><span class="string">Vendor_info</span>    <span class="string">:</span> <span class="string">'VBOX    '</span></span><br><span class="line"><span class="string">Identification</span> <span class="string">:</span> <span class="string">'CD-ROM          '</span></span><br><span class="line"><span class="string">Revision</span>       <span class="string">:</span> <span class="string">'1.0 '</span></span><br><span class="line"><span class="string">Device</span> <span class="string">seems</span> <span class="string">to</span> <span class="attr">be:</span> <span class="string">Generic</span> <span class="string">CD-ROM.</span></span><br><span class="line"><span class="attr">wodim:</span> <span class="string">Sorry,</span> <span class="literal">no</span> <span class="string">CD/DVD-Recorder</span> <span class="string">or</span> <span class="string">unsupported</span> <span class="string">CD/DVD-Recorder</span> <span class="string">found</span> <span class="string">on</span> <span class="string">this</span> <span class="string">target.</span></span><br><span class="line"><span class="string">Using</span> <span class="string">generic</span> <span class="string">SCSI-2</span>       <span class="string">CD-ROM</span> <span class="string">driver</span> <span class="string">(scsi2_cd).</span></span><br><span class="line"><span class="string">Driver</span> <span class="string">flags</span>   <span class="string">:</span></span><br><span class="line"><span class="string">Supported</span> <span class="attr">modes:</span></span><br><span class="line"><span class="string">Beginning</span> <span class="string">DMA</span> <span class="string">speed</span> <span class="string">test.</span> <span class="string">Set</span> <span class="string">CDR_NODMATEST</span> <span class="string">environment</span> <span class="string">variable</span> <span class="string">if</span> <span class="string">device</span></span><br><span class="line"><span class="string">communication</span> <span class="string">breaks</span> <span class="string">or</span> <span class="string">freezes</span> <span class="string">immediately</span> <span class="string">after</span> <span class="string">that.</span></span><br><span class="line"><span class="string">FIFO</span> <span class="string">size</span>      <span class="string">:</span> <span class="number">4194304</span> <span class="string">=</span> <span class="number">4096</span> <span class="string">KB</span></span><br><span class="line"><span class="attr">wodim:</span> <span class="string">Drive</span> <span class="string">does</span> <span class="string">not</span> <span class="string">support</span> <span class="string">TAO</span> <span class="string">recording.</span></span><br><span class="line"><span class="attr">wodim:</span> <span class="string">Illegal</span> <span class="string">write</span> <span class="string">mode</span> <span class="string">for</span> <span class="string">this</span> <span class="string">drive.</span></span><br><span class="line"><span class="comment">#因为加上-eject这个选项,烧录完成后,dDVD会退出光碟机</span></span><br><span class="line"><span class="comment">#测试挂载并查看内容</span></span><br><span class="line"><span class="string">//todo晚上搞搞</span></span><br></pre></td></tr></table></figure>
+<h2 id="其他常见压缩与备份工具"><a href="#其他常见压缩与备份工具" class="headerlink" title="其他常见压缩与备份工具"></a>其他常见压缩与备份工具</h2><h3 id="dd"><a href="#dd" class="headerlink" title="dd"></a>dd</h3><p>用指定大小的块拷贝一个文件，并在拷贝的同时进行指定的转换</p>
+<pre><code>命令:dd if=&quot;input_file&quot; of=&quot;output_file&quot; bs=&quot;block_size&quot; count=&quot;number&quot;
+选项及参数:
+    if input_file
+    of output_file
+    bs 规划的一个block的大小，未指定的话默认512bytes(一个sector的大小)
+    count 多少个bs
+</code></pre><p>例子1:<br><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#将/etc/passwd备份到/tmp/passwd.back中</span></span><br><span class="line">[root@CentOS7 tmp]<span class="comment"># dd if=/etc/passwd of=/tmp/passwd.back</span></span><br><span class="line">记录了4+1 的读入</span><br><span class="line">记录了4+1 的写出</span><br><span class="line">2328字节<span class="params">(2.3 kB)</span>已复制，0.000159143 秒，14.6 MB/秒</span><br><span class="line">[root@CentOS7 tmp]<span class="comment"># ll /etc/passwd /tmp/passwd.back</span></span><br><span class="line">-rw-r<span class="params">--r--</span>. 1 root root 2328 3月   1 18<span class="function">:07</span> <span class="string">/etc/passwd</span></span><br><span class="line">-rw-r<span class="params">--r--</span>. 1 root root 2328 3月   8 16<span class="function">:14</span> <span class="string">/tmp/passwd.back</span></span><br><span class="line"><span class="comment">#/etc/passwd的文件大小为2328bytes,</span></span><br><span class="line"><span class="comment">#默认512bytes为一个单位，因此4+1表示有4个完整的512bytes和一个未满512的block</span></span><br><span class="line"><span class="comment">#备份整个/boot</span></span><br><span class="line">[root@CentOS7 tmp]<span class="comment"># df -h /boot/</span></span><br><span class="line">文件系统        容量  已用  可用 已用% 挂载点</span><br><span class="line"><span class="string">/dev/sda2</span>      1014M  190M  825M   19% <span class="string">/boot</span></span><br><span class="line">[root@CentOS7 tmp]<span class="comment"># dd if=/dev/sda2 of=/tmp/sda2.img</span></span><br><span class="line">[root@CentOS7 tmp]<span class="comment"># ll -h /tmp/sda2.img </span></span><br><span class="line">-rw-r<span class="params">--r--</span>. 1 root root 1019M 3月   8 16<span class="function">:19</span> <span class="string">/tmp/sda2.img</span></span><br><span class="line"><span class="comment">#将U盘作为开机盘</span></span><br><span class="line">dd <span class="keyword">if</span>=<span class="string">/tmp/system.iso</span> of=<span class="string">/dev/sdb</span></span><br><span class="line">mount <span class="string">/dev/sdb</span> <span class="string">/mnt</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="cpio"><a href="#cpio" class="headerlink" title="cpio"></a>cpio</h3><pre><code>命令:cpio -ovcB  &gt; [file|device] &lt;==备份
+    cpio -ivcdu &lt; [file|device] &lt;==还原
+    cpio -ivct  &lt; [file|device] &lt;==查看
+备份会使用到的选项及参数：
+  -o ：将资料copy输出到文件或设备上
+  -B ：让默认的 Blocks 可以增加至 5120 bytes ，默认是 512 bytes ！
+　  　 这样的好处是可以让大文件的储存速度加快(请参考 i-nodes 的观念)
+还原会使用到的选项及参数：
+  -i ：将资料从文件或装置copy出来到系统当中
+  -d ：自动建立目录，使用cpio所备份的资料内容不见得会在同一层目录中，因此我们必须要让cpio在还   原时可以建立新目录
+  -u ：自动将较新的文件覆盖较旧的文件
+  -t ：需配合 -i 选项，可用在&quot;查看&quot;以 cpio 建立的文件或裝置的內容
+一些可共用的选项及参数：
+  -v ：让储存的过程中文件名称可以在屏幕上显示
+  -c ：一种较新的的 portable format 方式储存
+</code></pre><p>例子:<br><figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#找出/boot下的所有文件,然后备份到/tmp/boot.cpio去</span></span><br><span class="line">[root@CentOS7 <span class="regexp">/]# cd /</span></span><br><span class="line">[root@CentOS7 /]<span class="comment"># find boot | cpio -ocvB &gt; /tmp/boot.cpio</span></span><br><span class="line">[root@CentOS7 /]<span class="comment"># ll -h /tmp/boot.cpio</span></span><br><span class="line">-rw-r--r--. <span class="number">1</span> root root <span class="number">149</span>M <span class="number">3</span>月   <span class="number">8</span> <span class="number">16</span>:<span class="number">38</span> /tmp/boot.cpio</span><br><span class="line">[root@CentOS7 /]<span class="comment"># file /tmp/boot.cpio</span></span><br><span class="line">/tmp/boot.cpio: ASCII cpio archive (SVR4 <span class="keyword">with</span> <span class="literal">no</span> CRC)</span><br><span class="line"><span class="comment">#解开</span></span><br><span class="line">[root@CentOS7 ~]<span class="comment"># cd ~</span></span><br><span class="line">[root@CentOS7 ~]<span class="comment"># cpio -idvc &lt; /tmp/boot.cpio</span></span><br></pre></td></tr></table></figure></p>
+<p>cpio还可以把资料备份到磁带机上<br>备份<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">find</span> <span class="regexp">/ | cpio -ocvB &gt; /</span>dev<span class="regexp">/st0</span></span><br></pre></td></tr></table></figure></p>
+<p>还原<br><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cpio -idvc &lt; <span class="regexp">/dev/</span>st0</span><br></pre></td></tr></table></figure></p>
+<p>cpio可以备份任何文件</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>郝凯阳</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://haokaiyang.com/2017/03/08/centos7-learning-notes-4/" title="《鸟哥的Linux私房菜》文件与文件系统的压缩、打包与备份学习笔记">http://haokaiyang.com/2017/03/08/centos7-learning-notes-4/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！</li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/学习笔记/" rel="tag"># 学习笔记</a>
+          
+            <a href="/tags/Linux/" rel="tag"># Linux</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/07/centos7-learning-notes-3/" rel="next" title="《鸟哥的Linux私房菜》硬盘与文件系统管理学习笔记">
+                <i class="fa fa-chevron-left"></i> 《鸟哥的Linux私房菜》硬盘与文件系统管理学习笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/13/centos7-learning-notes-5/" rel="prev" title="《鸟哥的Linux私房菜》认识与学习Bash学习笔记">
+                《鸟哥的Linux私房菜》认识与学习Bash学习笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="郝凯阳" />
+            
+              <p class="site-author-name" itemprop="name">郝凯阳</p>
+              <p class="site-description motion-element" itemprop="description">Enjoy coding,Enjoy life:)</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">30</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">18</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="http://weibo.com/5146817200" target="_blank" title="WeiBo"><i class="fa fa-fw fa-weibo"></i>WeiBo</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/haokaiyang" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:hky1218@163.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#压缩的原理"><span class="nav-number">1.</span> <span class="nav-text">压缩的原理:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#压缩比"><span class="nav-number">2.</span> <span class="nav-text">压缩比:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux常见压缩文件后缀名"><span class="nav-number">3.</span> <span class="nav-text">Linux常见压缩文件后缀名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux常见压缩命令"><span class="nav-number">4.</span> <span class="nav-text">Linux常见压缩命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#gzip-zcat-zmore-zelss-zgrep"><span class="nav-number">4.1.</span> <span class="nav-text">gzip,zcat/zmore/zelss/zgrep</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#bzip2-bzcat-bzmore-bzless-bzgrep"><span class="nav-number">4.2.</span> <span class="nav-text">bzip2,bzcat/bzmore/bzless/bzgrep</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#xz-xcat-xzmore-xzless-xzgrep"><span class="nav-number">4.3.</span> <span class="nav-text">xz,xcat/xzmore/xzless/xzgrep</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#打包命令tar"><span class="nav-number">5.</span> <span class="nav-text">打包命令tar</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#tar命令的使用"><span class="nav-number">5.1.</span> <span class="nav-text">tar命令的使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tarfile与tarball"><span class="nav-number">5.2.</span> <span class="nav-text">tarfile与tarball</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#管道与资料流"><span class="nav-number">5.3.</span> <span class="nav-text">管道与资料流</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解压缩后的SELinux"><span class="nav-number">5.4.</span> <span class="nav-text">解压缩后的SELinux</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#XFS文件系统的备份与还原"><span class="nav-number">6.</span> <span class="nav-text">XFS文件系统的备份与还原</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#xfs文件系统备份-xfsdump"><span class="nav-number">6.1.</span> <span class="nav-text">xfs文件系统备份 xfsdump</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#用xfsdump备份完整的文件系统"><span class="nav-number">6.1.1.</span> <span class="nav-text">用xfsdump备份完整的文件系统</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#用xfsdump进行增量备份"><span class="nav-number">6.1.2.</span> <span class="nav-text">用xfsdump进行增量备份</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#XFS文件系统还原-xfsrestore"><span class="nav-number">6.2.</span> <span class="nav-text">XFS文件系统还原 xfsrestore</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#用xfsrestore观察xfsdump后的备份资料内容"><span class="nav-number">6.2.1.</span> <span class="nav-text">用xfsrestore观察xfsdump后的备份资料内容</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#复原增量备份资料"><span class="nav-number">6.2.2.</span> <span class="nav-text">复原增量备份资料</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#仅还原部分文件的xfsrestore互动模式"><span class="nav-number">6.2.3.</span> <span class="nav-text">仅还原部分文件的xfsrestore互动模式</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#光盘写入工具"><span class="nav-number">7.</span> <span class="nav-text">光盘写入工具</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#mkisofs：建立镜像文件"><span class="nav-number">7.1.</span> <span class="nav-text">mkisofs：建立镜像文件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#制作可开机光盘镜像"><span class="nav-number">7.1.1.</span> <span class="nav-text">制作可开机光盘镜像</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cdrecord：关盘烧录工具"><span class="nav-number">7.2.</span> <span class="nav-text">cdrecord：关盘烧录工具</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他常见压缩与备份工具"><span class="nav-number">8.</span> <span class="nav-text">其他常见压缩与备份工具</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#dd"><span class="nav-number">8.1.</span> <span class="nav-text">dd</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cpio"><span class="nav-number">8.2.</span> <span class="nav-text">cpio</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2014 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">郝凯阳</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/reading_progress/reading_progress.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.4"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+  
+  <script src="/lib/pangu/dist/pangu.min.js?v=3.3"></script>
+  <script type="text/javascript">pangu.spacingPage();</script>
+
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=6.0.4"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=6.0.4"></script>
+
+
+  
+
+  
+
+</body>
+</html>
