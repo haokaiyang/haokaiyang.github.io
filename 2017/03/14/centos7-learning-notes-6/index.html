@@ -1,0 +1,1526 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="google84e34793b41f97d4" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.4" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.0.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":true},
+    fancybox: true,
+    fastclick: true,
+    lazyload: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  
+  <meta name="keywords" content="学习笔记,Linux," />
+
+
+<meta name="description" content="特殊符号及代表意义   特殊符号 代表意义     [:alnum:] 英文小写字符及数字，即 0-9, A-Z, a-z   [:alpha:] 英文大小写字符，即 A-Z, a-z   [:blank:] 空格键与tab键   [:cntrl:] 键盘上面的控制按键，亦即包括 CR, LF, Tab, Del.. 等等   [:digit:] 代表数字，亦即 0-9   [:graph:] 除">
+<meta name="keywords" content="学习笔记,Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《鸟哥的Linux私房菜》正则表达式学习笔记">
+<meta property="og:url" content="http://haokaiyang.com/2017/03/14/centos7-learning-notes-6/index.html">
+<meta property="og:site_name" content="郝凯阳">
+<meta property="og:description" content="特殊符号及代表意义   特殊符号 代表意义     [:alnum:] 英文小写字符及数字，即 0-9, A-Z, a-z   [:alpha:] 英文大小写字符，即 A-Z, a-z   [:blank:] 空格键与tab键   [:cntrl:] 键盘上面的控制按键，亦即包括 CR, LF, Tab, Del.. 等等   [:digit:] 代表数字，亦即 0-9   [:graph:] 除">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-03-14T14:57:53.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="《鸟哥的Linux私房菜》正则表达式学习笔记">
+<meta name="twitter:description" content="特殊符号及代表意义   特殊符号 代表意义     [:alnum:] 英文小写字符及数字，即 0-9, A-Z, a-z   [:alpha:] 英文大小写字符，即 A-Z, a-z   [:blank:] 空格键与tab键   [:cntrl:] 键盘上面的控制按键，亦即包括 CR, LF, Tab, Del.. 等等   [:digit:] 代表数字，亦即 0-9   [:graph:] 除">
+
+
+
+
+
+
+  <link rel="canonical" href="http://haokaiyang.com/2017/03/14/centos7-learning-notes-6/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+  <title>《鸟哥的Linux私房菜》正则表达式学习笔记 | 郝凯阳</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">郝凯阳</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-bookmarks">
+          <a href="/bookmarks" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-bookmark"></i> <br />书签</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于</a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+    <div class="reading-progress-bar"></div>
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://haokaiyang.com/2017/03/14/centos7-learning-notes-6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="郝凯阳">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="郝凯阳">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">《鸟哥的Linux私房菜》正则表达式学习笔记</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-14T23:00:00+08:00">2017-03-14</time>
+            
+
+            
+            
+              
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/学习笔记/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="特殊符号及代表意义"><a href="#特殊符号及代表意义" class="headerlink" title="特殊符号及代表意义"></a>特殊符号及代表意义</h2><table>
+<thead>
+<tr>
+<th>特殊符号</th>
+<th>代表意义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>[:alnum:]</td>
+<td>英文小写字符及数字，即 0-9, A-Z, a-z</td>
+</tr>
+<tr>
+<td>[:alpha:]</td>
+<td>英文大小写字符，即 A-Z, a-z</td>
+</tr>
+<tr>
+<td>[:blank:]</td>
+<td>空格键与tab键</td>
+</tr>
+<tr>
+<td>[:cntrl:]</td>
+<td>键盘上面的控制按键，亦即包括 CR, LF, Tab, Del.. 等等</td>
+</tr>
+<tr>
+<td>[:digit:]</td>
+<td>代表数字，亦即 0-9</td>
+</tr>
+<tr>
+<td>[:graph:]</td>
+<td>除了空白字符 (空格键 [Tab] 按键) 外的其他所有按键</td>
+</tr>
+<tr>
+<td>[:lower:]</td>
+<td>代表小写字符，亦即 a-z</td>
+</tr>
+<tr>
+<td>[:print:]</td>
+<td>代表任何可以被打印出來的字符</td>
+</tr>
+<tr>
+<td>[:punct:]</td>
+<td>代表标点符号 (punctuation symbol)，亦即：” ‘ ? ! ; : # $…</td>
+</tr>
+<tr>
+<td>[:upper:]</td>
+<td>代表大写字符，亦即 A-Z</td>
+</tr>
+<tr>
+<td>[:space:]</td>
+<td>任何会产生生空白的字符，包括空白鍵, [Tab], CR 等等</td>
+</tr>
+<tr>
+<td>[:xdigit:]</td>
+<td>代表 16 进制的数字类型，因此包括： 0-9, A-F, a-f 的数字与字符</td>
+</tr>
+</tbody>
+</table>
+<h2 id="grep进阶"><a href="#grep进阶" class="headerlink" title="grep进阶"></a>grep进阶</h2><pre><code>命令:grep [-A] [-B] [--color=auto] &apos;搜索字符串&apos; filename
+选项及参数:
+    -A 后面可加数字,为after的意思,除了列出该行外,后面的n行也列出来
+    -B 后面可加数字,为befer的意思,除了列出该列外,前面的n行业列出来
+</code></pre><table>
+<thead>
+<tr>
+<th>RE字符</th>
+<th>意义</th>
+<th>例子</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>^word</td>
+<td>待搜素的字符串在行首</td>
+<td>grep -n ‘^#’ regular_express.txt</td>
+</tr>
+<tr>
+<td>word$</td>
+<td>待搜素的字符串在行尾</td>
+<td>grep -n ‘!$’ regular_express.txt</td>
+</tr>
+<tr>
+<td>.</td>
+<td>一定有一个任意字符</td>
+<td>grep -n ‘e.e’ regular_express.txt</td>
+</tr>
+<tr>
+<td>\</td>
+<td>转义特殊符号</td>
+<td>grep -n \’ regular_express.txt</td>
+</tr>
+<tr>
+<td>*</td>
+<td>代表重复前一个字符0-无穷次</td>
+<td>grep -n ‘ess*’ regular_express.txt</td>
+</tr>
+<tr>
+<td>[list]</td>
+<td>字符集合的RE字符,里面列出想要截取的字符</td>
+<td>grep -n ‘g[ld]’ regular_express.txt</td>
+</tr>
+<tr>
+<td>[n1-n2]</td>
+<td>字符集合的RE字符,里面列出想要截取的字符范围</td>
+<td>grep -n ‘[A-Z]’ regular_express.txt</td>
+</tr>
+<tr>
+<td>[^list]</td>
+<td>字符集合的RE字符,里面列出不要的字符串或范围</td>
+<td>grep -n ‘oo[^t]’ regular_express.txt</td>
+</tr>
+<tr>
+<td>{n,m}</td>
+<td>连续n到m的前一个RE字符<br>若为{n}连续n个前一个RE字符<br>{n,}连续n个以上的前一个RE字符</td>
+<td>grep -n ‘go{2,3}g’ regular_express.txt</td>
+</tr>
+</tbody>
+</table>
+<h2 id="sed工具"><a href="#sed工具" class="headerlink" title="sed工具"></a>sed工具</h2><pre><code>命令:sed [-nefr] [动作]
+选项及参数:
+    -n 使用安静(silent)模式,在一般sed的用法中,所有来自stdin的资料一般都会列出到屏幕上,但如果加上-n参数后,则只有经过sed特殊处理的那一行(或者动作)才会被列出来
+    -e 直接在命令模式上进行sed的动作编辑
+    -f 直接将sed的工作写在一个文件内,-f filename 则可以执行filename内的sed动作
+    -r sed的动作支持的是延伸型正规表达式语法(默认是基础语法)
+    -i 直接修改读取的文件内容,而不是由屏幕输出
+动作说明: [n1[,n2]]function
+    n1,n2 不见得会存在,一般代表选择进行动作的行数,举例来说,如果我的动作是需要在10-20行之间进行的,则10,20(动作行为)
+</code></pre><p>function下有这些东西:<br>a 新增,a的后面可以接字符串,而这些字符串会在新的一行出现(目前的下一行)<br>c 取代,c的后面可以接字符串,这些字符串可以取代n1,n2之间的行<br>d 删除,后面不用加任何东西<br>i 插入,i的后面可以接字符串,而这些字符串在新的一行出现(目前的上一行)<br>p 打印,将某个选择的资料打印<br>s 取代,可以直接进行替换的工作。可以搭配正则表达式,例如1,20s/old/new/g就是啦</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#将/etc/passwd的内容列出来,同时删除2-5行</span></div><div class="line">[root<span class="variable">@CentOS7</span> ~]<span class="comment"># nl /etc/passwd | sed '2,5d'</span></div><div class="line">     <span class="number">1</span>  <span class="symbol">root:</span><span class="symbol">x:</span><span class="number">0</span><span class="symbol">:</span><span class="number">0</span><span class="symbol">:root</span><span class="symbol">:/root</span><span class="symbol">:/bin/bash</span></div><div class="line">     <span class="number">6</span>  <span class="symbol">sync:</span><span class="symbol">x:</span><span class="number">5</span><span class="symbol">:</span><span class="number">0</span><span class="symbol">:sync</span><span class="symbol">:/sbin</span><span class="symbol">:/bin/sync</span></div><div class="line">...省略...</div><div class="line"><span class="comment">#只看第一行</span></div><div class="line">[root<span class="variable">@CentOS7</span> ~]<span class="comment"># nl /etc/passwd | sed '2,$d'</span></div><div class="line">     <span class="number">1</span>  <span class="symbol">root:</span><span class="symbol">x:</span><span class="number">0</span><span class="symbol">:</span><span class="number">0</span><span class="symbol">:root</span><span class="symbol">:/root</span><span class="symbol">:/bin/bash</span></div><div class="line"><span class="comment">#在第二行后加上drink tea字符串</span></div><div class="line">[root<span class="variable">@CentOS7</span> ~]<span class="comment"># nl /etc/passwd | sed '2a drink tea'</span></div><div class="line">     <span class="number">1</span>  <span class="symbol">root:</span><span class="symbol">x:</span><span class="number">0</span><span class="symbol">:</span><span class="number">0</span><span class="symbol">:root</span><span class="symbol">:/root</span><span class="symbol">:/bin/bash</span></div><div class="line">     <span class="number">2</span>  <span class="symbol">bin:</span><span class="symbol">x:</span><span class="number">1</span><span class="symbol">:</span><span class="number">1</span><span class="symbol">:bin</span><span class="symbol">:/bin</span><span class="symbol">:/sbin/nologin</span></div><div class="line">drink tea</div><div class="line">     <span class="number">3</span>  <span class="symbol">daemon:</span><span class="symbol">x:</span><span class="number">2</span><span class="symbol">:</span><span class="number">2</span><span class="symbol">:daemon</span><span class="symbol">:/sbin</span><span class="symbol">:/sbin/nologin</span></div><div class="line">     <span class="number">4</span>  <span class="symbol">adm:</span><span class="symbol">x:</span><span class="number">3</span><span class="symbol">:</span><span class="number">4</span><span class="symbol">:adm</span><span class="symbol">:/var/adm</span><span class="symbol">:/sbin/nologin</span></div><div class="line"><span class="comment">#将第2-5行的内容替换成 No 2-5 number</span></div><div class="line">[root<span class="variable">@CentOS7</span> ~]<span class="comment"># nl /etc/passwd | sed '2,5c No 2-5 number'</span></div><div class="line">     <span class="number">1</span>  <span class="symbol">root:</span><span class="symbol">x:</span><span class="number">0</span><span class="symbol">:</span><span class="number">0</span><span class="symbol">:root</span><span class="symbol">:/root</span><span class="symbol">:/bin/bash</span></div><div class="line">No <span class="number">2</span>-<span class="number">5</span> number</div><div class="line">     <span class="number">6</span>  <span class="symbol">sync:</span><span class="symbol">x:</span><span class="number">5</span><span class="symbol">:</span><span class="number">0</span><span class="symbol">:sync</span><span class="symbol">:/sbin</span><span class="symbol">:/bin/sync</span></div><div class="line">     <span class="number">7</span>  <span class="symbol">shutdown:</span><span class="symbol">x:</span><span class="number">6</span><span class="symbol">:</span><span class="number">0</span><span class="symbol">:shutdown</span><span class="symbol">:/sbin</span><span class="symbol">:/sbin/shutdown</span></div><div class="line"><span class="comment">#仅列出5-7行</span></div><div class="line">[root<span class="variable">@CentOS7</span> ~]<span class="comment"># nl /etc/passwd |sed -n '5,7p'</span></div><div class="line">     <span class="number">5</span>  <span class="symbol">lp:</span><span class="symbol">x:</span><span class="number">4</span><span class="symbol">:</span><span class="number">7</span><span class="symbol">:lp</span><span class="symbol">:/var/spool/lpd</span><span class="symbol">:/sbin/nologin</span></div><div class="line">     <span class="number">6</span>  <span class="symbol">sync:</span><span class="symbol">x:</span><span class="number">5</span><span class="symbol">:</span><span class="number">0</span><span class="symbol">:sync</span><span class="symbol">:/sbin</span><span class="symbol">:/bin/sync</span></div><div class="line">     <span class="number">7</span>  <span class="symbol">shutdown:</span><span class="symbol">x:</span><span class="number">6</span><span class="symbol">:</span><span class="number">0</span><span class="symbol">:shutdown</span><span class="symbol">:/sbin</span><span class="symbol">:/sbin/shutdown</span></div><div class="line"><span class="comment">#查看本机ip</span></div><div class="line">[root<span class="variable">@CentOS7</span> ~]<span class="comment"># ifconfig enp0s3 | grep 'inet '|sed 's/^.*inet //g' | sed 's/ *netmask.*$//g'</span></div><div class="line"><span class="number">10.0</span>.<span class="number">2.15</span></div><div class="line"><span class="comment">#直接修改文件内容(会修改原始文件,谨慎操作)</span></div><div class="line"><span class="comment">#将regular_express.txt中的.替换为!</span></div><div class="line">[root<span class="variable">@CentOS7</span> haokaiyang]<span class="comment"># sed -i 's/\.$/\!/g' regular_express.txt</span></div></pre></td></tr></table></figure>
+<h2 id="延伸正则表达式"><a href="#延伸正则表达式" class="headerlink" title="延伸正则表达式"></a>延伸正则表达式</h2><table>
+<thead>
+<tr>
+<th>RE字符</th>
+<th>意义</th>
+<th>例子</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>+</td>
+<td>重复一个或一个以上的前一个RE字符</td>
+<td>搜索god,good,goood等字符串<br>egrep -n ‘go+d’ regular_express.txt</td>
+</tr>
+<tr>
+<td>?</td>
+<td>0个或一个的前一个RE字符</td>
+<td>搜索gd,god等字符串<br>egrep -n ‘go?d’ regular_express.txt</td>
+</tr>
+<tr>
+<td>&#124;</td>
+<td>用or的方式找出字符串</td>
+<td>egrep -n ‘gd&#124;good’ regular_express.txt</td>
+</tr>
+<tr>
+<td>()</td>
+<td>找出群组字符</td>
+<td>找出glad或good字符串<br>egrep -n ‘g(la&#124;oo)d’ regular_express.txt</td>
+</tr>
+<tr>
+<td>()+</td>
+<td>多个重复群组的判断</td>
+<td>开头是A,结尾是C,中间有一个以上的xyz字符串的字符<br>echo ‘AxyzxyzxyzxyzC’,egrep ‘A(xyz)+C’</td>
+</tr>
+</tbody>
+</table>
+<h2 id="文件格式化及相关处理"><a href="#文件格式化及相关处理" class="headerlink" title="文件格式化及相关处理"></a>文件格式化及相关处理</h2><h3 id="格式化打印-printf"><a href="#格式化打印-printf" class="headerlink" title="格式化打印:printf"></a>格式化打印:printf</h3><pre><code>命令:printf &apos;打印格式&apos; 实际内容
+选项及参数:
+格式方面有以下几个特殊格式:
+    \a 警告声音
+    \b backspace键
+    \f 清屏(form feed)
+    \n 输出新的一行
+    \r Enter按键
+    \t 水平tab按键
+    \v 垂直tab按键
+    \xNN NN为两位数的数字,可以转换数字成为字符串
+    关于C语言内,常见的变量格式
+    %ns 那个n是数字,s代表string,即多少个字符
+    %ni 那个n是数字,i代表integer,即多少整数位
+    %N.nf 那个n与N都是数字,f代表floating(浮点),假设十个位数,小数点两位.%10.2f
+</code></pre><figure class="highlight lsl"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">Name     Chinese   English   Math    Average</div><div class="line">DmTsai        <span class="number">80</span>        <span class="number">60</span>     <span class="number">92</span>      <span class="number">77.33</span></div><div class="line">VBird         <span class="number">75</span>        <span class="number">55</span>     <span class="number">80</span>      <span class="number">70.00</span></div><div class="line">Ken           <span class="number">60</span>        <span class="number">90</span>     <span class="number">70</span>      <span class="number">73.33</span></div><div class="line"></div><div class="line">#将上诉信息第二行以后,分别用字符串,整数,小数来显示</div><div class="line">[haokaiyang@CentOS7 ~]$ printf '%<span class="number">10</span>s %<span class="number">5</span>i %<span class="number">5</span>i %<span class="number">5</span>i %<span class="number">8.2</span>f \n' $(cat printf.txt | grep -v Name)</div><div class="line">    DmTsai    <span class="number">80</span>    <span class="number">60</span>    <span class="number">92</span>    <span class="number">77.33</span> </div><div class="line">     VBird    <span class="number">75</span>    <span class="number">55</span>    <span class="number">80</span>    <span class="number">70.00</span> </div><div class="line">       Ken    <span class="number">60</span>    <span class="number">90</span>    <span class="number">70</span>    <span class="number">73.33</span></div></pre></td></tr></table></figure>
+<h3 id="awk-优良的文本处理工具"><a href="#awk-优良的文本处理工具" class="headerlink" title="awk:优良的文本处理工具"></a>awk:优良的文本处理工具</h3><p>awk中,默认栏位的分割符是 空格键 或 tab键。</p>
+<pre><code>命令:awk &apos;条件类型1{动作1} 条件类型2{动作2} ...&apos; filename
+</code></pre><figure class="highlight pf"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">[haokaiyang@CentOS7 ~]$ last -n <span class="number">5</span> |awk '&#123;print <span class="variable">$1</span> <span class="string">"\t"</span> <span class="variable">$3</span>&#125;'</div><div class="line">haokaiya    M<span class="keyword">on</span></div><div class="line">haokaiya    :<span class="number">0</span></div><div class="line">haokaiya    :<span class="number">0</span></div><div class="line">(<span class="literal">unknown</span>    :<span class="number">0</span></div><div class="line">reboot  boot</div><div class="line"></div><div class="line">wtmp    M<span class="keyword">on</span></div></pre></td></tr></table></figure>
+<h4 id="awk内置变量"><a href="#awk内置变量" class="headerlink" title="awk内置变量"></a>awk内置变量</h4><table>
+<thead>
+<tr>
+<th>变量名称</th>
+<th>意义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NF</td>
+<td>每一行($0)拥有的栏位总数</td>
+</tr>
+<tr>
+<td>NR</td>
+<td>目前awk所处理的是第几行的资料</td>
+</tr>
+<tr>
+<td>FS</td>
+<td>目前得到分割字符,默认是空格键</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">[haokaiyang@CentOS7 ~]$  <span class="keyword">last</span> -n <span class="number">5</span>| awk <span class="string">'&#123;print $1 "\t lines: " NR "\t columns: " NF&#125;'</span></div><div class="line">haokaiya     <span class="built_in">line</span><span class="variable">s:</span> <span class="number">1</span>    column<span class="variable">s:</span> <span class="number">9</span></div><div class="line">haokaiya     <span class="built_in">line</span><span class="variable">s:</span> <span class="number">2</span>    column<span class="variable">s:</span> <span class="number">10</span></div><div class="line">haokaiya     <span class="built_in">line</span><span class="variable">s:</span> <span class="number">3</span>    column<span class="variable">s:</span> <span class="number">10</span></div><div class="line">(unknown     <span class="built_in">line</span><span class="variable">s:</span> <span class="number">4</span>    column<span class="variable">s:</span> <span class="number">10</span></div><div class="line">reboot   <span class="built_in">line</span><span class="variable">s:</span> <span class="number">5</span>    column<span class="variable">s:</span> <span class="number">11</span></div><div class="line">     <span class="built_in">line</span><span class="variable">s:</span> <span class="number">6</span>    column<span class="variable">s:</span> <span class="number">0</span></div><div class="line">wtmp     <span class="built_in">line</span><span class="variable">s:</span> <span class="number">7</span>    column<span class="variable">s:</span> <span class="number">7</span></div></pre></td></tr></table></figure>
+<h4 id="awk的逻辑运算符"><a href="#awk的逻辑运算符" class="headerlink" title="awk的逻辑运算符"></a>awk的逻辑运算符</h4><table>
+<thead>
+<tr>
+<th>运算符号</th>
+<th>意义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>></td>
+<td>大于</td>
+</tr>
+<tr>
+<td>&lt;</td>
+<td>小于</td>
+</tr>
+<tr>
+<td>>=</td>
+<td>大于或等于</td>
+</tr>
+<tr>
+<td>&lt;=</td>
+<td>小于或等于</td>
+</tr>
+<tr>
+<td>==</td>
+<td>等于</td>
+</tr>
+<tr>
+<td>!=</td>
+<td>不等于</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">#查询第三栏小于10以下的数据,并且仅列出账号与第三栏</div><div class="line">[haokaiyang@CentOS7 ~]$ <span class="keyword">cat</span> /etc/passwd | awk '&#123;FS=<span class="string">":"</span>&#125; <span class="variable">$3</span> &lt; 10 &#123;<span class="keyword">print</span> <span class="variable">$1</span> <span class="string">"\t "</span> <span class="variable">$3&#125;</span>'</div><div class="line">root:x:0:0:root:/root:/bin/bash</div><div class="line">bin  1</div><div class="line">daemon   2</div><div class="line">adm  3</div><div class="line">lp   4</div><div class="line">sync     5</div><div class="line">shutdown     6</div><div class="line">halt     7</div><div class="line">mail     8</div><div class="line">#第一行是因为第一次读入默认还是以空格键位分割符的,虽然定义了FS,但从第二行才开始生效</div><div class="line">#预设可以使用BEGIN这个关键字</div><div class="line">[haokaiyang@CentOS7 ~]$ <span class="keyword">cat</span> /etc/passwd | awk 'BEGIN &#123;FS=<span class="string">":"</span>&#125; <span class="variable">$3</span> &lt; 10 &#123;<span class="keyword">print</span> <span class="variable">$1</span> <span class="string">"\t "</span> <span class="variable">$3&#125;</span>'</div><div class="line">root     0</div><div class="line">bin  1</div><div class="line">daemon   2</div><div class="line">adm  3</div><div class="line">lp   4</div><div class="line">sync     5</div><div class="line">shutdown     6</div><div class="line">halt     7</div><div class="line">mail     8</div><div class="line"></div><div class="line">#pay.txt</div><div class="line">Name    1st     2nd     3th</div><div class="line">VBird   23000   24000   25000</div><div class="line">DMTsai  21000   20000   23000</div><div class="line">Bird2   43000   42000   41000</div><div class="line">#计算<span class="keyword">Total</span></div><div class="line">#第一行只是说明,所以第一行不用统计</div><div class="line">#第二行以后开始统计</div><div class="line">[haokaiyang@CentOS7 ~]$ <span class="keyword">cat</span> pay.txt | \</div><div class="line">&gt; awk 'NR==1&#123;printf <span class="string">"%10s %10s %10s %10s %10s\n"</span>,<span class="variable">$1</span>,<span class="variable">$2</span>,<span class="variable">$3</span>,<span class="variable">$4</span>,<span class="string">"Total"</span> &#125;</div><div class="line">&gt; NR&gt;=2&#123;<span class="keyword">total</span> = <span class="variable">$2</span> + <span class="variable">$3</span> + <span class="variable">$4</span></div><div class="line">&gt; printf <span class="string">"%10s %10d %10d %10d %10.2f\n"</span>, <span class="variable">$1</span>, <span class="variable">$2</span>, <span class="variable">$3</span>, <span class="variable">$4</span>, <span class="keyword">total</span>&#125;'</div><div class="line">      Name        1st        2nd        3th      <span class="keyword">Total</span></div><div class="line">     VBird      23000      24000      25000   72000.00</div><div class="line">    DMTsai      21000      20000      23000   64000.00</div><div class="line">     Bird2      43000      42000      41000  126000.00</div></pre></td></tr></table></figure>
+<h3 id="文件对比工具"><a href="#文件对比工具" class="headerlink" title="文件对比工具"></a>文件对比工具</h3><h4 id="diff"><a href="#diff" class="headerlink" title="diff"></a>diff</h4><pre><code>命令: diff [-bBi] from-file to-file
+选项及参数:
+    from-file
+    to-file
+    from-file和to-file可以用-替换,代表stdin的意思
+
+    -b 忽略一行中,仅有多个空白的差异(例如&quot;about me&quot; 与 &quot;about     me&quot;视为相同)
+    -B 忽略空白行差异
+    -i 忽略大小写差异
+</code></pre><figure class="highlight elixir"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#实验准备</span></div><div class="line">[haokaiyang<span class="variable">@CentOS7</span> testpw]<span class="variable">$ </span>cp /etc/passwd passwd.old</div><div class="line">[haokaiyang<span class="variable">@CentOS7</span> testpw]<span class="variable">$ </span>cat /etc/passwd | sed -e <span class="string">'4d'</span> -e <span class="string">'6c no six line'</span> &gt;passwd.new</div><div class="line">[haokaiyang<span class="variable">@CentOS7</span> testpw]<span class="variable">$ </span>diff passwd.old passwd.new </div><div class="line"><span class="number">4</span>d3           左边第四行被删除(d)了,标准是右边的第三行  </div><div class="line">&lt; <span class="symbol">adm:</span><span class="symbol">x:</span><span class="number">3</span><span class="symbol">:</span><span class="number">4</span><span class="symbol">:adm</span><span class="symbol">:/var/adm</span><span class="symbol">:/sbin/nologin</span></div><div class="line"><span class="number">6</span>c5           左边的第六行被替换(c)成右边文件的第五行</div><div class="line">&lt; <span class="symbol">sync:</span><span class="symbol">x:</span><span class="number">5</span><span class="symbol">:</span><span class="number">0</span><span class="symbol">:sync</span><span class="symbol">:/sbin</span><span class="symbol">:/bin/sync</span> 右边第六行内容</div><div class="line">---</div><div class="line">&gt; no six line 右边第五行内容</div></pre></td></tr></table></figure>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[haokaiyang<span class="meta">@CentOS</span>7 ~]$  diff <span class="regexp">/etc/</span>rc0.d<span class="regexp">/ /</span>etc<span class="regexp">/rc5.d/</span></div><div class="line">只在 <span class="regexp">/etc/</span>rc0.d/ 存在：K90network</div><div class="line">只在 <span class="regexp">/etc/</span>rc5.d/ 存在：S10network</div></pre></td></tr></table></figure>
+<h4 id="cmp"><a href="#cmp" class="headerlink" title="cmp"></a>cmp</h4><pre><code>命令:cmp [-l] file1 file2
+选项及参数:
+    -l 显示十进制的字节数和八进制的不同字节
+</code></pre><h4 id="patch"><a href="#patch" class="headerlink" title="patch"></a>patch</h4><figure class="highlight elixir"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#以passwd.old与passwd.new 制作补丁文件</span></div><div class="line">[haokaiyang<span class="variable">@CentOS7</span> testpw]<span class="variable">$ </span>diff -Naur passwd.old passwd.new &gt; passwd.patch</div><div class="line">[haokaiyang<span class="variable">@CentOS7</span> testpw]<span class="variable">$ </span>cat passwd.patch </div><div class="line">--- passwd.old  <span class="number">2017</span>-<span class="number">03</span>-<span class="number">14</span> <span class="number">11</span><span class="symbol">:</span><span class="number">49</span><span class="symbol">:</span><span class="number">47.435808557</span> +080<span class="number">0</span></div><div class="line">+++ passwd.new  <span class="number">2017</span>-<span class="number">03</span>-<span class="number">14</span> <span class="number">11</span><span class="symbol">:</span><span class="number">50</span><span class="symbol">:</span><span class="number">21.191808557</span> +080<span class="number">0</span></div><div class="line">@@ -<span class="number">1</span>,<span class="number">9</span> +<span class="number">1</span>,<span class="number">8</span> @@   新旧文件要修改资料的限定范围,旧文件在<span class="number">1</span>-<span class="number">9</span>行,新文件在<span class="number">1</span>-<span class="number">8</span>行</div><div class="line"> <span class="symbol">root:</span><span class="symbol">x:</span><span class="number">0</span><span class="symbol">:</span><span class="number">0</span><span class="symbol">:root</span><span class="symbol">:/root</span><span class="symbol">:/bin/bash</span></div><div class="line"> <span class="symbol">bin:</span><span class="symbol">x:</span><span class="number">1</span><span class="symbol">:</span><span class="number">1</span><span class="symbol">:bin</span><span class="symbol">:/bin</span><span class="symbol">:/sbin/nologin</span></div><div class="line"> <span class="symbol">daemon:</span><span class="symbol">x:</span><span class="number">2</span><span class="symbol">:</span><span class="number">2</span><span class="symbol">:daemon</span><span class="symbol">:/sbin</span><span class="symbol">:/sbin/nologin</span></div><div class="line">-<span class="symbol">adm:</span><span class="symbol">x:</span><span class="number">3</span><span class="symbol">:</span><span class="number">4</span><span class="symbol">:adm</span><span class="symbol">:/var/adm</span><span class="symbol">:/sbin/nologin</span> 左侧文件删除</div><div class="line"> <span class="symbol">lp:</span><span class="symbol">x:</span><span class="number">4</span><span class="symbol">:</span><span class="number">7</span><span class="symbol">:lp</span><span class="symbol">:/var/spool/lpd</span><span class="symbol">:/sbin/nologin</span></div><div class="line">-<span class="symbol">sync:</span><span class="symbol">x:</span><span class="number">5</span><span class="symbol">:</span><span class="number">0</span><span class="symbol">:sync</span><span class="symbol">:/sbin</span><span class="symbol">:/bin/sync</span>      左侧文件删除</div><div class="line">+no six line                          右侧文件增加</div><div class="line"> <span class="symbol">shutdown:</span><span class="symbol">x:</span><span class="number">6</span><span class="symbol">:</span><span class="number">0</span><span class="symbol">:shutdown</span><span class="symbol">:/sbin</span><span class="symbol">:/sbin/shutdown</span></div><div class="line"> <span class="symbol">halt:</span><span class="symbol">x:</span><span class="number">7</span><span class="symbol">:</span><span class="number">0</span><span class="symbol">:halt</span><span class="symbol">:/sbin</span><span class="symbol">:/sbin/halt</span></div><div class="line"> <span class="symbol">mail:</span><span class="symbol">x:</span><span class="number">8</span><span class="symbol">:</span><span class="number">12</span><span class="symbol">:mail</span><span class="symbol">:/var/spool/mail</span><span class="symbol">:/sbin/nologin</span></div></pre></td></tr></table></figure>
+<pre><code>命令:patch -p0 &lt; patch_file &lt;==更新
+    patch -R -pN &lt; patch_file &lt;==还原
+选项及参数:
+    -p 后面可以接取消几层目录的意思
+    -R 代表还原,将新的档案还原成原来旧的版本
+</code></pre><figure class="highlight elixir"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#将刚刚制作的patch file 用来更新旧版资料</span></div><div class="line">[haokaiyang<span class="variable">@CentOS7</span> testpw]<span class="variable">$ </span>patch -p<span class="number">0</span> &lt; passwd.patch </div><div class="line">patching file passwd.old</div><div class="line">[haokaiyang<span class="variable">@CentOS7</span> testpw]<span class="variable">$ </span>ll passwd*</div><div class="line">-rw-rw-r--. <span class="number">1</span> haokaiyang haokaiyang <span class="number">2271</span> <span class="number">3</span>月  <span class="number">14</span> <span class="number">11</span><span class="symbol">:</span><span class="number">50</span> passwd.new</div><div class="line">-rw-r--r--. <span class="number">1</span> haokaiyang haokaiyang <span class="number">2271</span> <span class="number">3</span>月  <span class="number">14</span> <span class="number">13</span><span class="symbol">:</span><span class="number">38</span> passwd.old</div><div class="line">-rw-rw-r--. <span class="number">1</span> haokaiyang haokaiyang  <span class="number">480</span> <span class="number">3</span>月  <span class="number">14</span> <span class="number">11</span><span class="symbol">:</span><span class="number">54</span> passwd.patch</div><div class="line">[haokaiyang<span class="variable">@CentOS7</span> testpw]<span class="variable">$ </span>diff passwd.new passwd.old</div><div class="line"><span class="comment">#回复旧版文件的内容</span></div><div class="line">[haokaiyang<span class="variable">@CentOS7</span> testpw]<span class="variable">$ </span>patch -R -p<span class="number">0</span> &lt; passwd.patch </div><div class="line">patching file passwd.old</div><div class="line">[haokaiyang<span class="variable">@CentOS7</span> testpw]<span class="variable">$ </span>ll passwd*</div><div class="line">-rw-rw-r--. <span class="number">1</span> haokaiyang haokaiyang <span class="number">2271</span> <span class="number">3</span>月  <span class="number">14</span> <span class="number">11</span><span class="symbol">:</span><span class="number">50</span> passwd.new</div><div class="line">-rw-r--r--. <span class="number">1</span> haokaiyang haokaiyang <span class="number">2328</span> <span class="number">3</span>月  <span class="number">14</span> <span class="number">13</span><span class="symbol">:</span><span class="number">39</span> passwd.old</div><div class="line">-rw-rw-r--. <span class="number">1</span> haokaiyang haokaiyang  <span class="number">480</span> <span class="number">3</span>月  <span class="number">14</span> <span class="number">11</span><span class="symbol">:</span><span class="number">54</span> passwd.patch</div></pre></td></tr></table></figure>
+<h3 id="文件打印准备-pr"><a href="#文件打印准备-pr" class="headerlink" title="文件打印准备:pr"></a>文件打印准备:pr</h3>
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>郝凯阳</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://haokaiyang.com/2017/03/14/centos7-learning-notes-6/" title="《鸟哥的Linux私房菜》正则表达式学习笔记">http://haokaiyang.com/2017/03/14/centos7-learning-notes-6/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！</li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/学习笔记/" rel="tag"># 学习笔记</a>
+          
+            <a href="/tags/Linux/" rel="tag"># Linux</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/13/centos7-learning-notes-5/" rel="next" title="《鸟哥的Linux私房菜》认识与学习Bash学习笔记">
+                <i class="fa fa-chevron-left"></i> 《鸟哥的Linux私房菜》认识与学习Bash学习笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/12/01/docker/" rel="prev" title="Docker常用命令">
+                Docker常用命令 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="郝凯阳" />
+            
+              <p class="site-author-name" itemprop="name">郝凯阳</p>
+              <p class="site-description motion-element" itemprop="description">Enjoy coding,Enjoy life:)</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">30</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">18</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="http://weibo.com/5146817200" target="_blank" title="WeiBo"><i class="fa fa-fw fa-weibo"></i>WeiBo</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/haokaiyang" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:hky1218@163.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#特殊符号及代表意义"><span class="nav-number">1.</span> <span class="nav-text">特殊符号及代表意义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#grep进阶"><span class="nav-number">2.</span> <span class="nav-text">grep进阶</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sed工具"><span class="nav-number">3.</span> <span class="nav-text">sed工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#延伸正则表达式"><span class="nav-number">4.</span> <span class="nav-text">延伸正则表达式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件格式化及相关处理"><span class="nav-number">5.</span> <span class="nav-text">文件格式化及相关处理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#格式化打印-printf"><span class="nav-number">5.1.</span> <span class="nav-text">格式化打印:printf</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#awk-优良的文本处理工具"><span class="nav-number">5.2.</span> <span class="nav-text">awk:优良的文本处理工具</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#awk内置变量"><span class="nav-number">5.2.1.</span> <span class="nav-text">awk内置变量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#awk的逻辑运算符"><span class="nav-number">5.2.2.</span> <span class="nav-text">awk的逻辑运算符</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文件对比工具"><span class="nav-number">5.3.</span> <span class="nav-text">文件对比工具</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#diff"><span class="nav-number">5.3.1.</span> <span class="nav-text">diff</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cmp"><span class="nav-number">5.3.2.</span> <span class="nav-text">cmp</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#patch"><span class="nav-number">5.3.3.</span> <span class="nav-text">patch</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文件打印准备-pr"><span class="nav-number">5.4.</span> <span class="nav-text">文件打印准备:pr</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2014 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">郝凯阳</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/reading_progress/reading_progress.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.4"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+  
+  <script src="/lib/pangu/dist/pangu.min.js?v=3.3"></script>
+  <script type="text/javascript">pangu.spacingPage();</script>
+
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=6.0.4"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=6.0.4"></script>
+
+
+  
+
+  
+
+</body>
+</html>
