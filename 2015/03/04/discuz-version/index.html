@@ -435,7 +435,7 @@
         <p>1.打开/source/function/function_cloudaddons.php 这个文件，</p>
 <p>2.搜索：cloudaddons_validator，</p>
 <p>3.一般在97行，删去或者注释掉</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cpmsg(<span class="string">'cloudaddons_genuine_message'</span>, <span class="string">''</span>, <span class="string">'error'</span>, <span class="keyword">array</span>(<span class="string">'addonid'</span> =&gt; $addonid));</div></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cpmsg(<span class="string">'cloudaddons_genuine_message'</span>, <span class="string">''</span>, <span class="string">'error'</span>, <span class="keyword">array</span>(<span class="string">'addonid'</span> =&gt; $addonid));</span><br></pre></td></tr></table></figure>
 <p>这句代码，这样就解决问题了。</p>
 
       

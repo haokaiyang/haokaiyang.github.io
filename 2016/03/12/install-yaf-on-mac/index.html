@@ -435,29 +435,29 @@
         <h2 id="在Mac上安装yaf框架"><a href="#在Mac上安装yaf框架" class="headerlink" title="在Mac上安装yaf框架"></a>在Mac上安装yaf框架</h2><ul>
 <li><p>安装PHP运行环境</p>
 </li>
-<li><p>在PECL官网下载yaf,地址:<a href="http://pecl.php.net/package/yaf" target="_blank" rel="external">http://pecl.php.net/package/yaf</a>,这里我下载的是3.0.2的beta版本</p>
+<li><p>在PECL官网下载yaf,地址:<a href="http://pecl.php.net/package/yaf" target="_blank" rel="noopener">http://pecl.php.net/package/yaf</a>,这里我下载的是3.0.2的beta版本</p>
 </li>
 <li><p>解压缩以及安装</p>
 </li>
 </ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">tar -zvf yaf-3.0.2.tgz <span class="comment">#解压</span></div><div class="line"><span class="built_in">cd</span> yaf-3.0.2/</div><div class="line"><span class="variable">$PHP_BIN</span>/phpize</div><div class="line">./configure --with-php-config=<span class="variable">$PHP_BIN</span>/php-config</div><div class="line">sudo make</div><div class="line">sudo make install</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">tar -zvf yaf-3.0.2.tgz <span class="comment">#解压</span></span><br><span class="line"><span class="built_in">cd</span> yaf-3.0.2/</span><br><span class="line"><span class="variable">$PHP_BIN</span>/phpize</span><br><span class="line">./configure --with-php-config=<span class="variable">$PHP_BIN</span>/php-config</span><br><span class="line">sudo make</span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure>
 <h2 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h2><ul>
 <li><p><code>$PHP_BIN</code>:PHP的bin目录 例如我的为/usr/local/Cellar/php70/7.0.0/bin/  就执行</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./configure --with-php-config=/usr/<span class="built_in">local</span>/Cellar/php70/7.0.0/bin/php-config</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./configure --with-php-config=/usr/<span class="built_in">local</span>/Cellar/php70/7.0.0/bin/php-config</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>sudo为了命令执行没有权限</p>
 </li>
 <li><p>make install 之后会产生一个yaf.so文件。并且存放在某个文件夹下。具体放在哪里我们不需要关心,php知道就可以了，我们将yaf.so添加到php.ini</p>
 </li>
 </ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vi /usr/<span class="built_in">local</span>/etc/php/7.0/php.ini</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /usr/<span class="built_in">local</span>/etc/php/7.0/php.ini</span><br></pre></td></tr></table></figure>
 <p>我们添加代码</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">extension=yaf.so</div><div class="line">yaf.environ = product</div></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">extension</span>=yaf.so</span><br><span class="line">yaf.environ = product</span><br></pre></td></tr></table></figure>
 <p>重启php-fpm 和nginx,使用php -m 或者执行phpinfo()函数查看yaf模块是否载入成功</p>
 <ul>
 <li>生成yaf的例子</li>
 </ul>
-<p><a href="https://github.com/laruence/yaf" target="_blank" rel="external">https://github.com/laruence/yaf</a><br>我是下载的压缩包（可以直接git clone到本地）<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">tar -xvf yaf-master.zip</div><div class="line"><span class="built_in">cd</span> yaf-master/tools/cg</div><div class="line"><span class="variable">$PHP_BIN</span>/php yaf_cg yaf_sample 我的是<span class="comment">#/usr/local/Cellar/php70/7.0.0/bin/</span></div></pre></td></tr></table></figure></p>
+<p><a href="https://github.com/laruence/yaf" target="_blank" rel="noopener">https://github.com/laruence/yaf</a><br>我是下载的压缩包（可以直接git clone到本地）<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tar -xvf yaf-master.zip</span><br><span class="line"><span class="built_in">cd</span> yaf-master/tools/cg</span><br><span class="line"><span class="variable">$PHP_BIN</span>/php yaf_cg yaf_sample 我的是<span class="comment">#/usr/local/Cellar/php70/7.0.0/bin/</span></span><br></pre></td></tr></table></figure></p>
 <p>将output文件夹下生成的yaf_sample复制到你的项目目录</p>
 <ul>
 <li>配置nginx<br>重写规则</li>
@@ -466,8 +466,12 @@
 <blockquote>
 <p>参考文章:</p>
 <blockquote>
-<p>1.<a href="https://segmentfault.com/a/1190000000655886" target="_blank" rel="external">Yaf安装和配置</a></p>
-<p>2.<a href="https://segmentfault.com/a/1190000000613467" target="_blank" rel="external">Mac从零安装yaf</a></p>
+<p>1.<a href="https://segmentfault.com/a/1190000000655886" target="_blank" rel="noopener">Yaf安装和配置</a></p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>2.<a href="https://segmentfault.com/a/1190000000613467" target="_blank" rel="noopener">Mac从零安装yaf</a></p>
 </blockquote>
 </blockquote>
 
