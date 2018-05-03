@@ -489,7 +489,7 @@
 <pre><code>tar -cv file.tar
 </code></pre><p>如果压缩了，我们称呼为tarball</p>
 <pre><code>tar -jcv file.tar.bz2
-</code></pre><h3 id="管道与资料流"><a href="#管道与资料流" class="headerlink" title="管道与资料流"></a>管道与资料流</h3><p>将/etc目录一边打包，一边在/tmp解开<br><figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tar -cvf - /etc <span class="string">| tar -xvf -</span></span><br><span class="line"><span class="meta">#-分别代表standard output, standard input</span></span><br></pre></td></tr></table></figure></p>
+</code></pre><h3 id="管道与资料流"><a href="#管道与资料流" class="headerlink" title="管道与资料流"></a>管道与资料流</h3><p>将/etc目录一边打包，一边在/tmp解开<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tar -cvf - /etc | tar -xvf -</span><br><span class="line"><span class="meta">#</span><span class="bash">-分别代表standard output, standard input</span></span><br></pre></td></tr></table></figure></p>
 <h3 id="解压缩后的SELinux"><a href="#解压缩后的SELinux" class="headerlink" title="解压缩后的SELinux"></a>解压缩后的SELinux</h3><p>//todo 看完16章后添加</p>
 <h2 id="XFS文件系统的备份与还原"><a href="#XFS文件系统的备份与还原" class="headerlink" title="XFS文件系统的备份与还原"></a>XFS文件系统的备份与还原</h2><h3 id="xfs文件系统备份-xfsdump"><a href="#xfs文件系统备份-xfsdump" class="headerlink" title="xfs文件系统备份 xfsdump"></a>xfs文件系统备份 xfsdump</h3><p>xfsdump不仅可以进行文件系统的完整备份，还可以进行增量备份</p>
 <p>xfs有以下限制:</p>
