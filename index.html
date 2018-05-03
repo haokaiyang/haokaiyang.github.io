@@ -214,7 +214,7 @@
         
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
-            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />首页</a>
         </li>
       
         
@@ -500,8 +500,22 @@
             
             
               
+                
+              
             
 
+            
+              
+              <span class="post-meta-divider">|</span>
+              
+
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-05-03T10:20:08+08:00">2018-05-03</time>
             
           </span>
 
@@ -672,7 +686,7 @@
 </ul>
 <p>如果join很复杂，首先需要考虑分库的设计是否合理，其次可以考虑使用hadoop或者spark来解决。</p>
 <h4 id="分布式事务的实现-二阶段提交"><a href="#分布式事务的实现-二阶段提交" class="headerlink" title="分布式事务的实现:二阶段提交"></a>分布式事务的实现:二阶段提交</h4><p>两阶段提交协议(Two-phase Commit,2PC)经常被用来实现分布式事务<br>一般分为事务协调器TC和资源管理器SI两种角色，这里的资源管理就是具体的数据库。<br>案例:支付宝转账1万块钱到余额宝如何确保事务<br>1.支付宝表扣除一万<br>2.余额宝表增加一万</p>
-<p>二阶段提交具体细节<br>如图所示:<br><img src="http://7xr8u7.com1.z0.glb.clouddn.com/%E4%BA%8C%E9%98%B6%E6%AE%B5%E6%8F%90%E4%BA%A4%E6%88%90%E5%8A%9F.jpg" alt="二阶段提交成功"><br><img src="http://7xr8u7.com1.z0.glb.clouddn.com/%E4%BA%8C%E9%98%B6%E6%AE%B5%E6%8F%90%E4%BA%A4%E5%A4%B1%E8%B4%A5.jpg" alt="二阶段提交失败"><br>1.应用程序发起一个开始请求到TC<br>2.向所有的Si发起&lt;prepare>消息。</p>
+<p>二阶段提交具体细节<br>如图所示:<br><img src="/images/二阶段提交成功.jpg" alt="二阶段提交成功"><br><img src="/images/二阶段提交失败.jpg" alt="二阶段提交失败"><br>1.应用程序发起一个开始请求到TC<br>2.向所有的Si发起&lt;prepare>消息。</p>
 <pre><code>1. TC给B的prepare消息是通知余额宝数椐库相应账目加lw。
 2. TC给A的prepare消总足通知支付宝数据库相应账目扣款1w
 </code></pre><p>3.Si收到&lt;prepare>消息后，执行具体本机事务，但不会进行commit,锁定资源等待提交，成功返回</p>
@@ -805,6 +819,18 @@
               
             
 
+            
+              
+              <span class="post-meta-divider">|</span>
+              
+
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-04-08T14:34:59+08:00">2018-04-08</time>
             
           </span>
 
@@ -949,6 +975,18 @@
               
             
 
+            
+              
+              <span class="post-meta-divider">|</span>
+              
+
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-01-18T10:52:47+08:00">2018-01-18</time>
             
           </span>
 
@@ -1172,7 +1210,7 @@
 <p>6.自己组织列<br><figure class="highlight llvm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">docker images --format <span class="string">"&#123;&#123;.ID&#125;&#125;: &#123;&#123;.Repository&#125;&#125;"</span></span><br><span class="line">f<span class="number">2</span>a<span class="number">91732366</span><span class="keyword">c</span>: hello-world</span><br><span class="line"><span class="number">0</span>d<span class="number">7</span>d<span class="number">9</span>d<span class="number">3</span>a<span class="number">5480</span>: huginn/huginn</span><br><span class="line"><span class="number">965</span>b<span class="number">5</span>ad<span class="number">08</span>ad<span class="number">9</span>: cantino/huginn</span><br><span class="line"><span class="keyword">c</span><span class="number">37</span>d<span class="number">0</span>b<span class="number">3</span>f<span class="number">1860</span>: wonderfall/nextcloud</span><br><span class="line"><span class="keyword">c</span><span class="number">4</span>f<span class="number">44e4</span>b<span class="number">15</span>b<span class="number">8</span>: wahyd<span class="number">4</span>/aria<span class="number">2</span>-ariang</span><br><span class="line">$ docker images --format <span class="string">"table &#123;&#123;.ID&#125;&#125;\t&#123;&#123;.Repository&#125;&#125;\t&#123;&#123;.Tag&#125;&#125;"</span></span><br><span class="line">IMAGE ID            REPOSITORY          TAG</span><br><span class="line"><span class="number">5</span>f<span class="number">515359</span><span class="keyword">c</span><span class="number">7</span>f<span class="number">8</span>        redis               latest</span><br><span class="line"><span class="number">05</span>a<span class="number">60462</span>f<span class="number">8</span>ba        nginx               latest</span><br><span class="line">fe<span class="number">9198</span><span class="keyword">c</span><span class="number">04</span>d<span class="number">62</span>        mongo               <span class="number">3.2</span></span><br><span class="line"><span class="number">00285</span>df<span class="number">0</span>df<span class="number">87</span>        &lt;none&gt;              &lt;none&gt;</span><br><span class="line">f<span class="number">753707788</span><span class="keyword">c</span><span class="number">5</span>        ubuntu              <span class="number">16.04</span></span><br><span class="line">f<span class="number">753707788</span><span class="keyword">c</span><span class="number">5</span>        ubuntu              latest</span><br><span class="line"><span class="number">1e0</span><span class="keyword">c</span><span class="number">3</span>dd<span class="number">64</span>ccd        ubuntu              <span class="number">14.04</span></span><br></pre></td></tr></table></figure></p>
 <p>7.查看变动<br><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">docker diff webserver</span></span><br></pre></td></tr></table></figure></p>
 <p>8.docker commit 的语法格式为：<br><figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker commit [选项] &lt;容器ID或容器名&gt; <span class="meta">[&lt;仓库名&gt;[:&lt;标签&gt;]</span>]</span><br></pre></td></tr></table></figure></p>
-<p>9.查看commit历史<br><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">docker</span> history nginx:<span class="built_in">v2</span></span><br></pre></td></tr></table></figure></p>
+<p>9.查看commit历史<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">history</span> nginx:v2</span><br></pre></td></tr></table></figure></p>
 <p>10.<br><figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">image</span> build</span><br></pre></td></tr></table></figure></p>
 <p>11.Dockerfile 指令<br>COPY &lt;源路径&gt;… &lt;目标路径&gt;<br>ADD<br>CMD</p>
 

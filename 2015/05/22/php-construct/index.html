@@ -113,12 +113,12 @@
 <meta property="og:site_name" content="郝凯阳">
 <meta property="og:description" content="原文地址:http://www.cnblogs.com/giantpanda/archive/2012/11/07/2759458.html 我们在创建和销毁对象时需要执行一些任务。例如，在创建对象时给属性赋值，在对象销毁时关闭数据连接等，这时就需要构造函数和析构函数。在PHP中构造函数和析构函数是固定的，如下： 123456789// 构造函数function __construct([argu">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://7xr8u7.com1.z0.glb.clouddn.com/construct1.png">
-<meta property="og:updated_time" content="2016-02-25T15:18:03.000Z">
+<meta property="og:image" content="http://haokaiyang.com/images/construct1.png">
+<meta property="og:updated_time" content="2018-05-03T02:42:50.687Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PHP面向对象——构造函数、析构函数(转载)">
 <meta name="twitter:description" content="原文地址:http://www.cnblogs.com/giantpanda/archive/2012/11/07/2759458.html 我们在创建和销毁对象时需要执行一些任务。例如，在创建对象时给属性赋值，在对象销毁时关闭数据连接等，这时就需要构造函数和析构函数。在PHP中构造函数和析构函数是固定的，如下： 123456789// 构造函数function __construct([argu">
-<meta name="twitter:image" content="http://7xr8u7.com1.z0.glb.clouddn.com/construct1.png">
+<meta name="twitter:image" content="http://haokaiyang.com/images/construct1.png">
 
 
 
@@ -219,7 +219,7 @@
         
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
-            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />首页</a>
         </li>
       
         
@@ -370,7 +370,7 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2016-02-25T23:18:03+08:00">2016-02-25</time>
+              <time title="更新于" itemprop="dateModified" datetime="2018-05-03T10:42:50+08:00">2018-05-03</time>
             
           </span>
 
@@ -459,7 +459,7 @@
 <p>例子：</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">test</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">__destruct</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">"当对象销毁时会调用！！！"</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">$a = $b = $c = <span class="keyword">new</span> test();</span><br><span class="line"></span><br><span class="line">$a = <span class="keyword">null</span>;</span><br><span class="line"><span class="keyword">unset</span>($b);</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> <span class="string">"&lt;hr /&gt;"</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
 <p>此例子，如下图，有三个变量引用$a,$b,$c指向test对象，test对象就有3个引用计数，当$a = null时，$a对test对象的引用丢失，计数-1，变为2，当$b被unset()时，$b对test对象的引用也丢失了，计数再-1，变为1，最后页面加载完毕，$c指向test对象的引用自动被释放，此时计数再-1，变为0，test对象已没有变量引用，就会被销毁，此时就会调用析构函数。</p>
-<p><a href="http://7xr8u7.com1.z0.glb.clouddn.com/construct1.png" target="_blank" rel="noopener"><img src="http://7xr8u7.com1.z0.glb.clouddn.com/construct1.png" alt="PHP面向对象——构造函数、析构函数1"></a></p>
+<p><img src="/images/construct1.png" alt="PHP面向对象——构造函数、析构函数1"></p>
 
       
     </div>

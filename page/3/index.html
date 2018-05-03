@@ -214,7 +214,7 @@
         
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
-            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />首页</a>
         </li>
       
         
@@ -365,7 +365,7 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2016-02-25T23:50:41+08:00">2016-02-25</time>
+              <time title="更新于" itemprop="dateModified" datetime="2018-05-03T10:40:09+08:00">2018-05-03</time>
             
           </span>
 
@@ -418,12 +418,12 @@
         
           
             <p>我们经常要去熟悉一个框架或者一个CMS的目录结构，今天我翻看目录的时候，本来想找一个工具列下文件目录，忽然想到windows中有没有和linux下的tree命令呢，答案是有的。看我演示：<br>我们先切换到E盘下的test目录，为了演示，我在test目录里放了一个PHPExcel：</p>
-<p><a href="http://7xr8u7.com1.z0.glb.clouddn.com/tree2.jpg" target="_blank" rel="noopener"><img src="http://7xr8u7.com1.z0.glb.clouddn.com/tree1.jpg" alt="tree1"></a></p>
+<p><img src="/images/tree1.jpg" alt="tree1"></p>
 <p>使用tree命令，可以看到我们的目录树了：</p>
-<p><a href="http://7xr8u7.com1.z0.glb.clouddn.com/tree2.jpg" target="_blank" rel="noopener"><img src="http://7xr8u7.com1.z0.glb.clouddn.com/tree2.jpg" alt="tree2"></a></p>
+<p><img src="/images/tree2.jpg" alt="tree2"></p>
 <p>我们还可以把要目录的结构保存到文件里：</p>
-<p><a href="http://7xr8u7.com1.z0.glb.clouddn.com/tree3.jpg" target="_blank" rel="noopener"><img src="http://7xr8u7.com1.z0.glb.clouddn.com/tree3.jpg" alt="tree3"></a></p>
-<p><a href="http://7xr8u7.com1.z0.glb.clouddn.com/tree4.jpg" target="_blank" rel="noopener"><img src="http://7xr8u7.com1.z0.glb.clouddn.com/tree4.jpg" alt="tree4"></a></p>
+<p><img src="/images/tree3.jpg" alt="tree3"></p>
+<p><img src="/images/tree4.jpg" alt="tree4"></p>
 
           
         
@@ -529,7 +529,7 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2016-02-25T23:18:03+08:00">2016-02-25</time>
+              <time title="更新于" itemprop="dateModified" datetime="2018-05-03T10:42:50+08:00">2018-05-03</time>
             
           </span>
 
@@ -612,7 +612,7 @@
 <p>例子：</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">test</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">__destruct</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">"当对象销毁时会调用！！！"</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">$a = $b = $c = <span class="keyword">new</span> test();</span><br><span class="line"></span><br><span class="line">$a = <span class="keyword">null</span>;</span><br><span class="line"><span class="keyword">unset</span>($b);</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> <span class="string">"&lt;hr /&gt;"</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
 <p>此例子，如下图，有三个变量引用$a,$b,$c指向test对象，test对象就有3个引用计数，当$a = null时，$a对test对象的引用丢失，计数-1，变为2，当$b被unset()时，$b对test对象的引用也丢失了，计数再-1，变为1，最后页面加载完毕，$c指向test对象的引用自动被释放，此时计数再-1，变为0，test对象已没有变量引用，就会被销毁，此时就会调用析构函数。</p>
-<p><a href="http://7xr8u7.com1.z0.glb.clouddn.com/construct1.png" target="_blank" rel="noopener"><img src="http://7xr8u7.com1.z0.glb.clouddn.com/construct1.png" alt="PHP面向对象——构造函数、析构函数1"></a></p>
+<p><img src="/images/construct1.png" alt="PHP面向对象——构造函数、析构函数1"></p>
 
           
         
@@ -1039,7 +1039,7 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2016-02-25T23:38:07+08:00">2016-02-25</time>
+              <time title="更新于" itemprop="dateModified" datetime="2018-05-03T10:42:09+08:00">2018-05-03</time>
             
           </span>
 
@@ -1092,16 +1092,16 @@
         
           
             <p><em>注：路径仅作参考</em><br>如图所示，列表前面的小图标有时候会全部出现的是XX，不显示。</p>
-<p><a href="http://7xr8u7.com1.z0.glb.clouddn.com/wamp-icons1.png" target="_blank" rel="noopener"><img src="http://7xr8u7.com1.z0.glb.clouddn.com/wamp-icons1.png" alt="Wamp server 目录浏览时icons图标不显示解决方法1"></a><br>打开apache安装目录（D:\wamp\bin\apache\apache2.4.9\conf\extra）下的httpd-autoindex.conf文件;<br>查找 Alias /icons/ “c:/Apache24/icons/”,如下</p>
+<p><img src="/images/wamp-icons1.png" alt="Wamp server 目录浏览时icons图标不显示解决方法1"><br>打开apache安装目录（D:\wamp\bin\apache\apache2.4.9\conf\extra）下的httpd-autoindex.conf文件;<br>查找 Alias /icons/ “c:/Apache24/icons/”,如下</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Alias /icons/ &quot;c:/Apache24/icons/&quot;</span><br><span class="line"></span><br><span class="line">&lt;Directory &quot;c:/Apache24/icons&quot;&gt;</span><br><span class="line">    Options Indexes MultiViews</span><br><span class="line">    AllowOverride None</span><br><span class="line">    Require all granted</span><br><span class="line">&lt;/Directory&gt;</span><br></pre></td></tr></table></figure>
 <p>更改为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Alias /icons/ &quot;D:/wamp/bin/apache/apache2.4.9/icons/&quot;</span><br><span class="line"></span><br><span class="line">&lt;Directory &quot;D:/wamp/bin/apache/apache2.4.9/icons/&quot;&gt;</span><br><span class="line">    Options Indexes MultiViews</span><br><span class="line">    AllowOverride None</span><br><span class="line">    Require all granted</span><br><span class="line">&lt;/Directory&gt;</span><br></pre></td></tr></table></figure>
 <p>重启wamp后，如图所示：</p>
-<p><a href="http://7xr8u7.com1.z0.glb.clouddn.com/wamp-icons2.jpg" target="_blank" rel="noopener"><img src="http://7xr8u7.com1.z0.glb.clouddn.com/wamp-icons2.jpg" alt="Wamp server 目录浏览时icons图标不显示解决方法2"></a></p>
+<p><img src="/images/wamp-icons2.jpg" alt="Wamp server 目录浏览时icons图标不显示解决方法2"></p>
 <p>或者和我一样在httpd.conf中注释调这个功能：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># Fancy directory listings</span><br><span class="line">#Include conf/extra/httpd-autoindex.conf</span><br></pre></td></tr></table></figure>
 <p>注释掉后是这样：</p>
-<p><a href="http://7xr8u7.com1.z0.glb.clouddn.com/wamp-icons2.jpg" target="_blank" rel="noopener"><img src="http://7xr8u7.com1.z0.glb.clouddn.com/wamp-icons2.jpg" alt="Wamp server 目录浏览时icons图标不显示解决方法3"></a></p>
+<p><img src="/images/wamp-icons3.jpg" alt="Wamp server 目录浏览时icons图标不显示解决方法3"></p>
 
           
         
@@ -1696,7 +1696,7 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2016-02-25T23:22:27+08:00">2016-02-25</time>
+              <time title="更新于" itemprop="dateModified" datetime="2018-05-03T10:42:32+08:00">2018-05-03</time>
             
           </span>
 
@@ -1748,7 +1748,7 @@
       
         
           
-            <p><a href="http://7xr8u7.com1.z0.glb.clouddn.com/phpfunction.jpg" target="_blank" rel="noopener"><img src="http://7xr8u7.com1.z0.glb.clouddn.com/phpfunction.jpg" alt="PHP常用函数"></a></p>
+            <p><img src="/images/phpfunction.jpg" alt="PHP常用函数"></p>
 <p>戳大~</p>
 
           

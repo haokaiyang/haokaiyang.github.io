@@ -113,13 +113,13 @@
 <meta property="og:site_name" content="郝凯阳">
 <meta property="og:description" content="单机构建网站网站容量的估算容量估算需要估算什么常见容量估算包括数据量、并发量、带宽、CPU/MEM/DISK等。联网项目最重要的是估算并发量 容量评估的步骤和方法 总访问量 平均访问量QPS(总量/(12*3600)) 高峰QPS(平均访问的2-2.5倍) 系统、单机极限QPS 计算容量  常见性能压测工具 ab: ApacheBench是Apache自带的压力测试工具、可以用来测试各种web服务">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://7xr8u7.com1.z0.glb.clouddn.com/%E4%BA%8C%E9%98%B6%E6%AE%B5%E6%8F%90%E4%BA%A4%E6%88%90%E5%8A%9F.jpg">
-<meta property="og:image" content="http://7xr8u7.com1.z0.glb.clouddn.com/%E4%BA%8C%E9%98%B6%E6%AE%B5%E6%8F%90%E4%BA%A4%E5%A4%B1%E8%B4%A5.jpg">
-<meta property="og:updated_time" content="2018-04-26T08:28:00.000Z">
+<meta property="og:image" content="http://haokaiyang.com/images/二阶段提交成功.jpg">
+<meta property="og:image" content="http://haokaiyang.com/images/二阶段提交失败.jpg">
+<meta property="og:updated_time" content="2018-05-03T02:20:08.380Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="大型网站开发技术学习笔记">
 <meta name="twitter:description" content="单机构建网站网站容量的估算容量估算需要估算什么常见容量估算包括数据量、并发量、带宽、CPU/MEM/DISK等。联网项目最重要的是估算并发量 容量评估的步骤和方法 总访问量 平均访问量QPS(总量/(12*3600)) 高峰QPS(平均访问的2-2.5倍) 系统、单机极限QPS 计算容量  常见性能压测工具 ab: ApacheBench是Apache自带的压力测试工具、可以用来测试各种web服务">
-<meta name="twitter:image" content="http://7xr8u7.com1.z0.glb.clouddn.com/%E4%BA%8C%E9%98%B6%E6%AE%B5%E6%8F%90%E4%BA%A4%E6%88%90%E5%8A%9F.jpg">
+<meta name="twitter:image" content="http://haokaiyang.com/images/二阶段提交成功.jpg">
 
 
 
@@ -220,7 +220,7 @@
         
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
-            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />首页</a>
         </li>
       
         
@@ -356,8 +356,22 @@
             
             
               
+                
+              
             
 
+            
+              
+              <span class="post-meta-divider">|</span>
+              
+
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-05-03T10:20:08+08:00">2018-05-03</time>
             
           </span>
 
@@ -534,7 +548,7 @@
 </ul>
 <p>如果join很复杂，首先需要考虑分库的设计是否合理，其次可以考虑使用hadoop或者spark来解决。</p>
 <h4 id="分布式事务的实现-二阶段提交"><a href="#分布式事务的实现-二阶段提交" class="headerlink" title="分布式事务的实现:二阶段提交"></a>分布式事务的实现:二阶段提交</h4><p>两阶段提交协议(Two-phase Commit,2PC)经常被用来实现分布式事务<br>一般分为事务协调器TC和资源管理器SI两种角色，这里的资源管理就是具体的数据库。<br>案例:支付宝转账1万块钱到余额宝如何确保事务<br>1.支付宝表扣除一万<br>2.余额宝表增加一万</p>
-<p>二阶段提交具体细节<br>如图所示:<br><img src="http://7xr8u7.com1.z0.glb.clouddn.com/%E4%BA%8C%E9%98%B6%E6%AE%B5%E6%8F%90%E4%BA%A4%E6%88%90%E5%8A%9F.jpg" alt="二阶段提交成功"><br><img src="http://7xr8u7.com1.z0.glb.clouddn.com/%E4%BA%8C%E9%98%B6%E6%AE%B5%E6%8F%90%E4%BA%A4%E5%A4%B1%E8%B4%A5.jpg" alt="二阶段提交失败"><br>1.应用程序发起一个开始请求到TC<br>2.向所有的Si发起&lt;prepare>消息。</p>
+<p>二阶段提交具体细节<br>如图所示:<br><img src="/images/二阶段提交成功.jpg" alt="二阶段提交成功"><br><img src="/images/二阶段提交失败.jpg" alt="二阶段提交失败"><br>1.应用程序发起一个开始请求到TC<br>2.向所有的Si发起&lt;prepare>消息。</p>
 <pre><code>1. TC给B的prepare消息是通知余额宝数椐库相应账目加lw。
 2. TC给A的prepare消总足通知支付宝数据库相应账目扣款1w
 </code></pre><p>3.Si收到&lt;prepare>消息后，执行具体本机事务，但不会进行commit,锁定资源等待提交，成功返回</p>

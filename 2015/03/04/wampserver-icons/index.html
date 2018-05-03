@@ -113,14 +113,14 @@
 <meta property="og:site_name" content="郝凯阳">
 <meta property="og:description" content="注：路径仅作参考如图所示，列表前面的小图标有时候会全部出现的是XX，不显示。 打开apache安装目录（D:\wamp\bin\apache\apache2.4.9\conf\extra）下的httpd-autoindex.conf文件;查找 Alias /icons/ “c:/Apache24/icons/”,如下 1234567Alias /icons/ &amp;quot;c:/Apache24/i">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://7xr8u7.com1.z0.glb.clouddn.com/wamp-icons1.png">
-<meta property="og:image" content="http://7xr8u7.com1.z0.glb.clouddn.com/wamp-icons2.jpg">
-<meta property="og:image" content="http://7xr8u7.com1.z0.glb.clouddn.com/wamp-icons2.jpg">
-<meta property="og:updated_time" content="2016-02-25T15:38:07.000Z">
+<meta property="og:image" content="http://haokaiyang.com/images/wamp-icons1.png">
+<meta property="og:image" content="http://haokaiyang.com/images/wamp-icons2.jpg">
+<meta property="og:image" content="http://haokaiyang.com/images/wamp-icons3.jpg">
+<meta property="og:updated_time" content="2018-05-03T02:42:09.487Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="WampServer目录浏览时icons图标不显示解决方法">
 <meta name="twitter:description" content="注：路径仅作参考如图所示，列表前面的小图标有时候会全部出现的是XX，不显示。 打开apache安装目录（D:\wamp\bin\apache\apache2.4.9\conf\extra）下的httpd-autoindex.conf文件;查找 Alias /icons/ “c:/Apache24/icons/”,如下 1234567Alias /icons/ &amp;quot;c:/Apache24/i">
-<meta name="twitter:image" content="http://7xr8u7.com1.z0.glb.clouddn.com/wamp-icons1.png">
+<meta name="twitter:image" content="http://haokaiyang.com/images/wamp-icons1.png">
 
 
 
@@ -221,7 +221,7 @@
         
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
-            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />首页</a>
         </li>
       
         
@@ -372,7 +372,7 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2016-02-25T23:38:07+08:00">2016-02-25</time>
+              <time title="更新于" itemprop="dateModified" datetime="2018-05-03T10:42:09+08:00">2018-05-03</time>
             
           </span>
 
@@ -431,16 +431,16 @@
 
       
         <p><em>注：路径仅作参考</em><br>如图所示，列表前面的小图标有时候会全部出现的是XX，不显示。</p>
-<p><a href="http://7xr8u7.com1.z0.glb.clouddn.com/wamp-icons1.png" target="_blank" rel="noopener"><img src="http://7xr8u7.com1.z0.glb.clouddn.com/wamp-icons1.png" alt="Wamp server 目录浏览时icons图标不显示解决方法1"></a><br>打开apache安装目录（D:\wamp\bin\apache\apache2.4.9\conf\extra）下的httpd-autoindex.conf文件;<br>查找 Alias /icons/ “c:/Apache24/icons/”,如下</p>
+<p><img src="/images/wamp-icons1.png" alt="Wamp server 目录浏览时icons图标不显示解决方法1"><br>打开apache安装目录（D:\wamp\bin\apache\apache2.4.9\conf\extra）下的httpd-autoindex.conf文件;<br>查找 Alias /icons/ “c:/Apache24/icons/”,如下</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Alias /icons/ &quot;c:/Apache24/icons/&quot;</span><br><span class="line"></span><br><span class="line">&lt;Directory &quot;c:/Apache24/icons&quot;&gt;</span><br><span class="line">    Options Indexes MultiViews</span><br><span class="line">    AllowOverride None</span><br><span class="line">    Require all granted</span><br><span class="line">&lt;/Directory&gt;</span><br></pre></td></tr></table></figure>
 <p>更改为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Alias /icons/ &quot;D:/wamp/bin/apache/apache2.4.9/icons/&quot;</span><br><span class="line"></span><br><span class="line">&lt;Directory &quot;D:/wamp/bin/apache/apache2.4.9/icons/&quot;&gt;</span><br><span class="line">    Options Indexes MultiViews</span><br><span class="line">    AllowOverride None</span><br><span class="line">    Require all granted</span><br><span class="line">&lt;/Directory&gt;</span><br></pre></td></tr></table></figure>
 <p>重启wamp后，如图所示：</p>
-<p><a href="http://7xr8u7.com1.z0.glb.clouddn.com/wamp-icons2.jpg" target="_blank" rel="noopener"><img src="http://7xr8u7.com1.z0.glb.clouddn.com/wamp-icons2.jpg" alt="Wamp server 目录浏览时icons图标不显示解决方法2"></a></p>
+<p><img src="/images/wamp-icons2.jpg" alt="Wamp server 目录浏览时icons图标不显示解决方法2"></p>
 <p>或者和我一样在httpd.conf中注释调这个功能：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># Fancy directory listings</span><br><span class="line">#Include conf/extra/httpd-autoindex.conf</span><br></pre></td></tr></table></figure>
 <p>注释掉后是这样：</p>
-<p><a href="http://7xr8u7.com1.z0.glb.clouddn.com/wamp-icons2.jpg" target="_blank" rel="noopener"><img src="http://7xr8u7.com1.z0.glb.clouddn.com/wamp-icons2.jpg" alt="Wamp server 目录浏览时icons图标不显示解决方法3"></a></p>
+<p><img src="/images/wamp-icons3.jpg" alt="Wamp server 目录浏览时icons图标不显示解决方法3"></p>
 
       
     </div>
