@@ -1679,7 +1679,7 @@ chmod a-x .bashrc
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2018-03-08T13:30:36+08:00">2018-03-08</time>
+              <time title="更新于" itemprop="dateModified" datetime="2018-05-17T23:38:11+08:00">2018-05-17</time>
             
           </span>
 
@@ -1782,10 +1782,10 @@ chmod a-x .bashrc
 <li><p>nginx 配置文件地址<br>/usr/local/etc/nginx/nginx.conf</p>
 </li>
 <li><p>修改端口:nginx 安装后默认后默认监听8080端口，我们将端口修改为80端口，但是需要root权限，我们运行</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo chown root:wheel /usr/<span class="built_in">local</span>/Cellar/nginx/1.8.0/bin/nginx</span><br><span class="line">sudo u+s /usr/<span class="built_in">local</span>/Cellar/nginx/1.8.0/bin/nginx</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo chown root:wheel /usr/<span class="built_in">local</span>/Cellar/nginx/1.13.12/bin/nginx</span><br><span class="line">sudo chmod u+s /usr/<span class="built_in">local</span>/Cellar/nginx/1.13.12/bin/nginx</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>开机启动</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ln -sfv /usr/<span class="built_in">local</span>/opt/nginx/*.plist ~/Library/LaunchAgents</span><br><span class="line">launchctl load ~/Library/LaunchAgents/homebrew.mxcl.nginx.plist</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ln -sfv /usr/<span class="built_in">local</span>/opt/nginx/homebrew.mxcl.nginx.plist ~/Library/LaunchAgents/</span><br><span class="line">launchctl load ~/Library/LaunchAgents/homebrew.mxcl.nginx.plist</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <h2 id="安装mysql"><a href="#安装mysql" class="headerlink" title="安装mysql"></a>安装mysql</h2><ul>
