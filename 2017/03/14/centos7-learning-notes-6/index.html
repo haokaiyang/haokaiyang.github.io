@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"haokaiyang.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":false,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="特殊符号及代表意义   特殊符号 代表意义    [:alnum:] 英文小写字符及数字，即 0-9, A-Z, a-z   [:alpha:] 英文大小写字符，即 A-Z, a-z   [:blank:] 空格键与tab键   [:cntrl:] 键盘上面的控制按键，亦即包括 CR, LF, Tab, Del.. 等等   [:digit:] 代表数字，亦即 0-9   [:graph:] 除了">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《鸟哥的Linux私房菜》正则表达式学习笔记">
+<meta property="og:url" content="http://haokaiyang.com/2017/03/14/centos7-learning-notes-6/index.html">
+<meta property="og:site_name" content="郝凯阳">
+<meta property="og:description" content="特殊符号及代表意义   特殊符号 代表意义    [:alnum:] 英文小写字符及数字，即 0-9, A-Z, a-z   [:alpha:] 英文大小写字符，即 A-Z, a-z   [:blank:] 空格键与tab键   [:cntrl:] 键盘上面的控制按键，亦即包括 CR, LF, Tab, Del.. 等等   [:digit:] 代表数字，亦即 0-9   [:graph:] 除了">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2017-03-14T15:00:00.000Z">
+<meta property="article:modified_time" content="2020-12-04T03:52:40.936Z">
+<meta property="article:author" content="郝凯阳">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="学习笔记">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://haokaiyang.com/2017/03/14/centos7-learning-notes-6/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>《鸟哥的Linux私房菜》正则表达式学习笔记 | 郝凯阳</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">郝凯阳</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://haokaiyang.com/2017/03/14/centos7-learning-notes-6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="郝凯阳">
+      <meta itemprop="description" content="Enjoy coding,Enjoy life:)">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="郝凯阳">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          《鸟哥的Linux私房菜》正则表达式学习笔记
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2017-03-14 23:00:00" itemprop="dateCreated datePublished" datetime="2017-03-14T23:00:00+08:00">2017-03-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-04 11:52:40" itemprop="dateModified" datetime="2020-12-04T11:52:40+08:00">2020-12-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>7.3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>7 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="特殊符号及代表意义"><a href="#特殊符号及代表意义" class="headerlink" title="特殊符号及代表意义"></a>特殊符号及代表意义</h2><table>
+<thead>
+<tr>
+<th>特殊符号</th>
+<th>代表意义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>[:alnum:]</td>
+<td>英文小写字符及数字，即 0-9, A-Z, a-z</td>
+</tr>
+<tr>
+<td>[:alpha:]</td>
+<td>英文大小写字符，即 A-Z, a-z</td>
+</tr>
+<tr>
+<td>[:blank:]</td>
+<td>空格键与tab键</td>
+</tr>
+<tr>
+<td>[:cntrl:]</td>
+<td>键盘上面的控制按键，亦即包括 CR, LF, Tab, Del.. 等等</td>
+</tr>
+<tr>
+<td>[:digit:]</td>
+<td>代表数字，亦即 0-9</td>
+</tr>
+<tr>
+<td>[:graph:]</td>
+<td>除了空白字符 (空格键 [Tab] 按键) 外的其他所有按键</td>
+</tr>
+<tr>
+<td>[:lower:]</td>
+<td>代表小写字符，亦即 a-z</td>
+</tr>
+<tr>
+<td>[:print:]</td>
+<td>代表任何可以被打印出來的字符</td>
+</tr>
+<tr>
+<td>[:punct:]</td>
+<td>代表标点符号 (punctuation symbol)，亦即：” ‘ ? ! ; : # $…</td>
+</tr>
+<tr>
+<td>[:upper:]</td>
+<td>代表大写字符，亦即 A-Z</td>
+</tr>
+<tr>
+<td>[:space:]</td>
+<td>任何会产生生空白的字符，包括空白鍵, [Tab], CR 等等</td>
+</tr>
+<tr>
+<td>[:xdigit:]</td>
+<td>代表 16 进制的数字类型，因此包括： 0-9, A-F, a-f 的数字与字符</td>
+</tr>
+</tbody></table>
+<h2 id="grep进阶"><a href="#grep进阶" class="headerlink" title="grep进阶"></a>grep进阶</h2><pre><code>命令:grep [-A] [-B] [--color=auto] &#39;搜索字符串&#39; filename
+选项及参数:
+    -A 后面可加数字,为after的意思,除了列出该行外,后面的n行也列出来
+    -B 后面可加数字,为befer的意思,除了列出该列外,前面的n行业列出来</code></pre>
+<table>
+<thead>
+<tr>
+<th>RE字符</th>
+<th>意义</th>
+<th>例子</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>^word</td>
+<td>待搜素的字符串在行首</td>
+<td>grep -n ‘^#’ regular_express.txt</td>
+</tr>
+<tr>
+<td>word$</td>
+<td>待搜素的字符串在行尾</td>
+<td>grep -n ‘!$’ regular_express.txt</td>
+</tr>
+<tr>
+<td>.</td>
+<td>一定有一个任意字符</td>
+<td>grep -n ‘e.e’ regular_express.txt</td>
+</tr>
+<tr>
+<td>|转义特殊符号</td>
+<td>grep -n &#39; regular_express.txt</td>
+<td></td>
+</tr>
+<tr>
+<td>*</td>
+<td>代表重复前一个字符0-无穷次</td>
+<td>grep -n ‘ess*’ regular_express.txt</td>
+</tr>
+<tr>
+<td>[list]</td>
+<td>字符集合的RE字符,里面列出想要截取的字符</td>
+<td>grep -n ‘g[ld]’ regular_express.txt</td>
+</tr>
+<tr>
+<td>[n1-n2]</td>
+<td>字符集合的RE字符,里面列出想要截取的字符范围</td>
+<td>grep -n ‘[A-Z]’ regular_express.txt</td>
+</tr>
+<tr>
+<td>[^list]</td>
+<td>字符集合的RE字符,里面列出不要的字符串或范围</td>
+<td>grep -n ‘oo[^t]’ regular_express.txt</td>
+</tr>
+<tr>
+<td>{n,m}</td>
+<td>连续n到m的前一个RE字符<br>若为{n}连续n个前一个RE字符<br>{n,}连续n个以上的前一个RE字符</td>
+<td>grep -n ‘go{2,3}g’ regular_express.txt</td>
+</tr>
+</tbody></table>
+<h2 id="sed工具"><a href="#sed工具" class="headerlink" title="sed工具"></a>sed工具</h2><pre><code>命令:sed [-nefr] [动作]
+选项及参数:
+    -n 使用安静(silent)模式,在一般sed的用法中,所有来自stdin的资料一般都会列出到屏幕上,但如果加上-n参数后,则只有经过sed特殊处理的那一行(或者动作)才会被列出来
+    -e 直接在命令模式上进行sed的动作编辑
+    -f 直接将sed的工作写在一个文件内,-f filename 则可以执行filename内的sed动作
+    -r sed的动作支持的是延伸型正规表达式语法(默认是基础语法)
+    -i 直接修改读取的文件内容,而不是由屏幕输出
+动作说明: [n1[,n2]]function
+    n1,n2 不见得会存在,一般代表选择进行动作的行数,举例来说,如果我的动作是需要在10-20行之间进行的,则10,20(动作行为)</code></pre>
+<p>function下有这些东西:<br>a 新增,a的后面可以接字符串,而这些字符串会在新的一行出现(目前的下一行)<br>c 取代,c的后面可以接字符串,这些字符串可以取代n1,n2之间的行<br>d 删除,后面不用加任何东西<br>i 插入,i的后面可以接字符串,而这些字符串在新的一行出现(目前的上一行)<br>p 打印,将某个选择的资料打印<br>s 取代,可以直接进行替换的工作。可以搭配正则表达式,例如1,20s/old/new/g就是啦</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#将/etc/passwd的内容列出来,同时删除2-5行</span></span><br><span class="line">[root<span class="variable">@CentOS7</span> ~]<span class="comment"># nl /etc/passwd | sed &#x27;2,5d&#x27;</span></span><br><span class="line">     <span class="number">1</span>  <span class="symbol">root:</span><span class="symbol">x:</span>0<span class="symbol">:</span>0<span class="symbol">:root</span><span class="symbol">:/root</span><span class="symbol">:/bin/bash</span></span><br><span class="line">     <span class="number">6</span>  <span class="symbol">sync:</span><span class="symbol">x:</span><span class="number">5:0</span><span class="symbol">:sync</span><span class="symbol">:/sbin</span><span class="symbol">:/bin/sync</span></span><br><span class="line">...省略...</span><br><span class="line"><span class="comment">#只看第一行</span></span><br><span class="line">[root<span class="variable">@CentOS7</span> ~]<span class="comment"># nl /etc/passwd | sed &#x27;2,$d&#x27;</span></span><br><span class="line">     <span class="number">1</span>  <span class="symbol">root:</span><span class="symbol">x:</span>0<span class="symbol">:</span>0<span class="symbol">:root</span><span class="symbol">:/root</span><span class="symbol">:/bin/bash</span></span><br><span class="line"><span class="comment">#在第二行后加上drink tea字符串</span></span><br><span class="line">[root<span class="variable">@CentOS7</span> ~]<span class="comment"># nl /etc/passwd | sed &#x27;2a drink tea&#x27;</span></span><br><span class="line">     <span class="number">1</span>  <span class="symbol">root:</span><span class="symbol">x:</span>0<span class="symbol">:</span>0<span class="symbol">:root</span><span class="symbol">:/root</span><span class="symbol">:/bin/bash</span></span><br><span class="line">     <span class="number">2</span>  <span class="symbol">bin:</span><span class="symbol">x:</span><span class="number">1:1</span><span class="symbol">:bin</span><span class="symbol">:/bin</span><span class="symbol">:/sbin/nologin</span></span><br><span class="line">drink tea</span><br><span class="line">     <span class="number">3</span>  <span class="symbol">daemon:</span><span class="symbol">x:</span><span class="number">2:2</span><span class="symbol">:daemon</span><span class="symbol">:/sbin</span><span class="symbol">:/sbin/nologin</span></span><br><span class="line">     <span class="number">4</span>  <span class="symbol">adm:</span><span class="symbol">x:</span><span class="number">3:4</span><span class="symbol">:adm</span><span class="symbol">:/var/adm</span><span class="symbol">:/sbin/nologin</span></span><br><span class="line"><span class="comment">#将第2-5行的内容替换成 No 2-5 number</span></span><br><span class="line">[root<span class="variable">@CentOS7</span> ~]<span class="comment"># nl /etc/passwd | sed &#x27;2,5c No 2-5 number&#x27;</span></span><br><span class="line">     <span class="number">1</span>  <span class="symbol">root:</span><span class="symbol">x:</span>0<span class="symbol">:</span>0<span class="symbol">:root</span><span class="symbol">:/root</span><span class="symbol">:/bin/bash</span></span><br><span class="line">No <span class="number">2-5</span> number</span><br><span class="line">     <span class="number">6</span>  <span class="symbol">sync:</span><span class="symbol">x:</span><span class="number">5:0</span><span class="symbol">:sync</span><span class="symbol">:/sbin</span><span class="symbol">:/bin/sync</span></span><br><span class="line">     <span class="number">7</span>  <span class="symbol">shutdown:</span><span class="symbol">x:</span><span class="number">6:0</span><span class="symbol">:shutdown</span><span class="symbol">:/sbin</span><span class="symbol">:/sbin/shutdown</span></span><br><span class="line"><span class="comment">#仅列出5-7行</span></span><br><span class="line">[root<span class="variable">@CentOS7</span> ~]<span class="comment"># nl /etc/passwd |sed -n &#x27;5,7p&#x27;</span></span><br><span class="line">     <span class="number">5</span>  <span class="symbol">lp:</span><span class="symbol">x:</span><span class="number">4:7</span><span class="symbol">:lp</span><span class="symbol">:/var/spool/lpd</span><span class="symbol">:/sbin/nologin</span></span><br><span class="line">     <span class="number">6</span>  <span class="symbol">sync:</span><span class="symbol">x:</span><span class="number">5:0</span><span class="symbol">:sync</span><span class="symbol">:/sbin</span><span class="symbol">:/bin/sync</span></span><br><span class="line">     <span class="number">7</span>  <span class="symbol">shutdown:</span><span class="symbol">x:</span><span class="number">6:0</span><span class="symbol">:shutdown</span><span class="symbol">:/sbin</span><span class="symbol">:/sbin/shutdown</span></span><br><span class="line"><span class="comment">#查看本机ip</span></span><br><span class="line">[root<span class="variable">@CentOS7</span> ~]<span class="comment"># ifconfig enp0s3 | grep &#x27;inet &#x27;|sed &#x27;s/^.*inet //g&#x27; | sed &#x27;s/ *netmask.*$//g&#x27;</span></span><br><span class="line"><span class="number">10.0</span>.<span class="number">2.15</span></span><br><span class="line"><span class="comment">#直接修改文件内容(会修改原始文件,谨慎操作)</span></span><br><span class="line"><span class="comment">#将regular_express.txt中的.替换为!</span></span><br><span class="line">[root<span class="variable">@CentOS7</span> haokaiyang]<span class="comment"># sed -i &#x27;s/\.$/\!/g&#x27; regular_express.txt</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="延伸正则表达式"><a href="#延伸正则表达式" class="headerlink" title="延伸正则表达式"></a>延伸正则表达式</h2><table>
+<thead>
+<tr>
+<th>RE字符</th>
+<th>意义</th>
+<th>例子</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>+</td>
+<td>重复一个或一个以上的前一个RE字符</td>
+<td>搜索god,good,goood等字符串<br>egrep -n ‘go+d’ regular_express.txt</td>
+</tr>
+<tr>
+<td>?</td>
+<td>0个或一个的前一个RE字符</td>
+<td>搜索gd,god等字符串<br>egrep -n ‘go?d’ regular_express.txt</td>
+</tr>
+<tr>
+<td>&#124;</td>
+<td>用or的方式找出字符串</td>
+<td>egrep -n ‘gd&#124;good’ regular_express.txt</td>
+</tr>
+<tr>
+<td>()</td>
+<td>找出群组字符</td>
+<td>找出glad或good字符串<br>egrep -n ‘g(la&#124;oo)d’ regular_express.txt</td>
+</tr>
+<tr>
+<td>()+</td>
+<td>多个重复群组的判断</td>
+<td>开头是A,结尾是C,中间有一个以上的xyz字符串的字符<br>echo ‘AxyzxyzxyzxyzC’,egrep ‘A(xyz)+C’</td>
+</tr>
+</tbody></table>
+<h2 id="文件格式化及相关处理"><a href="#文件格式化及相关处理" class="headerlink" title="文件格式化及相关处理"></a>文件格式化及相关处理</h2><h3 id="格式化打印-printf"><a href="#格式化打印-printf" class="headerlink" title="格式化打印:printf"></a>格式化打印:printf</h3><pre><code>命令:printf &#39;打印格式&#39; 实际内容
+选项及参数:
+格式方面有以下几个特殊格式:
+    \a 警告声音
+    \b backspace键
+    \f 清屏(form feed)
+    \n 输出新的一行
+    \r Enter按键
+    \t 水平tab按键
+    \v 垂直tab按键
+    \xNN NN为两位数的数字,可以转换数字成为字符串
+    关于C语言内,常见的变量格式
+    %ns 那个n是数字,s代表string,即多少个字符
+    %ni 那个n是数字,i代表integer,即多少整数位
+    %N.nf 那个n与N都是数字,f代表floating(浮点),假设十个位数,小数点两位.%10.2f</code></pre>
+<figure class="highlight llvm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Name     Chinese   English   Math    Average</span><br><span class="line">DmTsai        <span class="number">80</span>        <span class="number">60</span>     <span class="number">92</span>      <span class="number">77.33</span></span><br><span class="line">VBird         <span class="number">75</span>        <span class="number">55</span>     <span class="number">80</span>      <span class="number">70.00</span></span><br><span class="line">Ken           <span class="number">60</span>        <span class="number">90</span>     <span class="number">70</span>      <span class="number">73.33</span></span><br><span class="line"></span><br><span class="line">#将上诉信息第二行以后<span class="punctuation">,</span>分别用字符串<span class="punctuation">,</span>整数<span class="punctuation">,</span>小数来显示</span><br><span class="line">[haokaiyang<span class="title">@CentOS7</span> ~]$ printf &#x27;<span class="variable">%10</span>s <span class="variable">%5</span>i <span class="variable">%5</span>i <span class="variable">%5</span>i <span class="variable">%8</span>.<span class="number">2</span>f \n&#x27; $(cat printf.txt | grep -v Name)</span><br><span class="line">    DmTsai    <span class="number">80</span>    <span class="number">60</span>    <span class="number">92</span>    <span class="number">77.33</span> </span><br><span class="line">     VBird    <span class="number">75</span>    <span class="number">55</span>    <span class="number">80</span>    <span class="number">70.00</span> </span><br><span class="line">       Ken    <span class="number">60</span>    <span class="number">90</span>    <span class="number">70</span>    <span class="number">73.33</span> </span><br></pre></td></tr></table></figure>
+
+<h3 id="awk-优良的文本处理工具"><a href="#awk-优良的文本处理工具" class="headerlink" title="awk:优良的文本处理工具"></a>awk:优良的文本处理工具</h3><p>awk中,默认栏位的分割符是 空格键 或 tab键。</p>
+<pre><code>命令:awk &#39;条件类型1&#123;动作1&#125; 条件类型2&#123;动作2&#125; ...&#39; filename</code></pre>
+<figure class="highlight pf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[haokaiyang@CentOS7 ~]$ last -n <span class="number">5</span> |awk &#x27;&#123;print <span class="variable">$1</span> <span class="string">&quot;\t&quot;</span> <span class="variable">$3</span>&#125;&#x27;</span><br><span class="line">haokaiya    M<span class="keyword">on</span></span><br><span class="line">haokaiya    :<span class="number">0</span></span><br><span class="line">haokaiya    :<span class="number">0</span></span><br><span class="line">(<span class="literal">unknown</span>    :<span class="number">0</span></span><br><span class="line">reboot  boot</span><br><span class="line"></span><br><span class="line">wtmp    M<span class="keyword">on</span></span><br></pre></td></tr></table></figure>
+<h4 id="awk内置变量"><a href="#awk内置变量" class="headerlink" title="awk内置变量"></a>awk内置变量</h4><table>
+<thead>
+<tr>
+<th>变量名称</th>
+<th>意义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>NF</td>
+<td>每一行($0)拥有的栏位总数</td>
+</tr>
+<tr>
+<td>NR</td>
+<td>目前awk所处理的是第几行的资料</td>
+</tr>
+<tr>
+<td>FS</td>
+<td>目前得到分割字符,默认是空格键</td>
+</tr>
+</tbody></table>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[haokaiyang@CentOS7 ~]$  <span class="keyword">last</span> -n <span class="number">5</span>| awk <span class="string">&#x27;&#123;print $1 &quot;\t lines: &quot; NR &quot;\t columns: &quot; NF&#125;&#x27;</span></span><br><span class="line">haokaiya     <span class="built_in">line</span><span class="variable">s:</span> <span class="number">1</span>    column<span class="variable">s:</span> <span class="number">9</span></span><br><span class="line">haokaiya     <span class="built_in">line</span><span class="variable">s:</span> <span class="number">2</span>    column<span class="variable">s:</span> <span class="number">10</span></span><br><span class="line">haokaiya     <span class="built_in">line</span><span class="variable">s:</span> <span class="number">3</span>    column<span class="variable">s:</span> <span class="number">10</span></span><br><span class="line">(unknown     <span class="built_in">line</span><span class="variable">s:</span> <span class="number">4</span>    column<span class="variable">s:</span> <span class="number">10</span></span><br><span class="line">reboot   <span class="built_in">line</span><span class="variable">s:</span> <span class="number">5</span>    column<span class="variable">s:</span> <span class="number">11</span></span><br><span class="line">     <span class="built_in">line</span><span class="variable">s:</span> <span class="number">6</span>    column<span class="variable">s:</span> <span class="number">0</span></span><br><span class="line">wtmp     <span class="built_in">line</span><span class="variable">s:</span> <span class="number">7</span>    column<span class="variable">s:</span> <span class="number">7</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="awk的逻辑运算符"><a href="#awk的逻辑运算符" class="headerlink" title="awk的逻辑运算符"></a>awk的逻辑运算符</h4><table>
+<thead>
+<tr>
+<th>运算符号</th>
+<th>意义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&gt;</td>
+<td>大于</td>
+</tr>
+<tr>
+<td>&lt;</td>
+<td>小于</td>
+</tr>
+<tr>
+<td>&gt;=</td>
+<td>大于或等于</td>
+</tr>
+<tr>
+<td>&lt;=</td>
+<td>小于或等于</td>
+</tr>
+<tr>
+<td>==</td>
+<td>等于</td>
+</tr>
+<tr>
+<td>!=</td>
+<td>不等于</td>
+</tr>
+</tbody></table>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">#查询第三栏小于10以下的数据,并且仅列出账号与第三栏</span><br><span class="line">[haokaiyang@CentOS7 ~]$ <span class="keyword">cat</span> /etc/passwd | awk &#x27;&#123;FS=<span class="string">&quot;:&quot;</span>&#125; <span class="variable">$3</span> &lt; 10 &#123;<span class="keyword">print</span> <span class="variable">$1</span> <span class="string">&quot;\t &quot;</span> <span class="variable">$3&#125;</span>&#x27;</span><br><span class="line">root:x:0:0:root:/root:/bin/bash</span><br><span class="line">bin  1</span><br><span class="line">daemon   2</span><br><span class="line">adm  3</span><br><span class="line">lp   4</span><br><span class="line">sync     5</span><br><span class="line">shutdown     6</span><br><span class="line">halt     7</span><br><span class="line">mail     8</span><br><span class="line">#第一行是因为第一次读入默认还是以空格键位分割符的,虽然定义了FS,但从第二行才开始生效</span><br><span class="line">#预设可以使用BEGIN这个关键字</span><br><span class="line">[haokaiyang@CentOS7 ~]$ <span class="keyword">cat</span> /etc/passwd | awk &#x27;BEGIN &#123;FS=<span class="string">&quot;:&quot;</span>&#125; <span class="variable">$3</span> &lt; 10 &#123;<span class="keyword">print</span> <span class="variable">$1</span> <span class="string">&quot;\t &quot;</span> <span class="variable">$3&#125;</span>&#x27;</span><br><span class="line">root     0</span><br><span class="line">bin  1</span><br><span class="line">daemon   2</span><br><span class="line">adm  3</span><br><span class="line">lp   4</span><br><span class="line">sync     5</span><br><span class="line">shutdown     6</span><br><span class="line">halt     7</span><br><span class="line">mail     8</span><br><span class="line"></span><br><span class="line">#pay.txt</span><br><span class="line">Name    1st     2nd     3th</span><br><span class="line">VBird   23000   24000   25000</span><br><span class="line">DMTsai  21000   20000   23000</span><br><span class="line">Bird2   43000   42000   41000</span><br><span class="line">#计算<span class="keyword">Total</span></span><br><span class="line">#第一行只是说明,所以第一行不用统计</span><br><span class="line">#第二行以后开始统计</span><br><span class="line">[haokaiyang@CentOS7 ~]$ <span class="keyword">cat</span> pay.txt | \</span><br><span class="line">&gt; awk &#x27;NR==1&#123;printf <span class="string">&quot;%10s %10s %10s %10s %10s\n&quot;</span>,<span class="variable">$1</span>,<span class="variable">$2</span>,<span class="variable">$3</span>,<span class="variable">$4</span>,<span class="string">&quot;Total&quot;</span> &#125;</span><br><span class="line">&gt; NR&gt;=2&#123;<span class="keyword">total</span> = <span class="variable">$2</span> + <span class="variable">$3</span> + <span class="variable">$4</span></span><br><span class="line">&gt; printf <span class="string">&quot;%10s %10d %10d %10d %10.2f\n&quot;</span>, <span class="variable">$1</span>, <span class="variable">$2</span>, <span class="variable">$3</span>, <span class="variable">$4</span>, <span class="keyword">total</span>&#125;&#x27;</span><br><span class="line">      Name        1st        2nd        3th      <span class="keyword">Total</span></span><br><span class="line">     VBird      23000      24000      25000   72000.00</span><br><span class="line">    DMTsai      21000      20000      23000   64000.00</span><br><span class="line">     Bird2      43000      42000      41000  126000.00</span><br></pre></td></tr></table></figure>
+
+<h3 id="文件对比工具"><a href="#文件对比工具" class="headerlink" title="文件对比工具"></a>文件对比工具</h3><h4 id="diff"><a href="#diff" class="headerlink" title="diff"></a>diff</h4><pre><code>命令: diff [-bBi] from-file to-file
+选项及参数:
+    from-file
+    to-file
+    from-file和to-file可以用-替换,代表stdin的意思
+
+    -b 忽略一行中,仅有多个空白的差异(例如&quot;about me&quot; 与 &quot;about     me&quot;视为相同)
+    -B 忽略空白行差异
+    -i 忽略大小写差异</code></pre>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#实验准备</span></span><br><span class="line">[haokaiyang<span class="variable">@CentOS7</span> testpw]<span class="variable">$ </span>cp /etc/passwd passwd.old</span><br><span class="line">[haokaiyang<span class="variable">@CentOS7</span> testpw]<span class="variable">$ </span>cat /etc/passwd | sed -e <span class="string">&#x27;4d&#x27;</span> -e <span class="string">&#x27;6c no six line&#x27;</span> &gt;passwd.new</span><br><span class="line">[haokaiyang<span class="variable">@CentOS7</span> testpw]<span class="variable">$ </span>diff passwd.old passwd.new </span><br><span class="line"><span class="number">4d3</span>           左边第四行被删除(d)了,标准是右边的第三行  </span><br><span class="line">&lt; <span class="symbol">adm:</span><span class="symbol">x:</span><span class="number">3:4</span><span class="symbol">:adm</span><span class="symbol">:/var/adm</span><span class="symbol">:/sbin/nologin</span></span><br><span class="line"><span class="number">6c5</span>           左边的第六行被替换(c)成右边文件的第五行</span><br><span class="line">&lt; <span class="symbol">sync:</span><span class="symbol">x:</span><span class="number">5:0</span><span class="symbol">:sync</span><span class="symbol">:/sbin</span><span class="symbol">:/bin/sync</span> 右边第六行内容</span><br><span class="line">---</span><br><span class="line">&gt; no six line 右边第五行内容</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[haokaiyang@CentOS7 ~]$  diff <span class="regexp">/etc/</span>rc0.d<span class="regexp">/ /</span>etc<span class="regexp">/rc5.d/</span></span><br><span class="line">只在 <span class="regexp">/etc/</span>rc0.d/ 存在：K90network</span><br><span class="line">只在 <span class="regexp">/etc/</span>rc5.d/ 存在：S10network</span><br></pre></td></tr></table></figure>
+
+<h4 id="cmp"><a href="#cmp" class="headerlink" title="cmp"></a>cmp</h4><pre><code>命令:cmp [-l] file1 file2
+选项及参数:
+    -l 显示十进制的字节数和八进制的不同字节</code></pre>
+<h4 id="patch"><a href="#patch" class="headerlink" title="patch"></a>patch</h4><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#以passwd.old与passwd.new 制作补丁文件</span></span><br><span class="line">[haokaiyang<span class="variable">@CentOS7</span> testpw]<span class="variable">$ </span>diff -Naur passwd.old passwd.new &gt; passwd.patch</span><br><span class="line">[haokaiyang<span class="variable">@CentOS7</span> testpw]<span class="variable">$ </span>cat passwd.patch </span><br><span class="line">--- passwd.old  <span class="number">2017-03</span><span class="number">-14 11</span><span class="symbol">:</span><span class="number">49:47</span>.<span class="number">435808557</span> +0800</span><br><span class="line">+++ passwd.new  <span class="number">2017-03</span><span class="number">-14 11</span><span class="symbol">:</span><span class="number">50:21</span>.<span class="number">191808557</span> +0800</span><br><span class="line">@@ <span class="number">-1,9</span> +<span class="number">1,8</span> @@   新旧文件要修改资料的限定范围,旧文件在<span class="number">1-9</span>行,新文件在<span class="number">1-8</span>行</span><br><span class="line"> <span class="symbol">root:</span><span class="symbol">x:</span>0<span class="symbol">:</span>0<span class="symbol">:root</span><span class="symbol">:/root</span><span class="symbol">:/bin/bash</span></span><br><span class="line"> <span class="symbol">bin:</span><span class="symbol">x:</span><span class="number">1:1</span><span class="symbol">:bin</span><span class="symbol">:/bin</span><span class="symbol">:/sbin/nologin</span></span><br><span class="line"> <span class="symbol">daemon:</span><span class="symbol">x:</span><span class="number">2:2</span><span class="symbol">:daemon</span><span class="symbol">:/sbin</span><span class="symbol">:/sbin/nologin</span></span><br><span class="line">-<span class="symbol">adm:</span><span class="symbol">x:</span><span class="number">3:4</span><span class="symbol">:adm</span><span class="symbol">:/var/adm</span><span class="symbol">:/sbin/nologin</span> 左侧文件删除</span><br><span class="line"> <span class="symbol">lp:</span><span class="symbol">x:</span><span class="number">4:7</span><span class="symbol">:lp</span><span class="symbol">:/var/spool/lpd</span><span class="symbol">:/sbin/nologin</span></span><br><span class="line">-<span class="symbol">sync:</span><span class="symbol">x:</span><span class="number">5:0</span><span class="symbol">:sync</span><span class="symbol">:/sbin</span><span class="symbol">:/bin/sync</span>      左侧文件删除</span><br><span class="line">+no six line                          右侧文件增加</span><br><span class="line"> <span class="symbol">shutdown:</span><span class="symbol">x:</span><span class="number">6:0</span><span class="symbol">:shutdown</span><span class="symbol">:/sbin</span><span class="symbol">:/sbin/shutdown</span></span><br><span class="line"> <span class="symbol">halt:</span><span class="symbol">x:</span><span class="number">7:0</span><span class="symbol">:halt</span><span class="symbol">:/sbin</span><span class="symbol">:/sbin/halt</span></span><br><span class="line"> <span class="symbol">mail:</span><span class="symbol">x:</span><span class="number">8:12</span><span class="symbol">:mail</span><span class="symbol">:/var/spool/mail</span><span class="symbol">:/sbin/nologin</span></span><br></pre></td></tr></table></figure>
+
+<pre><code>命令:patch -p0 &lt; patch_file &lt;==更新
+    patch -R -pN &lt; patch_file &lt;==还原
+选项及参数:
+    -p 后面可以接取消几层目录的意思
+    -R 代表还原,将新的档案还原成原来旧的版本</code></pre>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#将刚刚制作的patch file 用来更新旧版资料</span></span><br><span class="line">[haokaiyang<span class="variable">@CentOS7</span> testpw]<span class="variable">$ </span>patch -p0 &lt; passwd.patch </span><br><span class="line">patching file passwd.old</span><br><span class="line">[haokaiyang<span class="variable">@CentOS7</span> testpw]<span class="variable">$ </span>ll passwd*</span><br><span class="line">-rw-rw-r--. <span class="number">1</span> haokaiyang haokaiyang <span class="number">2271 3</span>月  <span class="number">14 11</span><span class="symbol">:</span><span class="number">50</span> passwd.new</span><br><span class="line">-rw-r--r--. <span class="number">1</span> haokaiyang haokaiyang <span class="number">2271 3</span>月  <span class="number">14 13</span><span class="symbol">:</span><span class="number">38</span> passwd.old</span><br><span class="line">-rw-rw-r--. <span class="number">1</span> haokaiyang haokaiyang  <span class="number">480 3</span>月  <span class="number">14 11</span><span class="symbol">:</span><span class="number">54</span> passwd.patch</span><br><span class="line">[haokaiyang<span class="variable">@CentOS7</span> testpw]<span class="variable">$ </span>diff passwd.new passwd.old</span><br><span class="line"><span class="comment">#回复旧版文件的内容</span></span><br><span class="line">[haokaiyang<span class="variable">@CentOS7</span> testpw]<span class="variable">$ </span>patch -R -p0 &lt; passwd.patch </span><br><span class="line">patching file passwd.old</span><br><span class="line">[haokaiyang<span class="variable">@CentOS7</span> testpw]<span class="variable">$ </span>ll passwd*</span><br><span class="line">-rw-rw-r--. <span class="number">1</span> haokaiyang haokaiyang <span class="number">2271 3</span>月  <span class="number">14 11</span><span class="symbol">:</span><span class="number">50</span> passwd.new</span><br><span class="line">-rw-r--r--. <span class="number">1</span> haokaiyang haokaiyang <span class="number">2328 3</span>月  <span class="number">14 13</span><span class="symbol">:</span><span class="number">39</span> passwd.old</span><br><span class="line">-rw-rw-r--. <span class="number">1</span> haokaiyang haokaiyang  <span class="number">480 3</span>月  <span class="number">14 11</span><span class="symbol">:</span><span class="number">54</span> passwd.patch</span><br></pre></td></tr></table></figure>
+
+<h3 id="文件打印准备-pr"><a href="#文件打印准备-pr" class="headerlink" title="文件打印准备:pr"></a>文件打印准备:pr</h3>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Linux/" rel="tag"># Linux</a>
+              <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag"># 学习笔记</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2017/03/13/centos7-learning-notes-5/" rel="prev" title="《鸟哥的Linux私房菜》认识与学习Bash学习笔记">
+      <i class="fa fa-chevron-left"></i> 《鸟哥的Linux私房菜》认识与学习Bash学习笔记
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2017/12/01/docker/" rel="next" title="Docker常用命令">
+      Docker常用命令 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC81MjA0My8yODUyNA=="></div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%B9%E6%AE%8A%E7%AC%A6%E5%8F%B7%E5%8F%8A%E4%BB%A3%E8%A1%A8%E6%84%8F%E4%B9%89"><span class="nav-number">1.</span> <span class="nav-text">特殊符号及代表意义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#grep%E8%BF%9B%E9%98%B6"><span class="nav-number">2.</span> <span class="nav-text">grep进阶</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sed%E5%B7%A5%E5%85%B7"><span class="nav-number">3.</span> <span class="nav-text">sed工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BB%B6%E4%BC%B8%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="nav-number">4.</span> <span class="nav-text">延伸正则表达式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%8F%8A%E7%9B%B8%E5%85%B3%E5%A4%84%E7%90%86"><span class="nav-number">5.</span> <span class="nav-text">文件格式化及相关处理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%BC%E5%BC%8F%E5%8C%96%E6%89%93%E5%8D%B0-printf"><span class="nav-number">5.1.</span> <span class="nav-text">格式化打印:printf</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#awk-%E4%BC%98%E8%89%AF%E7%9A%84%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7"><span class="nav-number">5.2.</span> <span class="nav-text">awk:优良的文本处理工具</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#awk%E5%86%85%E7%BD%AE%E5%8F%98%E9%87%8F"><span class="nav-number">5.2.1.</span> <span class="nav-text">awk内置变量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#awk%E7%9A%84%E9%80%BB%E8%BE%91%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">5.2.2.</span> <span class="nav-text">awk的逻辑运算符</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E5%AF%B9%E6%AF%94%E5%B7%A5%E5%85%B7"><span class="nav-number">5.3.</span> <span class="nav-text">文件对比工具</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#diff"><span class="nav-number">5.3.1.</span> <span class="nav-text">diff</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cmp"><span class="nav-number">5.3.2.</span> <span class="nav-text">cmp</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#patch"><span class="nav-number">5.3.3.</span> <span class="nav-text">patch</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E6%89%93%E5%8D%B0%E5%87%86%E5%A4%87-pr"><span class="nav-number">5.4.</span> <span class="nav-text">文件打印准备:pr</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="郝凯阳"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">郝凯阳</p>
+  <div class="site-description" itemprop="description">Enjoy coding,Enjoy life:)</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://t.me/haokaiyang" title="Telegram → https:&#x2F;&#x2F;t.me&#x2F;haokaiyang" rel="noopener" target="_blank"><i class="fa fa-fw fa-telegram"></i>Telegram</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/haokaiyang" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;haokaiyang" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="http://weibo.com/5146817200" title="Weibo → http:&#x2F;&#x2F;weibo.com&#x2F;5146817200" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2014 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">郝凯阳</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">140k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">2:08</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+});
+</script>
+
+</body>
+</html>

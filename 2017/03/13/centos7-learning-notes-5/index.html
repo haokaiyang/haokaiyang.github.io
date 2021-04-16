@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"haokaiyang.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":false,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="​ Bash shell的功能 命令记忆功能~&#x2F;.bash_history记忆的是前一次登入以前所执行过的命令,而本次的都是存在内存中,当退出系统后,命令才会记录到.bash_history 命令补全 命令别名1alias lm &#x3D;&amp;#x27;ls -al&amp;#x27; 工作控制,前台后台控制 shell脚本 万用字符  查询命令是否为bash shell的内置命令:type命令:type type">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《鸟哥的Linux私房菜》认识与学习Bash学习笔记">
+<meta property="og:url" content="http://haokaiyang.com/2017/03/13/centos7-learning-notes-5/index.html">
+<meta property="og:site_name" content="郝凯阳">
+<meta property="og:description" content="​ Bash shell的功能 命令记忆功能~&#x2F;.bash_history记忆的是前一次登入以前所执行过的命令,而本次的都是存在内存中,当退出系统后,命令才会记录到.bash_history 命令补全 命令别名1alias lm &#x3D;&amp;#x27;ls -al&amp;#x27; 工作控制,前台后台控制 shell脚本 万用字符  查询命令是否为bash shell的内置命令:type命令:type type">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2017-03-13T13:56:00.000Z">
+<meta property="article:modified_time" content="2020-12-04T03:52:40.935Z">
+<meta property="article:author" content="郝凯阳">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="学习笔记">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://haokaiyang.com/2017/03/13/centos7-learning-notes-5/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>《鸟哥的Linux私房菜》认识与学习Bash学习笔记 | 郝凯阳</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">郝凯阳</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://haokaiyang.com/2017/03/13/centos7-learning-notes-5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="郝凯阳">
+      <meta itemprop="description" content="Enjoy coding,Enjoy life:)">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="郝凯阳">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          《鸟哥的Linux私房菜》认识与学习Bash学习笔记
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2017-03-13 21:56:00" itemprop="dateCreated datePublished" datetime="2017-03-13T21:56:00+08:00">2017-03-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-04 11:52:40" itemprop="dateModified" datetime="2020-12-04T11:52:40+08:00">2020-12-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>18k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>17 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>​</p>
+<h2 id="Bash-shell的功能"><a href="#Bash-shell的功能" class="headerlink" title="Bash shell的功能"></a>Bash shell的功能</h2><ul>
+<li>命令记忆功能<br>~/.bash_history记忆的是前一次登入以前所执行过的命令,而本次的都是存在内存中,当退出系统后,命令才会记录到.bash_history</li>
+<li>命令补全</li>
+<li>命令别名<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">alias</span> lm =<span class="string">&#x27;ls -al&#x27;</span></span><br></pre></td></tr></table></figure></li>
+<li>工作控制,前台后台控制</li>
+<li>shell脚本</li>
+<li>万用字符</li>
+</ul>
+<h2 id="查询命令是否为bash-shell的内置命令-type"><a href="#查询命令是否为bash-shell的内置命令-type" class="headerlink" title="查询命令是否为bash shell的内置命令:type"></a>查询命令是否为bash shell的内置命令:type</h2><pre><code>命令:type type [-tpa] name
+选项及参数: 不加任何选项和任何参数,type会显示出name是外部命令还是内置命令
+    -t type将会以以下的字段显示出他的意义
+       file 外部命令
+       alias 别名
+       builtin bash内置命令
+    -p 如果后面的name
+    -a 会由PATH变量定义的路径中,将所有含name的命令都列出来,包括alias</code></pre>
+<h2 id="变量的输入"><a href="#变量的输入" class="headerlink" title="变量的输入"></a>变量的输入</h2><p>echo $variable 或者 echo ${variable}<br>变量的设置规则:</p>
+<ol>
+<li>变量与变量内容以一个等号连接<br>myname=haokaiyang</li>
+<li>等号两边不能直接跟空格,错误示范<br>myname = haokaiyang 或者myname=hao kai yang</li>
+<li>变量名称只能是英文字母与数字,不能以数字开头</li>
+<li>变量内容有空白字符可以使用单引号或双引号将变量内容结合起来<br>myname=“hao kai yang”</li>
+<li>可以用跳脱字符\将特殊字符[enter],$,,空格,’变成一般字符,如<br>myname=hao\ kai\ yang</li>
+<li>在一串命令的执行中,还需要用到其它命令时候,可以使用反引号<code>指令</code>或$(指令)</li>
+<li>若该变量为扩增内容时候,则可用”$变量名称”或${变量}累加内容<br>PATH=”$PATH”:/home/bin或PATH=${PATH}:/home/bin</li>
+<li>若该变量需要在子程序执行,需要export来使变量变成环境变量<br>export PATH</li>
+<li>通常大写字符为系统变量,小写为自定义变量</li>
+<li>unset取消设置变量 unset 变量名称</li>
+</ol>
+<h2 id="env观察环境变量"><a href="#env观察环境变量" class="headerlink" title="env观察环境变量"></a>env观察环境变量</h2><ul>
+<li><p>HOME 使用者家目录</p>
+</li>
+<li><p>SHELL 目前环境的SHELL</p>
+</li>
+<li><p>HISTSIZE 历史命令记录笔数</p>
+</li>
+<li><p>MAIL 当使用mail收信时,系统会去读取的邮件信箱档案</p>
+</li>
+<li><p>PATH 执行命令搜索路径</p>
+</li>
+<li><p>LANG 语言</p>
+</li>
+<li><p>RANDOM 随机数产生器,/dev/random这个文件,在BASH的环境下,这个RANDOM变量的内容,介于0~32767之间</p>
+</li>
+</ul>
+<h2 id="set-观察所有变量-含环境变量和自定义变量"><a href="#set-观察所有变量-含环境变量和自定义变量" class="headerlink" title="set 观察所有变量(含环境变量和自定义变量)"></a>set 观察所有变量(含环境变量和自定义变量)</h2><p>PS1:提示字符的设置</p>
+<ul>
+<li><p>\d 显示 星期 月 日的日期格式,如Mon Feb 2</p>
+</li>
+<li><p>\H 完整的主机名称</p>
+</li>
+<li><p>\h 仅取主机名称在第一个小数点之前的名字</p>
+</li>
+<li><p>\t 显示时间,为24小时格式HH:MM:SS</p>
+</li>
+<li><p>\T 显示时间,为12小时格式HH:MM:SS</p>
+</li>
+<li><p>\A 显示时间,为24小时格式的HH:MM</p>
+</li>
+<li><p>@ 显示时间,为12小时的am/pm样式</p>
+</li>
+<li><p>\u 目前使用者的账号名称</p>
+</li>
+<li><p>\v BASH的版本信息</p>
+</li>
+<li><p>\w 完整的工作目录名称,由根目录写起的目录名称,但家目录会以~取代</p>
+</li>
+<li><p>\W 利用basename函数取得工作目录名称,会列出最后一个目录名</p>
+</li>
+<li><p>\# 下达的第几个命令</p>
+</li>
+<li><p>$ 提示字符,如果是root时,提示字符为#,否则就是$</p>
+</li>
+<li><p>$:关于本shell的PID</p>
+</li>
+<li><p>?:关于上个命令的回传值</p>
+</li>
+<li><p>OSTYPE、HOSTTYPE、MACHTYPE(主机硬件与核心的等级)</p>
+</li>
+</ul>
+<h2 id="export-自定义参数转变为环境变量"><a href="#export-自定义参数转变为环境变量" class="headerlink" title="export 自定义参数转变为环境变量"></a>export 自定义参数转变为环境变量</h2><p>子程序会继续父程序的环境变量,不会继续父程序的自定义变量</p>
+<h2 id="影响显示结果的语言变量-locale"><a href="#影响显示结果的语言变量-locale" class="headerlink" title="影响显示结果的语言变量(locale)"></a>影响显示结果的语言变量(locale)</h2><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#查看系统支持的语言</span></span><br><span class="line">locale -a</span><br><span class="line">在centos7中修改语言变量</span><br><span class="line">vim <span class="regexp">/etc/</span>locale.conf</span><br></pre></td></tr></table></figure>
+
+<h2 id="读取来自键盘的参数read"><a href="#读取来自键盘的参数read" class="headerlink" title="读取来自键盘的参数read"></a>读取来自键盘的参数read</h2><pre><code>命令:read [-pt] variable
+选项及参数:
+    -p 后面接提示字符
+    -t 后面接等待秒数</code></pre>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#让使用者输入一个内容,将该内容变成名为atest的变量</span></span><br><span class="line"><span class="built_in">read</span> atest</span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;atest&#125;</span></span><br><span class="line"><span class="comment">#让使用者30秒内输入自己的名字</span></span><br><span class="line"><span class="built_in">read</span> -p <span class="string">&quot;Please keyin your name:&quot;</span> -t 30 named</span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;named&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="declare-typeset"><a href="#declare-typeset" class="headerlink" title="declare/typeset"></a>declare/typeset</h2><p>定义变量类型</p>
+<pre><code>命令:declare [-aixr] variable
+选项及参数:
+    -a 将后面的variable 的变量定义为array
+    -i 将后面的variable 的变量定义为int
+    -x 用法与export一样,将后面的variable变成环境变量
+    -r 将变量设置为readonly类型,该变量为不可被更改内容,也不能unset</code></pre>
+<p>默认情况下:</p>
+<ul>
+<li><p>变量类型默认字符串,所以如果不指定变量类型,则1+2为一个字符串而不是计算式。</p>
+</li>
+<li><p>bash环境的数值运算,默认最多只能达到整数形态,所以1/3结果是0</p>
+</li>
+</ul>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">#计算</span><br><span class="line">[haokaiyang@CentOS7 ~]<span class="symbol">$</span> <span class="keyword">sum</span>=<span class="number">100</span>+<span class="number">200</span></span><br><span class="line">[haokaiyang@CentOS7 ~]<span class="symbol">$</span> echo <span class="symbol">$</span>&#123;<span class="keyword">sum</span>&#125;</span><br><span class="line"><span class="number">100</span>+<span class="number">200</span></span><br><span class="line">[haokaiyang@CentOS7 ~]<span class="symbol">$</span> declare -i <span class="keyword">sum</span>=<span class="number">100</span>+<span class="number">200</span></span><br><span class="line">[haokaiyang@CentOS7 ~]<span class="symbol">$</span> echo <span class="symbol">$</span>&#123;<span class="keyword">sum</span>&#125;</span><br><span class="line"><span class="number">300</span></span><br><span class="line">[haokaiyang@CentOS7 ~]<span class="symbol">$</span> declare -x <span class="keyword">sum</span></span><br><span class="line">[haokaiyang@CentOS7 ~]<span class="symbol">$</span> export | grep <span class="keyword">sum</span></span><br><span class="line">declare -ix <span class="keyword">sum</span>=<span class="string">&quot;300&quot;</span></span><br><span class="line">[haokaiyang@CentOS7 ~]<span class="symbol">$</span> declare -r <span class="keyword">sum</span></span><br><span class="line">[haokaiyang@CentOS7 ~]<span class="symbol">$</span> <span class="keyword">sum</span>=testing</span><br><span class="line">bash: <span class="keyword">sum</span>: 只读变量</span><br><span class="line">[haokaiyang@CentOS7 ~]<span class="symbol">$</span> declare +x <span class="keyword">sum</span></span><br><span class="line">[haokaiyang@CentOS7 ~]<span class="symbol">$</span> declare -p <span class="keyword">sum</span></span><br><span class="line">declare -ir <span class="keyword">sum</span>=<span class="string">&quot;300&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="array变量类型"><a href="#array变量类型" class="headerlink" title="array变量类型"></a>array变量类型</h2><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#array设置</span></span><br><span class="line"><span class="keyword">var</span>[index]=content</span><br><span class="line">[<span class="meta">haokaiyang@CentOS7 ~</span>]$ <span class="keyword">var</span>[<span class="number">1</span>]=<span class="number">1</span></span><br><span class="line">[<span class="meta">haokaiyang@CentOS7 ~</span>]$ <span class="keyword">var</span>[<span class="number">2</span>]=<span class="number">2</span></span><br><span class="line">[<span class="meta">haokaiyang@CentOS7 ~</span>]$ <span class="keyword">var</span>[<span class="number">3</span>]=<span class="number">3</span></span><br><span class="line">[<span class="meta">haokaiyang@CentOS7 ~</span>]$ echo $&#123;<span class="keyword">var</span>[<span class="number">1</span>]&#125;,$&#123;<span class="keyword">var</span>[<span class="number">2</span>]&#125;,$&#123;<span class="keyword">var</span>[<span class="number">3</span>]&#125;</span><br><span class="line"><span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="与文件系统和程序的限制关系-ulimit"><a href="#与文件系统和程序的限制关系-ulimit" class="headerlink" title="与文件系统和程序的限制关系 ulimit"></a>与文件系统和程序的限制关系 ulimit</h2><p>为了限制使用者占用系统资源,包括可以开启的文件数量,可以使用的CPU时间,可以使用的内存总量,可以用ulimit设置</p>
+<pre><code>命令:ulimit [-SHacdfltu] [配额]
+选项及参数:
+    -H hard limit 严格设置,不能超过这个设置的述职
+    -S soft limit 警告设置,可以超过这个值,但是会警告
+    在设置上,通常soft比hard小
+    -a 后面不接任何选项及参数,可以列出所有的限制额度
+    -c 当某些程序发生错误时,系统可能会将该程序在内存中的资讯写成文件(     除错用),这种档案就被称为核心文件(core file),此为限制每个核心档案的最大容量
+    -f 此shell可以建立的最大文件容量(一般可能设置为2GB),单位为Kbytes
+    -d 程序可以使用的最大分段容量
+    -l 可以用于锁定(lock)的内存容量
+    -t 可以使用的最大CPU时间(单位为秒)
+    -u 单一使用者可以使用的最大程序(process数量)</code></pre>
+<figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">[haokaiyang@CentOS7 ~]$ ulimit -a</span><br><span class="line">core <span class="keyword">file</span> <span class="keyword">size</span>          (blocks, -c) <span class="number">0</span>               没有限制</span><br><span class="line">data seg <span class="keyword">size</span>           (kbytes, -d) unlimited</span><br><span class="line">scheduling priority             (-e) <span class="number">0</span></span><br><span class="line"><span class="keyword">file</span> <span class="keyword">size</span>               (blocks, -f) unlimited         建立单一文件的大小</span><br><span class="line">pending signals                 (-i) <span class="number">14850</span></span><br><span class="line"><span class="keyword">max</span> locked <span class="keyword">memory</span>       (kbytes, -l) <span class="number">64</span></span><br><span class="line"><span class="keyword">max</span> <span class="keyword">memory</span> <span class="keyword">size</span>         (kbytes, -m) unlimited</span><br><span class="line">open files                      (-n) <span class="number">1024</span>             同时可以开启的文件数量</span><br><span class="line">pipe <span class="keyword">size</span>            (<span class="number">512</span> bytes, -p) <span class="number">8</span></span><br><span class="line">POSIX message queues     (bytes, -q) <span class="number">819200</span></span><br><span class="line">real-time priority              (-r) <span class="number">0</span></span><br><span class="line">stack <span class="keyword">size</span>              (kbytes, -s) <span class="number">8192</span></span><br><span class="line">cpu time               (seconds, -t) unlimited</span><br><span class="line"><span class="keyword">max</span> user processes              (-u) <span class="number">4096</span></span><br><span class="line">virtual <span class="keyword">memory</span>          (kbytes, -v) unlimited</span><br><span class="line"><span class="keyword">file</span> locks                      (-x) unlimited</span><br><span class="line">#限制使用者仅能建立<span class="number">10</span>Mbtypes以下容量的文件</span><br><span class="line">[haokaiyang@CentOS7 ~]$ ulimit -f <span class="number">10240</span></span><br><span class="line">[haokaiyang@CentOS7 ~]$ ulimit -a | grep <span class="string">&#x27;file size&#x27;</span></span><br><span class="line">core <span class="keyword">file</span> <span class="keyword">size</span>          (blocks, -c) <span class="number">0</span></span><br><span class="line"><span class="keyword">file</span> <span class="keyword">size</span>               (blocks, -f) <span class="number">10240</span></span><br><span class="line">[haokaiyang@CentOS7 ~]$ dd <span class="keyword">if</span>=/dev/zero of=<span class="number">123</span> bs=<span class="number">1</span>M count=<span class="number">20</span></span><br><span class="line">文件大小超出限制(吐核)</span><br></pre></td></tr></table></figure>
+
+<h2 id="变量内容的删除与替换"><a href="#变量内容的删除与替换" class="headerlink" title="变量内容的删除与替换"></a>变量内容的删除与替换</h2><p>删除</p>
+<table>
+<thead>
+<tr>
+<th>变量设置方式</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>${variable#关键字}</td>
+<td>若变量内容从头开始的资料符合[关键字],则将符合的最短资料删除</td>
+</tr>
+<tr>
+<td>${variable##关键字}</td>
+<td>若变量内容从头开始的资料符合[关键字],则将符合的最长资料删除</td>
+</tr>
+<tr>
+<td>${variable%关键字}</td>
+<td>若变量内容从尾向前的资料符合[关键字],则将符合的最短资料删除</td>
+</tr>
+<tr>
+<td>${variable%%关键字}</td>
+<td>若变量内容从尾向前的资料符合[关键字],则将符合的最长资料删除</td>
+</tr>
+<tr>
+<td>${variable/旧字符串/新字符串}</td>
+<td>若变量内容符合旧字符串,则第一个旧字符串会被新字符串替换</td>
+</tr>
+<tr>
+<td>${variable//旧字符串/新字符串}</td>
+<td>若变量内容符合旧字符串,则全部的旧字符串会被新字符串取代</td>
+</tr>
+</tbody></table>
+<p>替换</p>
+<table>
+<thead>
+<tr>
+<th>变量设置方式</th>
+<th>str没有设置</th>
+<th>str为空字符串</th>
+<th>str已设定为空字符串</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>var=${str-expr}</td>
+<td>var=expr</td>
+<td>var=</td>
+<td>var=$str</td>
+</tr>
+<tr>
+<td>var=${str:-expr}</td>
+<td>var=expr</td>
+<td>var=expr</td>
+<td>var=$str</td>
+</tr>
+<tr>
+<td>var=${str+expr}</td>
+<td>var=</td>
+<td>var=expr</td>
+<td>var=expr</td>
+</tr>
+<tr>
+<td>var=${str:+expr}</td>
+<td>var=</td>
+<td>var=</td>
+<td>var=expr</td>
+</tr>
+<tr>
+<td>var=${str=expr}</td>
+<td>str=expr<br>var=expr</td>
+<td>str不变<br>var=</td>
+<td>str不变<br>var=$str</td>
+</tr>
+<tr>
+<td>var=${str:=expr}</td>
+<td>str=expr<br>var=expr</td>
+<td>str=expr<br>var=expr</td>
+<td>str不亮<br>var=$str</td>
+</tr>
+<tr>
+<td>var=${str?expr}</td>
+<td>expr输出到stderr</td>
+<td>var=</td>
+<td>var=$str</td>
+</tr>
+<tr>
+<td>var=${str:?expr}</td>
+<td>expr输出到stderr</td>
+<td>expr输出到stderr</td>
+<td>var=$str</td>
+</tr>
+</tbody></table>
+<h2 id="命令别名-alias-unalias"><a href="#命令别名-alias-unalias" class="headerlink" title="命令别名 alias unalias"></a>命令别名 alias unalias</h2><h2 id="历史命令history"><a href="#历史命令history" class="headerlink" title="历史命令history"></a>历史命令history</h2><pre><code>命令:history [n]
+history [-c]
+history [-raw] histfiles
+选项及参数:
+n 数字,意思是 要列出最近的n笔命令列出的意思
+    -c 将目前shell中所有的history内容全部删除
+    -a 将目前新增的history命令新加入histfiles,若没有加histfiles,则默认写入~/.bash_history
+    -r 将histfiles的内容读到目前这个shell的history内存中
+    -w 将目前的history内存写入histfiles中</code></pre>
+<figure class="highlight erlang-repl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">!number 执行第几个命令的意思</span><br><span class="line">!command 由最近的指令向前查询命令开头为command的指令,并执行</span><br><span class="line">!! 执行上一个命令(相当于↑,按enter)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">同一账号同时多次登录的<span class="built_in">history</span>写入问题</span></span><br><span class="line">最后退出的那个bash才是最后写入的资料</span><br></pre></td></tr></table></figure>
+
+<h2 id="路径与命令搜索顺序"><a href="#路径与命令搜索顺序" class="headerlink" title="路径与命令搜索顺序"></a>路径与命令搜索顺序</h2><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">tpye -a ls</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="bash的登录欢迎信息-etc-issue-etc-motd"><a href="#bash的登录欢迎信息-etc-issue-etc-motd" class="headerlink" title="bash的登录欢迎信息:/etc/issue,/etc/motd"></a>bash的登录欢迎信息:/etc/issue,/etc/motd</h2><p>无论登录成功不成功都会显示<br>issue内的各代码意义</p>
+<ul>
+<li><p>\d 本地时间的日期</p>
+</li>
+<li><p>\l 显示第几个终端界面</p>
+</li>
+<li><p>\m 显示硬件的等级(i386/i486/i586/i686…)</p>
+</li>
+<li><p>\n 显示主机的网络名称</p>
+</li>
+<li><p>\O 显示domain name</p>
+</li>
+<li><p>\r 操作系统的版本</p>
+</li>
+<li><p>\t 显示本地端时间的时间</p>
+</li>
+<li><p>\S 操作系统的名称</p>
+</li>
+<li><p>\v 操作系统</p>
+</li>
+</ul>
+<p>/etc/issue.net是提供给telnet使用的<br>/etc/motd 可以让使用者在登入后看到的欢迎信息</p>
+<h2 id="login与non-login-shell"><a href="#login与non-login-shell" class="headerlink" title="login与non-login shell"></a>login与non-login shell</h2><p>login shell:取得bash时候需要完整的登录流程,就称为login shell,举例来说,你要由tt1-tty6登录,需要输入使用者的账号与密码,此时取得的bash就称为 login shell<br>non-login shell:取得bash界面的方法不需要重复登录,举例来说：用窗口模式登录Linux后,再启动终端,不需要输入账号密码,那个bash的环境称为 non-login shell,在原本的bash环境中再次下达bash命令,同样也没有输入账号密码,子程序也是non-login-shell<br>login shell 只会读 <br>/etc/profile 系统整体的设定,最好不要修改<br><del>/.bash_profile或</del>/.bash_login或~/.profile:属于个人资料<br>/etc/profile (login shell才会读)<br>每个使用者登录使用bash一定会读取的配置文件<br>配置文件主要变量<br>PATH：根据UID决定PATH要不要含有sbin的命令指令<br>MAIL：根据账号设置好使用者的mailbox到/var/spool/mail/账号名称<br>USER: 根据使用者的账号设置此变量内容<br>HOSTNAME:根据主机的hostname命令决定这个变量<br>HISTSIZE：历史命令记录笔数,CentOS7默认1000<br>umask包括root默认为022,而一般用户为002<br>这个文件还会引入其他文件,在CentOS7默认情况下,会引入下列文件<br>/etc/profile.d/*.sh<br>/etc/locale.conf 是由/etc/profile.d/lang.sh呼叫进来的<br>/usr/share/bash-completion/completions/*是由/etc/profile.d/bash_completion.sh这个文件载入的<br>~/.bash_profile(login shell才会读)<br>bash在读完了整个环境设定的/etc/profile并呼叫其他设定档后,在login shell的bash环境中,所读取的个人偏好设置其实主要有三个.顺序如下</p>
+<ol>
+<li>~/.bash_profile</li>
+<li>~/.bash_login</li>
+<li>~/.profile</li>
+</ol>
+<p>login shell 只会读以上三个文件的其中一个,读取顺序如上,如果~/.bash_profile存在,那后面的都不会引入</p>
+<h2 id="source-读入环境配置的命令"><a href="#source-读入环境配置的命令" class="headerlink" title="source 读入环境配置的命令"></a>source 读入环境配置的命令</h2><pre><code>命令:source 配置文件文件名</code></pre>
+<p>. 配置文件文件名<br><del>/.bashrc (non-login shell 会读)<br>主动呼叫/etc/bashrc<br>/etc/bashrc帮我们定义了以下<br>根据不同UID规范出umask的值<br>根据不同UID规范出提示字符(PS1变量)<br>呼叫/etc/profile.d/*.sh的配置<br>如果不小心将</del>/.bashrc删除了,那么bash提示字符会变成<br>-bash-4.2$<br>因为无法呼叫/etc/bashrc来规范PS1。我们可以复制/etc/ske1/.bashrc到家目录<br>并使用source去呼叫~/.bashrc<br>其他相关设置<br>/etc/man_db.conf 规范了使用man的时候,man page的路径,如果是以tarball的方式来安装资料的话,manpage可能会放到/usr/local/softpackage/man中.那个softpackage是软件名称.这个时候就需要手动将路径加入到这个配置文件<br>~/.bash_history 历史命令记录存放<br>~/.bash_logout 文件记录了当用户退出bash.系统帮忙做了什么操作才离开。</p>
+<h2 id="终端环境配置-stty-set"><a href="#终端环境配置-stty-set" class="headerlink" title="终端环境配置:stty,set"></a>终端环境配置:stty,set</h2><pre><code>命令:stty [-a]
+选项及参数:
+    -a 将目前所有的stty参数列出来</code></pre>
+<figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#列出所有的按键与按键内容</span></span><br><span class="line">[haokaiyang@CentOS7 ~]$ stty -a</span><br><span class="line">speed <span class="number">38400</span> baud; rows <span class="number">24</span>; columns <span class="number">80</span>; <span class="attr">line</span> = <span class="number">0</span>;</span><br><span class="line"><span class="attr">intr</span> = ^C; <span class="attr">quit</span> = ^\; <span class="attr">erase</span> = ^?; <span class="attr">kill</span> = ^U; <span class="attr">eof</span> = ^D; <span class="attr">eol</span> = M-^?; <span class="attr">eol2</span> = M-^?;</span><br><span class="line"><span class="attr">swtch</span> = M-^?; <span class="attr">start</span> = ^Q; <span class="attr">stop</span> = ^S; <span class="attr">susp</span> = ^Z; <span class="attr">rprnt</span> = ^R; <span class="attr">werase</span> = ^W;</span><br><span class="line"><span class="attr">lnext</span> = ^V; <span class="attr">flush</span> = ^O; <span class="attr">min</span> = <span class="number">1</span>; <span class="attr">time</span> = <span class="number">0</span>;</span><br><span class="line">-parenb -parodd -cmspar cs8 hupcl -cstopb cread -clocal -crtscts</span><br><span class="line">-ignbrk brkint -ignpar -parmrk -inpck -istrip -inlcr -igncr icrnl ixon -ixoff</span><br><span class="line">-iuclc ixany imaxbel iutf8</span><br><span class="line">opost -olcuc -ocrnl onlcr -onocr -onlret -ofill -ofdel nl0 cr0 tab0 bs0 vt0 ff0</span><br><span class="line">isig icanon iexten echo echoe echok -echonl -noflsh -xcase -tostop -echoprt</span><br><span class="line">echoctl echoke</span><br><span class="line"></span><br><span class="line"><span class="comment">#^ 代表Ctrl</span></span><br><span class="line"><span class="comment">#intr:送出一个interrupt(中断)的信号给目前正在run的程序(就是终止的意思)</span></span><br><span class="line"><span class="comment">#quit:送出一个quit的信号给目前正在run的程序</span></span><br><span class="line"><span class="comment">#erase:向后删除字符</span></span><br><span class="line"><span class="comment">#kill:删除在目前指令上的所有文字</span></span><br><span class="line"><span class="comment">#eof: End of file的意思,代表结束输入</span></span><br><span class="line"><span class="comment">#start:在某个程序停止后,重新启动他的output</span></span><br><span class="line"><span class="comment">#stop:停止目前屏幕的输出</span></span><br><span class="line"><span class="comment">#susp:送出一个terminal stop的信号给正在run的程序</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="set"><a href="#set" class="headerlink" title="set"></a>set</h2><pre><code>命令:set [-uvCHhmBx]
+选项及参数:
+    -u 默认不启动,若启用后,当使用未设置变量时,会提示错误信息
+    -v 默认不启动,若启用后,在信息被输出前,会先显示信息的原始内容
+    -x 默认不启动,若启用后,在指令被执行前,会显示命令内容(前面有++符号)
+    -h 默认启动。与历史命令有关
+    -H 默认启动。与历史命令有关
+    -m 默认启动。与历史命令有关
+    -B 默认启动。与括号[]的作用有关
+    -C 默认不启动,若使用&gt;等,则若档案存在时,该文件不会被重置</code></pre>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">#显示出目前所有的<span class="keyword">set</span>设定值</span><br><span class="line">[haokaiyang@CentOS7 ~<span class="comment">]$ echo $-</span></span><br><span class="line">himBH</span><br><span class="line">#设定若使用未定义变量,则显示错误信息</span><br><span class="line">[haokaiyang@CentOS7 ~<span class="comment">]$ set -u</span></span><br><span class="line">[haokaiyang@CentOS7 ~<span class="comment">]$ echo $name</span></span><br><span class="line">bash: name: 为绑定变量</span><br><span class="line">#执行前,显示出该命令内容</span><br><span class="line">[haokaiyang@CentOS7 ~<span class="comment">]$ set -x</span></span><br><span class="line">++ __vte_prompt_command</span><br><span class="line">++ local <span class="comment">&#x27;pwd=~&#x27;</span></span><br><span class="line">++ <span class="string">&#x27;[&#x27;</span> /home/haokaiyang <span class="comment">&#x27;!=&#x27;</span> /home/<span class="comment">haokaiyang</span> <span class="comment">&#x27;]&#x27;</span></span><br><span class="line">+++ __vte_osc7</span><br><span class="line">++++ __vte_urlencode /home/<span class="comment">haokaiyang</span></span><br><span class="line">++++ LC_ALL=C</span><br><span class="line">++++ str=/home/haokaiyang</span><br><span class="line">++++ <span class="string">&#x27;[&#x27;</span> -n /home/<span class="comment">haokaiyang</span> <span class="comment">&#x27;]&#x27;</span></span><br><span class="line">++++ safe=/home/haokaiyang</span><br><span class="line">++++ printf <span class="comment">%s</span> /home/<span class="comment">haokaiyang</span></span><br><span class="line">++++ str=</span><br><span class="line">++++ <span class="string">&#x27;[&#x27;</span> -n <span class="comment">&#x27;&#x27;</span> <span class="comment">&#x27;]&#x27;</span></span><br><span class="line">++++ <span class="string">&#x27;[&#x27;</span> -n <span class="comment">&#x27;&#x27;</span> <span class="comment">&#x27;]&#x27;</span></span><br><span class="line">+++ printf <span class="comment">&#x27;\033]7;file://%s%s\a&#x27;</span><span class="comment"> CentOS7.study</span> /home/<span class="comment">haokaiyang</span></span><br><span class="line">++ printf <span class="comment">&#x27;\033]0;%s@%s:%s\007%s&#x27;</span><span class="comment"> haokaiyang CentOS7</span> <span class="comment">&#x27;~&#x27;</span> <span class="comment">&#x27;&#x27;</span></span><br><span class="line">[haokaiyang@CentOS7 ~<span class="comment">]$ echo $&#123;HOME&#125;</span></span><br><span class="line">+ echo /home/<span class="comment">haokaiyang</span></span><br><span class="line">/home/haokaiyang</span><br><span class="line">++ __vte_prompt_command</span><br><span class="line">++ local <span class="comment">&#x27;pwd=~&#x27;</span></span><br><span class="line">++ <span class="string">&#x27;[&#x27;</span> /home/haokaiyang <span class="comment">&#x27;!=&#x27;</span> /home/<span class="comment">haokaiyang</span> <span class="comment">&#x27;]&#x27;</span></span><br><span class="line">+++ __vte_osc7</span><br><span class="line">++++ __vte_urlencode /home/<span class="comment">haokaiyang</span></span><br><span class="line">++++ LC_ALL=C</span><br><span class="line">++++ str=/home/haokaiyang</span><br><span class="line">++++ <span class="string">&#x27;[&#x27;</span> -n /home/<span class="comment">haokaiyang</span> <span class="comment">&#x27;]&#x27;</span></span><br><span class="line">++++ safe=/home/haokaiyang</span><br><span class="line">++++ printf <span class="comment">%s</span> /home/<span class="comment">haokaiyang</span></span><br><span class="line">++++ str=</span><br><span class="line">++++ <span class="string">&#x27;[&#x27;</span> -n <span class="comment">&#x27;&#x27;</span> <span class="comment">&#x27;]&#x27;</span></span><br><span class="line">++++ <span class="string">&#x27;[&#x27;</span> -n <span class="comment">&#x27;&#x27;</span> <span class="comment">&#x27;]&#x27;</span></span><br><span class="line">+++ printf <span class="comment">&#x27;\033]7;file://%s%s\a&#x27;</span><span class="comment"> CentOS7.study</span> /home/<span class="comment">haokaiyang</span></span><br><span class="line">++ printf <span class="comment">&#x27;\033]0;%s@%s:%s\007%s&#x27;</span><span class="comment"> haokaiyang CentOS7</span> <span class="comment">&#x27;~&#x27;</span> <span class="comment">&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="BASH默认组合键"><a href="#BASH默认组合键" class="headerlink" title="BASH默认组合键"></a>BASH默认组合键</h2><table>
+<thead>
+<tr>
+<th>组合按键</th>
+<th>执行结果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Ctrl+C</td>
+<td>终止当前命令</td>
+</tr>
+<tr>
+<td>Ctrl+D</td>
+<td>输入结束</td>
+</tr>
+<tr>
+<td>Ctrl+M</td>
+<td>就是enter</td>
+</tr>
+<tr>
+<td>Ctrl+S</td>
+<td>暂停屏幕输出</td>
+</tr>
+<tr>
+<td>Ctrl+Q</td>
+<td>恢复屏幕的输出</td>
+</tr>
+<tr>
+<td>Ctrl+U</td>
+<td>在提示字符下,将整列命令删除</td>
+</tr>
+<tr>
+<td>Ctrl+Z</td>
+<td>暂停目前的指令</td>
+</tr>
+</tbody></table>
+<h2 id="万用字符与特殊字符"><a href="#万用字符与特殊字符" class="headerlink" title="万用字符与特殊字符"></a>万用字符与特殊字符</h2><table>
+<thead>
+<tr>
+<th>符号</th>
+<th>意义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>*</td>
+<td>代表0个到多个字符</td>
+</tr>
+<tr>
+<td>?</td>
+<td>代表一定有一个任意字符</td>
+</tr>
+<tr>
+<td>[]</td>
+<td>一定有一个在括号内的字符</td>
+</tr>
+<tr>
+<td>[-]</td>
+<td>在编码顺序内的所有字符,如[0-9]代表0-9之间的所有数字</td>
+</tr>
+<tr>
+<td>[^]</td>
+<td>反向选择,如[^abc]代表字符不在abc中</td>
+</tr>
+<tr>
+<td>组合按键</td>
+<td>执行结果</td>
+</tr>
+<tr>
+<td>——-</td>
+<td>——</td>
+</tr>
+<tr>
+<td>#</td>
+<td>注释符号</td>
+</tr>
+<tr>
+<td>|跳脱符号</td>
+<td></td>
+</tr>
+<tr>
+<td>&#124;</td>
+<td></td>
+</tr>
+<tr>
+<td>管道</td>
+<td></td>
+</tr>
+<tr>
+<td>;</td>
+<td>连续命令分割符</td>
+</tr>
+<tr>
+<td>~</td>
+<td>使用者家目录</td>
+</tr>
+<tr>
+<td>$</td>
+<td>取用变量前置字符</td>
+</tr>
+<tr>
+<td>&amp;</td>
+<td>工作控制:将命令变成后台工作</td>
+</tr>
+<tr>
+<td>!</td>
+<td>取反</td>
+</tr>
+<tr>
+<td>/</td>
+<td>目录符号,路径分割符号</td>
+</tr>
+<tr>
+<td>&gt;,&gt;&gt;</td>
+<td>资料流重导向:输出导向,分别试取代和累加</td>
+</tr>
+<tr>
+<td>&lt;,&lt;&lt;</td>
+<td>资料流重导向:输入导向</td>
+</tr>
+<tr>
+<td>‘’</td>
+<td>单引号</td>
+</tr>
+<tr>
+<td>“”</td>
+<td>双引号</td>
+</tr>
+<tr>
+<td>`\`</td>
+<td>两个`中间为可以执行的命令,也可以使用$()</td>
+</tr>
+<tr>
+<td>()</td>
+<td>在中间为子shell的起始和结束</td>
+</tr>
+<tr>
+<td>{}</td>
+<td>在中间为命令区块的组合</td>
+</tr>
+</tbody></table>
+<h2 id="资料流重导向"><a href="#资料流重导向" class="headerlink" title="资料流重导向"></a>资料流重导向</h2><p>标准输出(standard output) 命令执行所回传的正确的信息<br>标准错误输出(standard error output) 命令执行失败后,所回传的错误信息</p>
+<p>资料流重导向可以将stdout和stderr分送传送到其它文件,而分别传送所用的传送特殊字符如下:<br>标准输入(stdin)代码为0,使用&lt;或&lt;&lt;;<br>标准输出(stdout)代码为1,使用&gt;或&gt;&gt;;<br>标准错误输出(stderr)代码为2,使用2&gt;或2&gt;&gt;;</p>
+<h3 id="dev-null-垃圾桶黑洞装置与特殊写法"><a href="#dev-null-垃圾桶黑洞装置与特殊写法" class="headerlink" title="/dev/null 垃圾桶黑洞装置与特殊写法"></a>/dev/null 垃圾桶黑洞装置与特殊写法</h3><p>/dev/null可以吃掉任何导向这个装置的信息<br>将命令的资料全乎写到list文件</p>
+<figure class="highlight subunit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">find /home -name .bashrc &gt; list 2&gt;&amp;1</span><br><span class="line">find /home -name .bashrc &amp;&gt; list</span><br><span class="line"></span><br><span class="line">standard input:&lt;与&lt;&lt;</span><br><span class="line">将原本需要由键盘输入的资料,改由文件来代替</span><br><span class="line">#利用cat来建立一个文件</span><br><span class="line">[haokaiyang@CentOS7 ~]cat &gt; catfile</span><br><span class="line">testing</span><br><span class="line">cat file test</span><br><span class="line">ctrl+d离开</span><br><span class="line">[haokaiyang@CentOS7 ~]$ cat catfile </span><br><span class="line">testing</span><br><span class="line">cat file test</span><br><span class="line">#用stdin 代替键盘输入建立新文件</span><br><span class="line">haokaiyang@CentOS7 ~]$ cat &gt; catfile &lt; ~/.bashrc </span><br><span class="line">[haokaiyang@CentOS7 ~]$ ll catfile ~/.bashrc</span><br><span class="line">-rw-rw-r--. 1 haokaiyang haokaiyang 231 3月  13 11:33 catfile</span><br><span class="line">-rw-r--r--. 1 haokaiyang haokaiyang 231 8月   3 2016 /home/haokaiyang/.bashrc</span><br><span class="line"></span><br><span class="line">[haokaiyang@CentOS7 ~]$ cat &gt; catfile &lt;&lt;  &quot;eof&quot;</span><br><span class="line">&gt; this is a test</span><br><span class="line">&gt; ok now stop</span><br><span class="line">&gt; eof</span><br><span class="line">[haokaiyang@CentOS7 ~]$ cat catfile </span><br><span class="line">this is a test</span><br><span class="line">ok now stop</span><br><span class="line">#利用&lt;&lt;右侧的控制字符,可以终于一次输入,而不用ctrl+d来结束</span><br></pre></td></tr></table></figure>
+<p>屏幕输出的信息很重要,而且我们需要将信息存下来的时候<br>后台执行的程序,不希望干扰屏幕正常输入结果时<br>一些系统执行命令的执行结果,希望可以保存下来<br>一些执行命令的可能已知错误信息时,想2&gt;/dev/null丢掉<br>错误信息与正确信息需要分别输出时</p>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#把 echo <span class="string">&quot;error message&quot;</span>以stderr输出</span></span><br><span class="line">echo <span class="string">&quot;error message&quot;</span> <span class="number">1</span>&gt;<span class="variable">&amp;2</span></span><br><span class="line">echo <span class="string">&quot;error message&quot;</span> <span class="number">2</span>&gt; <span class="meta-keyword">/dev/</span>null <span class="number">1</span>&gt;<span class="variable">&amp;2</span></span><br><span class="line">[haokaiyang@CentOS7 ~]$ echo <span class="string">&quot;error message&quot;</span> <span class="number">1</span>&gt;<span class="variable">&amp;2</span></span><br><span class="line">error message</span><br><span class="line">[haokaiyang@CentOS7 ~]$ echo <span class="string">&quot;error message&quot;</span> <span class="number">2</span>&gt; <span class="meta-keyword">/dev/</span>null <span class="number">1</span>&gt;<span class="variable">&amp;2</span></span><br><span class="line"><span class="meta">#这条没有消息输出是因为都丢掉垃圾桶去了</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="命令执行判断依据"><a href="#命令执行判断依据" class="headerlink" title="命令执行判断依据"></a>命令执行判断依据</h2><p>cmd;cmd(不考虑相关性连接命令)</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">sync</span>;<span class="keyword">sync</span>;shutdown -h now</span><br></pre></td></tr></table></figure>
+
+<h3 id="与-amp-amp"><a href="#与-amp-amp" class="headerlink" title="$?与&amp;&amp; ||"></a>$?与&amp;&amp; ||</h3><p>cmd1&amp;&amp;cmd2 1.若cmd执行完毕且正确执行($?=0),则开始执行cmd2<br>           2.若cmd执行完且为错误($?=0),则cmd2不执行<br>cmd1||cmd2 1.若cmd执行完毕且正确执行($?=0),则cmd2不执行<br>           2.若cmd执行完且为错误($?=0),则开始执行cmd2</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">cmd1</span> &amp;&amp; cmd<span class="number">2</span> || cmd<span class="number">3</span></span><br><span class="line"><span class="comment">#如果cmd1成功就执行cmd2,不成功执行cmd3</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="管道命令"><a href="#管道命令" class="headerlink" title="管道命令"></a>管道命令</h2><p>|管道命令只能处理前面一个指令stdout 的信息,会忽略stderr的信息<br>管道命令必须要接受来自前一个命令的信息围城stdout继续处理才行</p>
+<h3 id="截取命令cut-grep"><a href="#截取命令cut-grep" class="headerlink" title="截取命令cut,grep"></a>截取命令cut,grep</h3><pre><code>命令:cut -d &#39;分割字符&#39; f fields
+    cut -c 字符区间
+选项及参数:
+    -d:后面接分割字符,与-f一起使用
+    -f:依据-d分割字符将一段信息成为字段,取-f取出第几段的意思
+    -c:以字符(characters)的单位取出固定字符区间</code></pre>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#将PATH变量取出,找第五个路径</span></span><br><span class="line">[haokaiyang@CentOS7 ~]$ echo <span class="variable">$PATH</span></span><br><span class="line">/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin:/home/haokaiyang/.local/bin:/home/haokaiyang/bin</span><br><span class="line">[haokaiyang@CentOS7 ~]$ echo <span class="variable">$PATH</span> | cut -d <span class="string">&#x27;:&#x27;</span> -f 5</span><br><span class="line">/bin</span><br><span class="line">[haokaiyang@CentOS7 ~]$ echo <span class="variable">$PATH</span> | cut -d <span class="string">&#x27;:&#x27;</span> -f 3,5</span><br><span class="line">/usr/bin:/bin</span><br><span class="line"><span class="comment">#将export输出的信息,取得第12个字符以后的所有字符串</span></span><br><span class="line">[haokaiyang@CentOS7 ~]$ export</span><br><span class="line">declare -x <span class="attribute">DBUS_SESSION_BUS_ADDRESS</span>=<span class="string">&quot;unix:abstract=/tmp/dbus-XJTgTELjog,guid=01073012db3b26373639582458c611fa&quot;</span></span><br><span class="line">declare -x <span class="attribute">DESKTOP_SESSION</span>=<span class="string">&quot;gnome-classic&quot;</span></span><br><span class="line">declare -x <span class="attribute">DISPLAY</span>=<span class="string">&quot;:0&quot;</span></span><br><span class="line">declare -x <span class="attribute">GDMSESSION</span>=<span class="string">&quot;gnome-classic&quot;</span></span><br><span class="line">declare -x <span class="attribute">GDM_LANG</span>=<span class="string">&quot;zh_CN.UTF-8&quot;</span></span><br><span class="line">declare -x <span class="attribute">GNOME_DESKTOP_SESSION_ID</span>=<span class="string">&quot;this-is-deprecated&quot;</span></span><br><span class="line">declare -x <span class="attribute">GNOME_SHELL_SESSION_MODE</span>=<span class="string">&quot;classic&quot;</span></span><br><span class="line"><span class="built_in">..</span>.省略其它<span class="built_in">..</span>.</span><br><span class="line">[haokaiyang@CentOS7 ~]$ <span class="builtin-name">export</span> | cut -c 12-</span><br><span class="line"><span class="attribute">DBUS_SESSION_BUS_ADDRESS</span>=<span class="string">&quot;unix:abstract=/tmp/dbus-XJTgTELjog,guid=01073012db3b26373639582458c611fa&quot;</span></span><br><span class="line"><span class="attribute">DESKTOP_SESSION</span>=<span class="string">&quot;gnome-classic&quot;</span></span><br><span class="line"><span class="attribute">DISPLAY</span>=<span class="string">&quot;:0&quot;</span></span><br><span class="line"><span class="attribute">GDMSESSION</span>=<span class="string">&quot;gnome-classic&quot;</span></span><br><span class="line"><span class="attribute">GDM_LANG</span>=<span class="string">&quot;zh_CN.UTF-8&quot;</span></span><br><span class="line"><span class="attribute">GNOME_DESKTOP_SESSION_ID</span>=<span class="string">&quot;this-is-deprecated&quot;</span></span><br><span class="line"><span class="attribute">GNOME_SHELL_SESSION_MODE</span>=<span class="string">&quot;classic&quot;</span></span><br><span class="line"><span class="built_in">..</span>.省略其它<span class="built_in">..</span>.</span><br><span class="line">[haokaiyang@CentOS7 ~]$ <span class="builtin-name">export</span> | cut -c 12-20</span><br><span class="line">[haokaiyang@CentOS7 ~]$ <span class="builtin-name">export</span> | cut -c 12-20</span><br><span class="line">DBUS_SESS</span><br><span class="line">DESKTOP_S</span><br><span class="line"><span class="attribute">DISPLAY</span>=<span class="string">&quot;</span></span><br><span class="line"><span class="string">GDMSESSIO</span></span><br><span class="line"><span class="string">GDM_LANG=</span></span><br><span class="line"><span class="string">GNOME_DES</span></span><br><span class="line"><span class="string">GNOME_SHE</span></span><br><span class="line"><span class="string">...省略其它...</span></span><br></pre></td></tr></table></figure>
+
+<pre><code>命令:grep [-acinv] [--color=auto] &#39;搜索字符串&#39; filename
+选项及参数:
+    -a 将binary文件以text文件的方式搜索信息
+    -c 统计找到&#39;搜索字符串&#39;的次数
+    -i 忽略大小写的不同,所以大小写视为相同
+    -n 输出行数
+    -v 反向选择,表示显示出没有&#39;搜索字符串&#39;内容的那一行
+    --color=auto 可以将找到的关键字部分加上颜色的显示</code></pre>
+<h3 id="排序命令-sort-wc-uniq"><a href="#排序命令-sort-wc-uniq" class="headerlink" title="排序命令:sort,wc,uniq"></a>排序命令:sort,wc,uniq</h3><pre><code>命令:sort [-fbMnrtuk] [file or stdin]
+选项及参数:
+    -f 忽略大小写差异
+    -b 忽略最前面的空白字符
+    -M 以月份名字来排序
+    -n 使用数字排序(默认是以文字类型排序)
+    -r 反向排序
+    -u uniq,相同的资料中,仅出现一行代表
+    -t 分割符号,默认使用tab来分割
+    -k 以那个字段来进行排序的意思</code></pre>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#对账号进行排序</span></span><br><span class="line">[<span class="type">haokaiyang</span>@<span class="type">CentOS7</span> ~]<span class="variable">$</span> <span class="built_in">cat</span> /etc/passwd | <span class="built_in">sort</span></span><br><span class="line"><span class="comment">#第三栏排序</span></span><br><span class="line">[<span class="type">haokaiyang</span>@<span class="type">CentOS7</span> ~]<span class="variable">$</span> <span class="built_in">cat</span> /etc/passwd | <span class="built_in">sort</span> <span class="literal">-t</span> <span class="string">&#x27;:&#x27;</span> <span class="literal">-k</span> <span class="number">3</span></span><br><span class="line"><span class="comment">#仅以第三栏排序</span></span><br><span class="line">[<span class="type">haokaiyang</span>@<span class="type">CentOS7</span> ~]<span class="variable">$</span> <span class="built_in">cat</span> /etc/passwd | <span class="built_in">sort</span> <span class="literal">-t</span> <span class="string">&#x27;:&#x27;</span> <span class="literal">-k</span> <span class="number">3</span>,<span class="number">3</span></span><br></pre></td></tr></table></figure>
+
+<pre><code>命令:wc [-lwm]
+选项及参数:
+    -l 仅列出行
+    -w 列出多个字(单文单字)
+    -m 多少字符</code></pre>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#<span class="regexp">/etc/m</span>an_db.conf 里面有多少相关字、行、字符数</span><br><span class="line">[haokaiyang@CentOS7 ~]$ cat <span class="regexp">/etc/m</span>an_db.conf | wc</span><br><span class="line">    <span class="number">131</span>     <span class="number">723</span>    <span class="number">5171</span></span><br></pre></td></tr></table></figure>
+
+<pre><code>命令:uniq [-ic]
+选项及参数:
+    -i 忽略大小写
+    -c 进行计数</code></pre>
+<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#每个人登录次数</span></span><br><span class="line">[haokaiyang<span class="meta">@CentOS7</span> ~]$ last |<span class="string"> cut -d &#x27; &#x27; -f 1 </span>|<span class="string"> sort </span>|<span class="string"> uniq -c</span></span><br><span class="line"><span class="string">      1 </span></span><br><span class="line"><span class="string">     30 haokaiya</span></span><br><span class="line"><span class="string">     11 reboot</span></span><br><span class="line"><span class="string">      1 root</span></span><br><span class="line"><span class="string">     10 (unknown</span></span><br><span class="line"><span class="string">      1 wtmp</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="双向重定向-tee"><a href="#双向重定向-tee" class="headerlink" title="双向重定向:tee"></a>双向重定向:tee</h3><pre><code>命令:tee [-a] file
+选项及参数:
+    -a 以累加(append)的方式,将资料加入file当中</code></pre>
+<figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#将<span class="built_in">last</span>的结果输出一份到<span class="built_in">last</span>.list</span><br><span class="line"><span class="built_in">last</span> | tee <span class="built_in">last</span>.list | cut -d <span class="string">&quot; &quot;</span> -f <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="字符转换命令tr-col-join-paste-expand"><a href="#字符转换命令tr-col-join-paste-expand" class="headerlink" title="字符转换命令tr,col,join,paste,expand"></a>字符转换命令tr,col,join,paste,expand</h3><pre><code>命令:tr [-ds] SET1 ...
+选项及参数:
+    -d 删除信息当中SET1这个字符串
+    -s 替换掉重复字符</code></pre>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#将last输出的信息中,所有小写转换成大写</span></span><br><span class="line">[haokaiyang@CentOS7 ~]$ <span class="keyword">last</span> | <span class="keyword">tr</span> [a-z] [A-Z]</span><br><span class="line"><span class="comment">#删除&quot;:&quot;</span></span><br><span class="line">[haokaiyang@CentOS7 ~]$ <span class="keyword">last</span> | <span class="keyword">tr</span> -d <span class="string">&quot;:&quot;</span></span><br></pre></td></tr></table></figure>
+
+<pre><code>命令:col [-xb]
+选项及参数:
+    -x 将tab键转换成对等的空格键
+    -b 过滤掉所有的控制字符,包括RLF和HRLF</code></pre>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#将<span class="keyword">tab</span>转为空格键</span><br><span class="line">[haokaiyang@CentOS7 ~]$ <span class="keyword">cat</span> /etc/man_db.<span class="keyword">conf</span> |<span class="keyword">col</span> -<span class="keyword">x</span> |<span class="keyword">cat</span> -A</span><br></pre></td></tr></table></figure>
+
+<p>两个文件中,有相同资料的那一行,才将他们放在一起</p>
+<pre><code>命令:join [-ti12] file1 file2
+选项及参数:
+    -t join默认以空格分割资料,并且比对第一个栏位的资料,如果两个文件相同,则将两笔资料聊成一行,且第一个栏位放在第一个
+    -i 忽略大小写差异
+    -1 第一个档案要用那个栏位来分析的意思
+    -2 第二个档案要用那个栏位来分析的意思</code></pre>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#整合/etc/passwd与/etc/shadow的相关资料</span></span><br><span class="line">[root<span class="variable">@CentOS7</span> haokaiyang]<span class="comment"># head -n 3 /etc/passwd /etc/shadow</span></span><br><span class="line">==&gt; <span class="regexp">/etc/passwd</span> &lt;==</span><br><span class="line"><span class="symbol">root:</span><span class="symbol">x:</span>0<span class="symbol">:</span>0<span class="symbol">:root</span><span class="symbol">:/root</span><span class="symbol">:/bin/bash</span></span><br><span class="line"><span class="symbol">bin:</span><span class="symbol">x:</span><span class="number">1:1</span><span class="symbol">:bin</span><span class="symbol">:/bin</span><span class="symbol">:/sbin/nologin</span></span><br><span class="line"><span class="symbol">daemon:</span><span class="symbol">x:</span><span class="number">2:2</span><span class="symbol">:daemon</span><span class="symbol">:/sbin</span><span class="symbol">:/sbin/nologin</span></span><br><span class="line"></span><br><span class="line">==&gt; <span class="regexp">/etc/shadow</span> &lt;==</span><br><span class="line"><span class="symbol">root:</span><span class="variable">$6</span><span class="variable">$pJ6</span>.kUwNnrV29NsN<span class="variable">$vEwUpSnvXaUmMO8RqFe8GE0rxN</span>.s.<span class="number">4</span>/uI/GBFvjEMfXe7GRhjT.Kkwz99LwHyhrqtD4KKUBeuqkwszYRgv51d0::0<span class="symbol">:</span><span class="number">99999:7</span>::<span class="symbol">:</span></span><br><span class="line"><span class="symbol">bin:</span>*<span class="symbol">:</span><span class="number">17110:0</span><span class="symbol">:</span><span class="number">99999:7</span>::<span class="symbol">:</span></span><br><span class="line"><span class="symbol">daemon:</span>*<span class="symbol">:</span><span class="number">17110:0</span><span class="symbol">:</span><span class="number">99999:7</span>::<span class="symbol">:</span></span><br><span class="line">[root<span class="variable">@CentOS7</span> haokaiyang]<span class="comment"># join -t &quot;:&quot; /etc/passwd /etc/shadow | head -n 3</span></span><br><span class="line"><span class="symbol">root:</span><span class="symbol">x:</span>0<span class="symbol">:</span>0<span class="symbol">:root</span><span class="symbol">:/root</span><span class="symbol">:/bin/bash</span><span class="symbol">:</span><span class="variable">$6</span><span class="variable">$pJ6</span>.kUwNnrV29NsN<span class="variable">$vEwUpSnvXaUmMO8RqFe8GE0rxN</span>.s.<span class="number">4</span>/uI/GBFvjEMfXe7GRhjT.Kkwz99LwHyhrqtD4KKUBeuqkwszYRgv51d0::0<span class="symbol">:</span><span class="number">99999:7</span>::<span class="symbol">:</span></span><br><span class="line"><span class="symbol">bin:</span><span class="symbol">x:</span><span class="number">1:1</span><span class="symbol">:bin</span><span class="symbol">:/bin</span><span class="symbol">:/sbin/nologin</span><span class="symbol">:*</span><span class="symbol">:</span><span class="number">17110:0</span><span class="symbol">:</span><span class="number">99999:7</span>::<span class="symbol">:</span></span><br><span class="line"><span class="symbol">daemon:</span><span class="symbol">x:</span><span class="number">2:2</span><span class="symbol">:daemon</span><span class="symbol">:/sbin</span><span class="symbol">:/sbin/nologin</span><span class="symbol">:*</span><span class="symbol">:</span><span class="number">17110:0</span><span class="symbol">:</span><span class="number">99999:7</span>::<span class="symbol">:</span></span><br></pre></td></tr></table></figure>
+
+<p>将两列放一起</p>
+<pre><code>命令:paste [-d] file1 file2
+选项及参数:
+    -d 后面接分割字符,默认是[tab]来分割的
+    - 如果file部分写成-,表示来自stdin的资料</code></pre>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#将/etc/passwd与/etc/shadow同一行放一起</span></span><br><span class="line">[root<span class="variable">@CentOS7</span> haokaiyang]<span class="comment"># paste /etc/passwd /etc/shadow | head -n 3</span></span><br><span class="line"><span class="symbol">root:</span><span class="symbol">x:</span>0<span class="symbol">:</span>0<span class="symbol">:root</span><span class="symbol">:/root</span><span class="symbol">:/bin/bash</span> <span class="symbol">root:</span><span class="variable">$6</span><span class="variable">$pJ6</span>.kUwNnrV29NsN<span class="variable">$vEwUpSnvXaUmMO8RqFe8GE0rxN</span>.s.<span class="number">4</span>/uI/GBFvjEMfXe7GRhjT.Kkwz99LwHyhrqtD4KKUBeuqkwszYRgv51d0::0<span class="symbol">:</span><span class="number">99999:7</span>::<span class="symbol">:</span></span><br><span class="line"><span class="symbol">bin:</span><span class="symbol">x:</span><span class="number">1:1</span><span class="symbol">:bin</span><span class="symbol">:/bin</span><span class="symbol">:/sbin/nologin</span>    <span class="symbol">bin:</span>*<span class="symbol">:</span><span class="number">17110:0</span><span class="symbol">:</span><span class="number">99999:7</span>::<span class="symbol">:</span></span><br><span class="line"><span class="symbol">daemon:</span><span class="symbol">x:</span><span class="number">2:2</span><span class="symbol">:daemon</span><span class="symbol">:/sbin</span><span class="symbol">:/sbin/nologin</span> <span class="symbol">daemon:</span>*<span class="symbol">:</span><span class="number">17110:0</span><span class="symbol">:</span><span class="number">99999:7</span>::<span class="symbol">:</span></span><br><span class="line"><span class="comment">#将/etc/group读出,然后与上述资料放一起</span></span><br><span class="line">[root<span class="variable">@CentOS7</span> haokaiyang]<span class="comment"># cat /etc/group | paste /etc/passwd /etc/shadow - | head -n 3</span></span><br><span class="line"><span class="symbol">root:</span><span class="symbol">x:</span>0<span class="symbol">:</span>0<span class="symbol">:root</span><span class="symbol">:/root</span><span class="symbol">:/bin/bash</span> <span class="symbol">root:</span><span class="variable">$6</span><span class="variable">$pJ6</span>.kUwNnrV29NsN<span class="variable">$vEwUpSnvXaUmMO8RqFe8GE0rxN</span>.s.<span class="number">4</span>/uI/GBFvjEMfXe7GRhjT.Kkwz99LwHyhrqtD4KKUBeuqkwszYRgv51d0::0<span class="symbol">:</span><span class="number">99999:7</span>:::   <span class="symbol">root:</span><span class="symbol">x:</span>0<span class="symbol">:</span></span><br><span class="line"><span class="symbol">bin:</span><span class="symbol">x:</span><span class="number">1:1</span><span class="symbol">:bin</span><span class="symbol">:/bin</span><span class="symbol">:/sbin/nologin</span>    <span class="symbol">bin:</span>*<span class="symbol">:</span><span class="number">17110:0</span><span class="symbol">:</span><span class="number">99999:7</span>:::    <span class="symbol">bin:</span><span class="symbol">x:</span><span class="number">1</span><span class="symbol">:</span></span><br><span class="line"><span class="symbol">daemon:</span><span class="symbol">x:</span><span class="number">2:2</span><span class="symbol">:daemon</span><span class="symbol">:/sbin</span><span class="symbol">:/sbin/nologin</span> <span class="symbol">daemon:</span>*<span class="symbol">:</span><span class="number">17110:0</span><span class="symbol">:</span><span class="number">99999:7</span>::: <span class="symbol">daemon:</span><span class="symbol">x:</span><span class="number">2</span><span class="symbol">:</span></span><br></pre></td></tr></table></figure>
+
+<p>将给定文件中的空格转换成tab</p>
+<pre><code>命令:expand [-t] file
+选项及参数:
+    -t 后面接数字,一般来说,一个tab用8个空格代替,我们也可以自定义一个tab按键代表多少个字符</code></pre>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@CentOS7 ~]# <span class="keyword">grep</span> <span class="string">&#x27;^MANPATH&#x27;</span> <span class="regexp">/etc/m</span>an_db.conf | head -n <span class="number">3</span> | expand -t <span class="number">6</span> - | cat -A</span><br><span class="line">MANPATH_MAP <span class="regexp">/bin              /u</span>sr<span class="regexp">/share/m</span>an$</span><br><span class="line">MANPATH_MAP <span class="regexp">/usr/</span>bin          <span class="regexp">/usr/</span>share/man$</span><br><span class="line">MANPATH_MAP <span class="regexp">/sbin             /u</span>sr<span class="regexp">/share/m</span>an$</span><br></pre></td></tr></table></figure>
+
+<pre><code>相关命令:unexpand [-t] file
+选项及参数:
+    -t 后面接数字,一般来说,一个tab用8个空格代替,我们也可以自定义一个tab按键代表多少个字符</code></pre>
+<h3 id="切割命令-split"><a href="#切割命令-split" class="headerlink" title="切割命令:split"></a>切割命令:split</h3><p>将大文件切割</p>
+<pre><code>命令:split [-bl] file PREFIX
+选项及参数:
+    -b 后面可以接想要分割成的文件大小,可加单位b,k,m等
+    -l 以行数进行分割
+    PREFIX 代表前缀,可作为分割文件的前缀</code></pre>
+<figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#按300K切割 /etc/services</span></span><br><span class="line">[root@CentOS7 tmp]<span class="comment"># cd /tmp/;split -b 300k /etc/services services</span></span><br><span class="line">[root@CentOS7 tmp]<span class="comment"># ll -k servicesa*</span></span><br><span class="line">-rw-r--r--.<span class="number"> 1 </span>root root<span class="number"> 307200 </span>3月  13 15:03 servicesaa</span><br><span class="line">-rw-r--r--.<span class="number"> 1 </span>root root<span class="number"> 307200 </span>3月  13 15:03 servicesab</span><br><span class="line">-rw-r--r--.<span class="number"> 1 </span>root root  55893 3月  13 15:03 servicesac</span><br><span class="line"><span class="comment">#合并上述三个文件</span></span><br><span class="line">[root@CentOS7 tmp]<span class="comment"># cat servicesa* &gt;&gt; servicesback</span></span><br><span class="line">[root@CentOS7 tmp]<span class="comment"># ll -k services*</span></span><br><span class="line">-rw-r--r--.<span class="number"> 1 </span>root root<span class="number"> 307200 </span>3月  13 15:03 servicesaa</span><br><span class="line">-rw-r--r--.<span class="number"> 1 </span>root root<span class="number"> 307200 </span>3月  13 15:03 servicesab</span><br><span class="line">-rw-r--r--.<span class="number"> 1 </span>root root  55893 3月  13 15:03 servicesac</span><br><span class="line">-rw-r--r--.<span class="number"> 1 </span>root root<span class="number"> 670293 </span>3月  13 15:04 servicesback</span><br><span class="line"><span class="comment">#使用ll -a /输出的信息中,每10行记录成1个文件</span></span><br><span class="line">[root@CentOS7 tmp]<span class="comment"># ll -a / | split -10 - lsroot</span></span><br><span class="line">[root@CentOS7 tmp]<span class="comment"># wc -l lsroot*</span></span><br><span class="line"> <span class="number"> 10 </span>lsrootaa</span><br><span class="line"> <span class="number"> 10 </span>lsrootab</span><br><span class="line">   4 lsrootac</span><br><span class="line"> <span class="number"> 24 </span>总用量</span><br></pre></td></tr></table></figure>
+
+<h3 id="参数替换-xargs"><a href="#参数替换-xargs" class="headerlink" title="参数替换:xargs"></a>参数替换:xargs</h3><p>由于很多命令不支持管道,所以我们通过xargs来引用stdin</p>
+<pre><code>命令:xargs [-0epn] command
+选项及参数:
+    -0 将stdin中的字符还原为特殊字符
+    -e 这个是EOF(end of file)的意思,后面接一个字符串,当xargs分析到这个字符,就会停止工作
+    -p 在执行每个命令的argument时,询问使用者的意思
+    -n 后面接次数,每个command命令执行时,要使用几个参数的意思
+    当xargs后面没有接任何的命令时候,默认是以echo来进行输出</code></pre>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#将/etc/passwd的第一栏取出,仅取三行,使用id将每个账号的内容亮出来</span></span><br><span class="line">[root@CentOS7 tmp]# id root</span><br><span class="line"><span class="attribute">uid</span>=0(root) <span class="attribute">gid</span>=0(root) 组=0(root)</span><br><span class="line">[root@CentOS7 tmp]# id $(cut -d <span class="string">&#x27;:&#x27;</span> -f 1 /etc/passwd | head -n 3)</span><br><span class="line">id: 额外的操作数 <span class="string">&quot;bin&quot;</span></span><br><span class="line">Try <span class="string">&#x27;id --help&#x27;</span> <span class="keyword">for</span> more information.</span><br><span class="line"><span class="comment">#id 仅能接受一个参数</span></span><br><span class="line">[root@CentOS7 tmp]# cut -d <span class="string">&#x27;:&#x27;</span> -f 1 /etc/passwd | head -n 3 | id</span><br><span class="line"><span class="attribute">uid</span>=0(root) <span class="attribute">gid</span>=0(root) 组=0(root) 环境=unconfined_u:  unconfined_r:unconfined_t:s0-s0:c0.c1023</span><br><span class="line"><span class="comment">#id不是管道命令 前面的东西通通不变,只会执行id</span></span><br><span class="line">[root@CentOS7 tmp]# cut -d <span class="string">&#x27;:&#x27;</span> -f 1 /etc/passwd | head -n 3 | xargs id</span><br><span class="line">id: 额外的操作数 <span class="string">&quot;bin&quot;</span></span><br><span class="line">Try <span class="string">&#x27;id --help&#x27;</span> <span class="keyword">for</span> more information.</span><br><span class="line"><span class="comment">#id就接受一个参数而已</span></span><br><span class="line">[root@CentOS7 tmp]# cut -d <span class="string">&#x27;:&#x27;</span> -f 1 /etc/passwd | head -n 3 | xargs -n 1 id</span><br><span class="line"><span class="attribute">uid</span>=0(root) <span class="attribute">gid</span>=0(root) 组=0(root)</span><br><span class="line"><span class="attribute">uid</span>=1(bin) <span class="attribute">gid</span>=1(bin) 组=1(bin)</span><br><span class="line"><span class="attribute">uid</span>=2(daemon) <span class="attribute">gid</span>=2(daemon) 组=2(daemon)</span><br><span class="line"><span class="comment">#通过-n来处理,一次给予一个参数</span></span><br><span class="line">[root@CentOS7 tmp]# cut -d <span class="string">&#x27;:&#x27;</span> -f 1 /etc/passwd | head -n 3 | xargs -n 1 -p id</span><br><span class="line">id root ?<span class="built_in">..</span>.y</span><br><span class="line"><span class="attribute">uid</span>=0(root) <span class="attribute">gid</span>=0(root) 组=0(root)</span><br><span class="line">id bin ?<span class="built_in">..</span>.y</span><br><span class="line"><span class="attribute">uid</span>=1(bin) <span class="attribute">gid</span>=1(bin) 组=1(bin)</span><br><span class="line">id daemon ?<span class="built_in">..</span>.y</span><br><span class="line"><span class="attribute">uid</span>=2(daemon) <span class="attribute">gid</span>=2(daemon) 组=2(daemon)</span><br></pre></td></tr></table></figure>
+
+<h3 id="减号的用途"><a href="#减号的用途" class="headerlink" title="-减号的用途"></a>-减号的用途</h3><figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@CentOS7 <span class="built_in">home</span>]<span class="meta"># tar -cvf - /home | tar -xvf - -C /tmp/homeback</span></span><br><span class="line">#将/<span class="built_in">home</span>里面的档案打包,将打包的资料输出到<span class="built_in">stdout</span>,然后经过管道传送到后面的tar -xvf -,后面的这个-取的是前面的<span class="built_in">stdout</span></span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Linux/" rel="tag"># Linux</a>
+              <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag"># 学习笔记</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2017/03/08/centos7-learning-notes-4/" rel="prev" title="《鸟哥的Linux私房菜》文件与文件系统的压缩、打包与备份学习笔记">
+      <i class="fa fa-chevron-left"></i> 《鸟哥的Linux私房菜》文件与文件系统的压缩、打包与备份学习笔记
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2017/03/14/centos7-learning-notes-6/" rel="next" title="《鸟哥的Linux私房菜》正则表达式学习笔记">
+      《鸟哥的Linux私房菜》正则表达式学习笔记 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC81MjA0My8yODUyNA=="></div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Bash-shell%E7%9A%84%E5%8A%9F%E8%83%BD"><span class="nav-number">1.</span> <span class="nav-text">Bash shell的功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2%E5%91%BD%E4%BB%A4%E6%98%AF%E5%90%A6%E4%B8%BAbash-shell%E7%9A%84%E5%86%85%E7%BD%AE%E5%91%BD%E4%BB%A4-type"><span class="nav-number">2.</span> <span class="nav-text">查询命令是否为bash shell的内置命令:type</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%98%E9%87%8F%E7%9A%84%E8%BE%93%E5%85%A5"><span class="nav-number">3.</span> <span class="nav-text">变量的输入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#env%E8%A7%82%E5%AF%9F%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="nav-number">4.</span> <span class="nav-text">env观察环境变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#set-%E8%A7%82%E5%AF%9F%E6%89%80%E6%9C%89%E5%8F%98%E9%87%8F-%E5%90%AB%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E5%92%8C%E8%87%AA%E5%AE%9A%E4%B9%89%E5%8F%98%E9%87%8F"><span class="nav-number">5.</span> <span class="nav-text">set 观察所有变量(含环境变量和自定义变量)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#export-%E8%87%AA%E5%AE%9A%E4%B9%89%E5%8F%82%E6%95%B0%E8%BD%AC%E5%8F%98%E4%B8%BA%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="nav-number">6.</span> <span class="nav-text">export 自定义参数转变为环境变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BD%B1%E5%93%8D%E6%98%BE%E7%A4%BA%E7%BB%93%E6%9E%9C%E7%9A%84%E8%AF%AD%E8%A8%80%E5%8F%98%E9%87%8F-locale"><span class="nav-number">7.</span> <span class="nav-text">影响显示结果的语言变量(locale)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%BB%E5%8F%96%E6%9D%A5%E8%87%AA%E9%94%AE%E7%9B%98%E7%9A%84%E5%8F%82%E6%95%B0read"><span class="nav-number">8.</span> <span class="nav-text">读取来自键盘的参数read</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#declare-typeset"><span class="nav-number">9.</span> <span class="nav-text">declare&#x2F;typeset</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#array%E5%8F%98%E9%87%8F%E7%B1%BB%E5%9E%8B"><span class="nav-number">10.</span> <span class="nav-text">array变量类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8E%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E5%92%8C%E7%A8%8B%E5%BA%8F%E7%9A%84%E9%99%90%E5%88%B6%E5%85%B3%E7%B3%BB-ulimit"><span class="nav-number">11.</span> <span class="nav-text">与文件系统和程序的限制关系 ulimit</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%98%E9%87%8F%E5%86%85%E5%AE%B9%E7%9A%84%E5%88%A0%E9%99%A4%E4%B8%8E%E6%9B%BF%E6%8D%A2"><span class="nav-number">12.</span> <span class="nav-text">变量内容的删除与替换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E5%88%AB%E5%90%8D-alias-unalias"><span class="nav-number">13.</span> <span class="nav-text">命令别名 alias unalias</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8E%86%E5%8F%B2%E5%91%BD%E4%BB%A4history"><span class="nav-number">14.</span> <span class="nav-text">历史命令history</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B7%AF%E5%BE%84%E4%B8%8E%E5%91%BD%E4%BB%A4%E6%90%9C%E7%B4%A2%E9%A1%BA%E5%BA%8F"><span class="nav-number">15.</span> <span class="nav-text">路径与命令搜索顺序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bash%E7%9A%84%E7%99%BB%E5%BD%95%E6%AC%A2%E8%BF%8E%E4%BF%A1%E6%81%AF-etc-issue-etc-motd"><span class="nav-number">16.</span> <span class="nav-text">bash的登录欢迎信息:&#x2F;etc&#x2F;issue,&#x2F;etc&#x2F;motd</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#login%E4%B8%8Enon-login-shell"><span class="nav-number">17.</span> <span class="nav-text">login与non-login shell</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#source-%E8%AF%BB%E5%85%A5%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E7%9A%84%E5%91%BD%E4%BB%A4"><span class="nav-number">18.</span> <span class="nav-text">source 读入环境配置的命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE-stty-set"><span class="nav-number">19.</span> <span class="nav-text">终端环境配置:stty,set</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#set"><span class="nav-number">20.</span> <span class="nav-text">set</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BASH%E9%BB%98%E8%AE%A4%E7%BB%84%E5%90%88%E9%94%AE"><span class="nav-number">21.</span> <span class="nav-text">BASH默认组合键</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%87%E7%94%A8%E5%AD%97%E7%AC%A6%E4%B8%8E%E7%89%B9%E6%AE%8A%E5%AD%97%E7%AC%A6"><span class="nav-number">22.</span> <span class="nav-text">万用字符与特殊字符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B5%84%E6%96%99%E6%B5%81%E9%87%8D%E5%AF%BC%E5%90%91"><span class="nav-number">23.</span> <span class="nav-text">资料流重导向</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#dev-null-%E5%9E%83%E5%9C%BE%E6%A1%B6%E9%BB%91%E6%B4%9E%E8%A3%85%E7%BD%AE%E4%B8%8E%E7%89%B9%E6%AE%8A%E5%86%99%E6%B3%95"><span class="nav-number">23.1.</span> <span class="nav-text">&#x2F;dev&#x2F;null 垃圾桶黑洞装置与特殊写法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E5%88%A4%E6%96%AD%E4%BE%9D%E6%8D%AE"><span class="nav-number">24.</span> <span class="nav-text">命令执行判断依据</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8E-amp-amp"><span class="nav-number">24.1.</span> <span class="nav-text">$?与&amp;&amp; ||</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%A1%E9%81%93%E5%91%BD%E4%BB%A4"><span class="nav-number">25.</span> <span class="nav-text">管道命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%88%AA%E5%8F%96%E5%91%BD%E4%BB%A4cut-grep"><span class="nav-number">25.1.</span> <span class="nav-text">截取命令cut,grep</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%92%E5%BA%8F%E5%91%BD%E4%BB%A4-sort-wc-uniq"><span class="nav-number">25.2.</span> <span class="nav-text">排序命令:sort,wc,uniq</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%8C%E5%90%91%E9%87%8D%E5%AE%9A%E5%90%91-tee"><span class="nav-number">25.3.</span> <span class="nav-text">双向重定向:tee</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E8%BD%AC%E6%8D%A2%E5%91%BD%E4%BB%A4tr-col-join-paste-expand"><span class="nav-number">25.4.</span> <span class="nav-text">字符转换命令tr,col,join,paste,expand</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%87%E5%89%B2%E5%91%BD%E4%BB%A4-split"><span class="nav-number">25.5.</span> <span class="nav-text">切割命令:split</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E6%95%B0%E6%9B%BF%E6%8D%A2-xargs"><span class="nav-number">25.6.</span> <span class="nav-text">参数替换:xargs</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%8F%E5%8F%B7%E7%9A%84%E7%94%A8%E9%80%94"><span class="nav-number">25.7.</span> <span class="nav-text">-减号的用途</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="郝凯阳"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">郝凯阳</p>
+  <div class="site-description" itemprop="description">Enjoy coding,Enjoy life:)</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://t.me/haokaiyang" title="Telegram → https:&#x2F;&#x2F;t.me&#x2F;haokaiyang" rel="noopener" target="_blank"><i class="fa fa-fw fa-telegram"></i>Telegram</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/haokaiyang" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;haokaiyang" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="http://weibo.com/5146817200" title="Weibo → http:&#x2F;&#x2F;weibo.com&#x2F;5146817200" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2014 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">郝凯阳</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">140k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">2:08</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+});
+</script>
+
+</body>
+</html>
