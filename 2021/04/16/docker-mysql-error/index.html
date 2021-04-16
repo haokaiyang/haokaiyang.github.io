@@ -9,31 +9,34 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
   <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="google84e34793b41f97d4">
 
 <link rel="stylesheet" href="/css/main.css">
 
 
 <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"haokaiyang.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":false,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"haokaiyang.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":false,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="1.打开&#x2F;source&#x2F;function&#x2F;function_cloudaddons.php 这个文件， 2.搜索：cloudaddons_validator， 3.一般在97行，删去或者注释掉 1cpmsg(&amp;#x27;cloudaddons_genuine_message&amp;#x27;, &amp;#x27;&amp;#x27;, &amp;#x27;error&amp;#x27;, array(&amp;#x27;addonid&amp;#x">
+  <meta name="description" content="Docker 下 Mysql 启动错误">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Discuz! 对不起，您安装的不是正版应用的解决办法(转载)">
-<meta property="og:url" content="http://haokaiyang.com/2015/03/04/discuz-version/index.html">
+<meta property="og:title" content="Docker 下 Mysql 启动错误：Please Read &quot;Security&quot; Section of the Manual to Find Out How to Run Mysqld as Root!">
+<meta property="og:url" content="http://haokaiyang.com/2021/04/16/docker-mysql-error/index.html">
 <meta property="og:site_name" content="郝凯阳">
-<meta property="og:description" content="1.打开&#x2F;source&#x2F;function&#x2F;function_cloudaddons.php 这个文件， 2.搜索：cloudaddons_validator， 3.一般在97行，删去或者注释掉 1cpmsg(&amp;#x27;cloudaddons_genuine_message&amp;#x27;, &amp;#x27;&amp;#x27;, &amp;#x27;error&amp;#x27;, array(&amp;#x27;addonid&amp;#x">
+<meta property="og:description" content="Docker 下 Mysql 启动错误">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2015-03-04T01:58:42.000Z">
-<meta property="article:modified_time" content="2020-12-04T03:52:40.936Z">
+<meta property="article:published_time" content="2021-04-16T06:00:20.642Z">
+<meta property="article:modified_time" content="2021-04-16T06:00:20.642Z">
 <meta property="article:author" content="郝凯阳">
-<meta property="article:tag" content="Discuz">
+<meta property="article:tag" content="Docker">
+<meta property="article:tag" content="Mysql">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://haokaiyang.com/2015/03/04/discuz-version/">
+<link rel="canonical" href="http://haokaiyang.com/2021/04/16/docker-mysql-error/">
 
 
 <script id="page-configurations">
@@ -46,8 +49,17 @@
   };
 </script>
 
-  <title>Discuz! 对不起，您安装的不是正版应用的解决办法(转载) | 郝凯阳</title>
+  <title>Docker 下 Mysql 启动错误：Please Read "Security" Section of the Manual to Find Out How to Run Mysqld as Root! | 郝凯阳</title>
   
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-106549978-1"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-106549978-1');
+      }
+    </script>
 
 
 
@@ -190,7 +202,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://haokaiyang.com/2015/03/04/discuz-version/">
+    <link itemprop="mainEntityOfPage" href="http://haokaiyang.com/2021/04/16/docker-mysql-error/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -203,7 +215,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Discuz! 对不起，您安装的不是正版应用的解决办法(转载)
+          Docker 下 Mysql 启动错误：Please Read "Security" Section of the Manual to Find Out How to Run Mysqld as Root!
         </h1>
 
         <div class="post-meta">
@@ -213,22 +225,15 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2015-03-04 09:58:42" itemprop="dateCreated datePublished" datetime="2015-03-04T09:58:42+08:00">2015-03-04</time>
+              <time title="创建时间：2021-04-16 14:00:20" itemprop="dateCreated datePublished" datetime="2021-04-16T14:00:20+08:00">2021-04-16</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-12-04 11:52:40" itemprop="dateModified" datetime="2020-12-04T11:52:40+08:00">2020-12-04</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/PHP/" itemprop="url" rel="index"><span itemprop="name">PHP</span></a>
+                  <a href="/categories/Docker/" itemprop="url" rel="index"><span itemprop="name">Docker</span></a>
                 </span>
             </span>
 
@@ -245,7 +250,7 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>226</span>
+              <span>1.4k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -254,6 +259,7 @@
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
               <span>1 分钟</span>
             </span>
+            <div class="post-description">Docker 下 Mysql 启动错误</div>
 
         </div>
       </header>
@@ -264,11 +270,24 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>1.打开/source/function/function_cloudaddons.php 这个文件，</p>
-<p>2.搜索：cloudaddons_validator，</p>
-<p>3.一般在97行，删去或者注释掉</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cpmsg(<span class="string">&#x27;cloudaddons_genuine_message&#x27;</span>, <span class="string">&#x27;&#x27;</span>, <span class="string">&#x27;error&#x27;</span>, <span class="keyword">array</span>(<span class="string">&#x27;addonid&#x27;</span> =&gt; <span class="variable">$addonid</span>));</span><br></pre></td></tr></table></figure>
-<p>这句代码，这样就解决问题了。</p>
+        <h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p>系统: windows 10<br>Docker 版本: 19.03.13</p>
+<a id="more"></a>
+
+<h2 id="Docker-compose-文件"><a href="#Docker-compose-文件" class="headerlink" title="Docker-compose 文件"></a>Docker-compose 文件</h2><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">version: <span class="string">&#x27;3.2&#x27;</span></span><br><span class="line">services:</span><br><span class="line">    ...</span><br><span class="line">    mysql:</span><br><span class="line">        image: <span class="string">&quot;$&#123;MYSQL_VERSION&#125;&quot;</span></span><br><span class="line">        command: <span class="string">&quot; --default-authentication-plugin=caching_sha2_password&quot;</span></span><br><span class="line">        volumes:</span><br><span class="line">            - .<span class="regexp">/etc/my</span>sql<span class="regexp">/my.cnf:/</span>etc/my.cnf</span><br><span class="line">            - .<span class="regexp">/etc/my</span>sql<span class="regexp">/my.cnf.d:/</span>etc/my.cnf.d</span><br><span class="line">            - .<span class="regexp">/etc/my</span>sql<span class="regexp">/data:/</span>var<span class="regexp">/lib/my</span>sql</span><br><span class="line">        environment:</span><br><span class="line">            MYSQL_ROOT_PASSWORD: <span class="variable">$&#123;MYSQL_ROOT_PASSWORD&#125;</span></span><br><span class="line">            MYSQL_ROOT_HOST: <span class="string">&quot;%&quot;</span></span><br><span class="line">            TZ: <span class="variable">$&#123;TZ&#125;</span></span><br><span class="line">        restart: on-failure</span><br><span class="line">    ...</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h2><p>Mysql 无法启动,启动就关闭,查看日志发现</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Mysql启动错误：Please read <span class="string">&quot;Security&quot;</span> section of the<span class="built_in"> manual </span><span class="keyword">to</span> <span class="builtin-name">find</span> out how <span class="keyword">to</span> <span class="builtin-name">run</span> mysqld as root!</span><br></pre></td></tr></table></figure>
+<p>这步的解决方案很简单,只需要在 my.cnf 中添加或修改</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">user</span>=mysql</span><br></pre></td></tr></table></figure>
+<p>修改后还是无法启动</p>
+<p>继续查看日志</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Warnin<span class="variable">g:</span> World-writable config <span class="keyword">file</span> <span class="string">&#x27;/etc/mysql/my.cnf&#x27;</span> <span class="keyword">is</span> ignored</span><br></pre></td></tr></table></figure>
+<p>由于 /etc/mysql/my.conf 的权限是 777,配置文件会被忽略。<br>这步的解决办法也很简单</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod <span class="number">0444</span> <span class="regexp">/etc/my</span>sql/my.cnf</span><br></pre></td></tr></table></figure>
+<p>但由于我是 windows ，只能想点别的招数了。<br>然后我修改了 docker-compose 文件中 mysql 的 command 部分</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">docker-compose.yml</span><br><span class="line">version: <span class="string">&#x27;3.2&#x27;</span></span><br><span class="line"></span><br><span class="line">services:</span><br><span class="line">    ...</span><br><span class="line">    mysql:</span><br><span class="line">        image: <span class="string">&quot;$&#123;MYSQL_VERSION&#125;&quot;</span></span><br><span class="line">        command: &gt; </span><br><span class="line">            bash -c <span class="string">&quot;chmod 0444 /etc/my.cnf &amp;&amp; /usr/sbin/mysqld --default-authentication-plugin=caching_sha2_password&quot;</span></span><br><span class="line">        volumes:</span><br><span class="line">            - .<span class="regexp">/etc/my</span>sql<span class="regexp">/my.cnf:/</span>etc/my.cnf</span><br><span class="line">            - .<span class="regexp">/etc/my</span>sql<span class="regexp">/my.cnf.d:/</span>etc/my.cnf.d</span><br><span class="line">            - .<span class="regexp">/etc/my</span>sql<span class="regexp">/data:/</span>var<span class="regexp">/lib/my</span>sql</span><br><span class="line">        environment:</span><br><span class="line">            MYSQL_ROOT_PASSWORD: <span class="variable">$&#123;MYSQL_ROOT_PASSWORD&#125;</span></span><br><span class="line">            MYSQL_ROOT_HOST: <span class="string">&quot;%&quot;</span></span><br><span class="line">            TZ: <span class="variable">$&#123;TZ&#125;</span></span><br><span class="line">        restart: on-failure</span><br><span class="line">    ...</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>启动，成功。<br>不知道有没有什么副作用。</p>
 
     </div>
 
@@ -278,7 +297,8 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/Discuz/" rel="tag"># Discuz</a>
+              <a href="/tags/Docker/" rel="tag"># Docker</a>
+              <a href="/tags/Mysql/" rel="tag"># Mysql</a>
           </div>
 
         
@@ -287,13 +307,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2015/03/04/wamp-www-directory/" rel="prev" title="WampServer修改默认网站www目录的方法">
-      <i class="fa fa-chevron-left"></i> WampServer修改默认网站www目录的方法
+    <a href="/2021/04/16/weekly-2021-16/" rel="prev" title="Weekly Read | 2021年 16 周">
+      <i class="fa fa-chevron-left"></i> Weekly Read | 2021年 16 周
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2015/03/04/wampserver-set-timezone/" rel="next" title="WampServer修改默认时区办法">
-      WampServer修改默认时区办法 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -306,11 +323,7 @@
 
           </div>
           
-    
-  <div class="comments">
-    <div id="lv-container" data-id="city" data-uid="MTAyMC81MjA0My8yODUyNA=="></div>
-  </div>
-  
+    <div class="comments" id="gitalk-container"></div>
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -357,6 +370,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83"><span class="nav-number">1.</span> <span class="nav-text">环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker-compose-%E6%96%87%E4%BB%B6"><span class="nav-number">2.</span> <span class="nav-text">Docker-compose 文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%87%E7%A8%8B"><span class="nav-number">3.</span> <span class="nav-text">过程</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -379,13 +393,13 @@
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-count">10</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-count">23</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -423,7 +437,7 @@
 <div class="copyright">
   
   &copy; 2014 – 
-  <span itemprop="copyrightYear">2020</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -432,12 +446,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">140k</span>
+    <span title="站点总字数">143k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:08</span>
+    <span title="站点阅读时长">2:10</span>
 </div>
 
         
@@ -475,6 +489,9 @@
 
   
   <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 
@@ -515,19 +532,24 @@
 
   
 
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
 <script>
-NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
-  window.livereOptions = {
-    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
-  };
-  (function(d, s) {
-    var j, e = d.getElementsByTagName(s)[0];
-    if (typeof LivereTower === 'function') { return; }
-    j = d.createElement(s);
-    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
-    j.async = true;
-    e.parentNode.insertBefore(j, e);
-  })(document, 'script');
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : '55b56a455cc8a59a37ee',
+      clientSecret: '972ae90f3121e7b803f51cda974e83f34e60e9a6',
+      repo        : 'haokaiyang.github.io',
+      owner       : 'haokaiyang',
+      admin       : ['haokaiyang'],
+      id          : '19974abd9b5d558f481aca8e557f18a4',
+        language: 'zh-CN',
+      distractionFreeMode: false,
+      createIssueManually: false
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
 });
 </script>
 

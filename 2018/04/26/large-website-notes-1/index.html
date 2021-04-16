@@ -9,28 +9,30 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
   <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="google84e34793b41f97d4">
 
 <link rel="stylesheet" href="/css/main.css">
 
 
 <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"haokaiyang.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":false,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"haokaiyang.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":false,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="单机构建网站网站容量的估算容量估算需要估算什么常见容量估算包括数据量、并发量、带宽、CPU&#x2F;MEM&#x2F;DISK等。联网项目最重要的是估算并发量 容量评估的步骤和方法 总访问量 平均访问量QPS(总量&#x2F;(12*3600)) 高峰QPS(平均访问的2-2.5倍) 系统、单机极限QPS 计算容量  常见性能压测工具 ab: ApacheBench是Apache自带的压力测试工具、可以用来测试各种web服务">
+  <meta name="description" content="大型网站开发技术学习笔记">
 <meta property="og:type" content="article">
 <meta property="og:title" content="大型网站开发技术学习笔记">
 <meta property="og:url" content="http://haokaiyang.com/2018/04/26/large-website-notes-1/index.html">
 <meta property="og:site_name" content="郝凯阳">
-<meta property="og:description" content="单机构建网站网站容量的估算容量估算需要估算什么常见容量估算包括数据量、并发量、带宽、CPU&#x2F;MEM&#x2F;DISK等。联网项目最重要的是估算并发量 容量评估的步骤和方法 总访问量 平均访问量QPS(总量&#x2F;(12*3600)) 高峰QPS(平均访问的2-2.5倍) 系统、单机极限QPS 计算容量  常见性能压测工具 ab: ApacheBench是Apache自带的压力测试工具、可以用来测试各种web服务">
+<meta property="og:description" content="大型网站开发技术学习笔记">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://haokaiyang.com/images/%E4%BA%8C%E9%98%B6%E6%AE%B5%E6%8F%90%E4%BA%A4%E6%88%90%E5%8A%9F.jpg">
 <meta property="og:image" content="http://haokaiyang.com/images/%E4%BA%8C%E9%98%B6%E6%AE%B5%E6%8F%90%E4%BA%A4%E5%A4%B1%E8%B4%A5.jpg">
 <meta property="article:published_time" content="2018-04-26T12:06:39.000Z">
-<meta property="article:modified_time" content="2020-12-04T03:52:40.938Z">
+<meta property="article:modified_time" content="2021-04-16T06:00:20.645Z">
 <meta property="article:author" content="郝凯阳">
 <meta property="article:tag" content="负载均衡">
 <meta property="article:tag" content="Mysql">
@@ -53,6 +55,15 @@
 
   <title>大型网站开发技术学习笔记 | 郝凯阳</title>
   
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-106549978-1"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-106549978-1');
+      }
+    </script>
 
 
 
@@ -225,7 +236,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-12-04 11:52:40" itemprop="dateModified" datetime="2020-12-04T11:52:40+08:00">2020-12-04</time>
+                <time title="修改时间：2021-04-16 14:00:20" itemprop="dateModified" datetime="2021-04-16T14:00:20+08:00">2021-04-16</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -259,6 +270,7 @@
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
               <span>5 分钟</span>
             </span>
+            <div class="post-description">大型网站开发技术学习笔记</div>
 
         </div>
       </header>
@@ -269,7 +281,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="单机构建网站"><a href="#单机构建网站" class="headerlink" title="单机构建网站"></a>单机构建网站</h2><h3 id="网站容量的估算"><a href="#网站容量的估算" class="headerlink" title="网站容量的估算"></a>网站容量的估算</h3><p>容量估算需要估算什么<br>常见容量估算包括数据量、<strong>并发量</strong>、带宽、CPU/MEM/DISK等。联网项目最重要的是估算并发量</p>
+        <h2 id="单机构建网站"><a href="#单机构建网站" class="headerlink" title="单机构建网站"></a>单机构建网站</h2><h3 id="网站容量的估算"><a href="#网站容量的估算" class="headerlink" title="网站容量的估算"></a>网站容量的估算</h3><p>容量估算需要估算什么 <a id="more"></a><br>常见容量估算包括数据量、<strong>并发量</strong>、带宽、CPU/MEM/DISK等。联网项目最重要的是估算并发量</p>
 <h3 id="容量评估的步骤和方法"><a href="#容量评估的步骤和方法" class="headerlink" title="容量评估的步骤和方法"></a>容量评估的步骤和方法</h3><ol>
 <li>总访问量</li>
 <li>平均访问量QPS(总量/(12*3600))</li>
@@ -354,7 +366,7 @@
 </ul>
 <p>如果join很复杂，首先需要考虑分库的设计是否合理，其次可以考虑使用hadoop或者spark来解决。</p>
 <h4 id="分布式事务的实现-二阶段提交"><a href="#分布式事务的实现-二阶段提交" class="headerlink" title="分布式事务的实现:二阶段提交"></a>分布式事务的实现:二阶段提交</h4><p>两阶段提交协议(Two-phase Commit,2PC)经常被用来实现分布式事务<br>一般分为事务协调器TC和资源管理器SI两种角色，这里的资源管理就是具体的数据库。<br>案例:支付宝转账1万块钱到余额宝如何确保事务<br>1.支付宝表扣除一万<br>2.余额宝表增加一万</p>
-<p>二阶段提交具体细节<br>如图所示:<br><img src="/images/%E4%BA%8C%E9%98%B6%E6%AE%B5%E6%8F%90%E4%BA%A4%E6%88%90%E5%8A%9F.jpg" alt="二阶段提交成功"><br><img src="/images/%E4%BA%8C%E9%98%B6%E6%AE%B5%E6%8F%90%E4%BA%A4%E5%A4%B1%E8%B4%A5.jpg" alt="二阶段提交失败"><br>1.应用程序发起一个开始请求到TC<br>2.向所有的Si发起&lt;prepare&gt;消息。<br>    1. TC给B的prepare消息是通知余额宝数椐库相应账目加lw。<br>    2. TC给A的prepare消总足通知支付宝数据库相应账目扣款1w<br>3.Si收到&lt;prepare&gt;消息后，执行具体本机事务，但不会进行commit,锁定资源等待提交，成功返回<br>&lt;yes&gt;,失败返回&lt;no&gt;<br>4. TC收集所有执行器返回的消息<br>    1. 如果有执行器都返回yes,那么给所有执行器发送commit消总，执行器收到commit后执行本地事务的commit操作<br>    2. 如果有任一个执行器返回no,那么给所有执行器发送abort消息，执行器收到abort消息后执行事务abort操作。</p>
+<p>二阶段提交具体细节<br>如图所示:<br><img data-src="/images/%E4%BA%8C%E9%98%B6%E6%AE%B5%E6%8F%90%E4%BA%A4%E6%88%90%E5%8A%9F.jpg" alt="二阶段提交成功"><br><img data-src="/images/%E4%BA%8C%E9%98%B6%E6%AE%B5%E6%8F%90%E4%BA%A4%E5%A4%B1%E8%B4%A5.jpg" alt="二阶段提交失败"><br>1.应用程序发起一个开始请求到TC<br>2.向所有的Si发起&lt;prepare&gt;消息。<br>    1. TC给B的prepare消息是通知余额宝数椐库相应账目加lw。<br>    2. TC给A的prepare消总足通知支付宝数据库相应账目扣款1w<br>3.Si收到&lt;prepare&gt;消息后，执行具体本机事务，但不会进行commit,锁定资源等待提交，成功返回<br>&lt;yes&gt;,失败返回&lt;no&gt;<br>4. TC收集所有执行器返回的消息<br>    1. 如果有执行器都返回yes,那么给所有执行器发送commit消总，执行器收到commit后执行本地事务的commit操作<br>    2. 如果有任一个执行器返回no,那么给所有执行器发送abort消息，执行器收到abort消息后执行事务abort操作。</p>
 <h4 id="使用消息队列来避免分布式事务"><a href="#使用消息队列来避免分布式事务" class="headerlink" title="使用消息队列来避免分布式事务"></a>使用消息队列来避免分布式事务</h4><p>我们也可以选择牺牲一致性（保证最终一致性）来获取高性能的可用性。<br>1.支付宝在扣款事务提交之前，向实时消息服务请求发送消息，实时消息服务只记录消息数据,而不真正发送，只有消息发送成功后才会提交事务；<br>2.当支付宝扣款事务被提交成功后，向实时消息服务确认发送。只有在得到确认发送指令后，实时消息服务才真正发送该消息；<br>3.当支付宝扣款事务提交失败回滚后，向实时消息服务取消发送。在得到取消发送指令后，该消息将不会被发送；<br>4.对于那些未确认的消息或者取消的消息，需要有一个消息状态确认系统定时去支付宝系统査询这个消息的状态并进行更新。为什么需要这一步骤，举个例子：假设在第2步支付宝扣款事务被成功提交后，系统挂了，此时消息状态并未被更新为“确认发送”，从而异致消息不能被发送。</p>
 <p>这种实现方式的思路，其实是源于ebay,后来通过支付宝等公司的布道，在收内广泛使用。其基木的设<br>计思想是将远程分布式事务拆分成一系列的本地事务。</p>
 <h4 id="非patition-key的查询问题"><a href="#非patition-key的查询问题" class="headerlink" title="非patition key的查询问题"></a>非patition key的查询问题</h4><p>没有好办法，一般采用冗余表的方式解决</p>
@@ -423,11 +435,7 @@
 
           </div>
           
-    
-  <div class="comments">
-    <div id="lv-container" data-id="city" data-uid="MTAyMC81MjA0My8yODUyNA=="></div>
-  </div>
-  
+    <div class="comments" id="gitalk-container"></div>
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -497,13 +505,13 @@
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-count">10</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-count">23</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -541,7 +549,7 @@
 <div class="copyright">
   
   &copy; 2014 – 
-  <span itemprop="copyrightYear">2020</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -550,12 +558,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">140k</span>
+    <span title="站点总字数">143k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:08</span>
+    <span title="站点阅读时长">2:10</span>
 </div>
 
         
@@ -593,6 +601,9 @@
 
   
   <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 
@@ -633,19 +644,24 @@
 
   
 
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
 <script>
-NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
-  window.livereOptions = {
-    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
-  };
-  (function(d, s) {
-    var j, e = d.getElementsByTagName(s)[0];
-    if (typeof LivereTower === 'function') { return; }
-    j = d.createElement(s);
-    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
-    j.async = true;
-    e.parentNode.insertBefore(j, e);
-  })(document, 'script');
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : '55b56a455cc8a59a37ee',
+      clientSecret: '972ae90f3121e7b803f51cda974e83f34e60e9a6',
+      repo        : 'haokaiyang.github.io',
+      owner       : 'haokaiyang',
+      admin       : ['haokaiyang'],
+      id          : '92fa01038d988ee513829ed4d4bc6963',
+        language: 'zh-CN',
+      distractionFreeMode: false,
+      createIssueManually: false
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
 });
 </script>
 
