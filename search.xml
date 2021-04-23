@@ -2886,6 +2886,8 @@ Minor 次要装置代码</code></pre>
 </li>
 <li><p><a href="https://sspai.com/post/65965">妙用书签，将微信文章装进 Drafts</a><br>自动化好文,那天和同事聊现在的智能家居，可以自己设置if else 的 也许比算法更加智能，唯一的缺点是管理和设置</p>
 </li>
+<li><p><a href="https://brianschrader.com/archive/why-all-my-servers-have-an-8gb-empty-file/">Why All My Servers Have an 8GB Empty File</a><br>硬盘便宜了，服务器上放个8G空间可以在磁盘满的时候给你争取一些时间</p>
+</li>
 </ul>
 <p>Find:</p>
 <ul>
@@ -2971,6 +2973,47 @@ Minor 次要装置代码</code></pre>
       <tags>
         <tag>Docker</tag>
         <tag>Mysql</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Weekly Read | 2021年 17 周</title>
+    <url>/2021/04/23/weekly-2021-17/</url>
+    <content><![CDATA[<p>Mark:</p>
+<ul>
+<li><a href="https://www.notboring.co/p/excel-never-dies">excel-never-dies</a><br>这…excel就当成数据库吧</li>
+</ul>
+<p>Find:</p>
+<ul>
+<li><p><a href="https://wechat.privacyhide.com/">给微信公众号生成RSS</a><br>监控微信公众号，RSS永远不死!!</p>
+</li>
+<li><p><a href="https://xpaidia.com/">落日间</a><br>卡片式出版，把更原始的思考和创作过程分享给读者？</p>
+</li>
+</ul>
+<p>Game:</p>
+<p>刷渣兔刷的有点无聊,但渣兔真的是个精致的小游戏<br>没其他想玩的游戏，重新下载了《光遇》，可能有空会上去看看</p>
+<p>App:</p>
+<ul>
+<li><p><a href="https://netnewswire.com/">NetNewsWire</a><br>是在找reeder的替换中找到的，万万没想到还真的不错，reeder 好久没更新了.<br>相关文章: <a href="https://www.guidingtech.com/netnewswire-vs-reeder-rss-reader-app-comparison/">https://www.guidingtech.com/netnewswire-vs-reeder-rss-reader-app-comparison/</a></p>
+</li>
+<li><p><a href="https://apps.apple.com/cn/app/id1552536109">PasteNow for Mac</a><br>上周体验了还不错，这周却把我磁盘写满了。希望将来出ios版本，花30买下了</p>
+</li>
+<li><p>轻芒杂志<br>可能拿来订阅一些rss和微信公众号，页面挺好看，直接截图网页也不错</p>
+</li>
+</ul>
+<p>Github:</p>
+<ul>
+<li><a href="https://blog.never.pet/2021/01/08/tweet-to-telegram">用 Github Action 拯救 Twitter 与 Telegram 的转发</a><br>我是用surge 脚本将链接post到自己的服务器了，但服务器到期了，也懒得搞，等啥会儿勤快了再更新起来</li>
+</ul>
+<p>Like:</p>
+<p>无</p>
+<p>Emotion:</p>
+<p>有个同事离职了，中午一起吃了饭，还一直聊天，很开心，得到她去了快手，嗯。不错不错。<br>路上的时间基本都交给了《赘婿》这本小说，也不YY，也不是什么爽文，宁毅是真的厉害。</p>
+]]></content>
+      <categories>
+        <category>Weekly Read</category>
+      </categories>
+      <tags>
+        <tag>2021</tag>
       </tags>
   </entry>
 </search>
