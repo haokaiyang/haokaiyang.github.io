@@ -2116,7 +2116,7 @@ n 数字,意思是 要列出最近的n笔命令列出的意思
   </entry>
   <entry>
     <title>Docker 下 Mysql 启动错误：Please Read &quot;Security&quot; Section of the Manual to Find Out How to Run Mysqld as Root!</title>
-    <url>/2022/03/24/docker-mysql-error/</url>
+    <url>/2022/03/25/docker-mysql-error/</url>
     <content><![CDATA[<h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p>系统: windows 10<br>Docker 版本: 19.03.13</p>
 <span id="more"></span>
 
