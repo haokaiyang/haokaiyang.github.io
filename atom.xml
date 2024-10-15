@@ -6,7 +6,7 @@
   <link href="http://haokaiyang.com/atom.xml" rel="self"/>
   
   <link href="http://haokaiyang.com/"/>
-  <updated>2022-07-11T13:13:28.630Z</updated>
+  <updated>2024-10-15T05:09:04.358Z</updated>
   <id>http://haokaiyang.com/</id>
   
   <author>
@@ -15,6 +15,25 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Follow 描述</title>
+    <link href="http://haokaiyang.com/2024/10/15/follow-description/"/>
+    <id>http://haokaiyang.com/2024/10/15/follow-description/</id>
+    <published>2024-10-14T16:00:00.000Z</published>
+    <updated>2024-10-15T05:09:04.358Z</updated>
+    
+    
+    <summary type="html">Follow 描述</summary>
+    
+    
+    
+    <category term="Follow" scheme="http://haokaiyang.com/categories/Follow/"/>
+    
+    
+    <category term="Follow" scheme="http://haokaiyang.com/tags/Follow/"/>
+    
+  </entry>
   
   <entry>
     <title>Docker 下 Mysql 启动错误：Please Read &quot;Security&quot; Section of the Manual to Find Out How to Run Mysqld as Root!</title>
@@ -211,9 +230,9 @@
     <category term="学习笔记" scheme="http://haokaiyang.com/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
     
-    <category term="Linux" scheme="http://haokaiyang.com/tags/Linux/"/>
-    
     <category term="学习笔记" scheme="http://haokaiyang.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+    <category term="Linux" scheme="http://haokaiyang.com/tags/Linux/"/>
     
   </entry>
   
@@ -232,9 +251,9 @@
     <category term="学习笔记" scheme="http://haokaiyang.com/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
     
-    <category term="Linux" scheme="http://haokaiyang.com/tags/Linux/"/>
-    
     <category term="学习笔记" scheme="http://haokaiyang.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+    <category term="Linux" scheme="http://haokaiyang.com/tags/Linux/"/>
     
   </entry>
   
@@ -253,9 +272,9 @@
     <category term="学习笔记" scheme="http://haokaiyang.com/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
     
-    <category term="Linux" scheme="http://haokaiyang.com/tags/Linux/"/>
-    
     <category term="学习笔记" scheme="http://haokaiyang.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+    <category term="Linux" scheme="http://haokaiyang.com/tags/Linux/"/>
     
   </entry>
   
@@ -274,9 +293,9 @@
     <category term="学习笔记" scheme="http://haokaiyang.com/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
     
-    <category term="Linux" scheme="http://haokaiyang.com/tags/Linux/"/>
-    
     <category term="学习笔记" scheme="http://haokaiyang.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+    <category term="Linux" scheme="http://haokaiyang.com/tags/Linux/"/>
     
   </entry>
   
@@ -295,9 +314,9 @@
     <category term="学习笔记" scheme="http://haokaiyang.com/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
     
-    <category term="Linux" scheme="http://haokaiyang.com/tags/Linux/"/>
-    
     <category term="学习笔记" scheme="http://haokaiyang.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+    <category term="Linux" scheme="http://haokaiyang.com/tags/Linux/"/>
     
   </entry>
   
@@ -316,9 +335,9 @@
     <category term="学习笔记" scheme="http://haokaiyang.com/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
     
-    <category term="Linux" scheme="http://haokaiyang.com/tags/Linux/"/>
-    
     <category term="学习笔记" scheme="http://haokaiyang.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+    <category term="Linux" scheme="http://haokaiyang.com/tags/Linux/"/>
     
   </entry>
   
@@ -337,9 +356,9 @@
     <category term="学习笔记" scheme="http://haokaiyang.com/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
     
-    <category term="Linux" scheme="http://haokaiyang.com/tags/Linux/"/>
-    
     <category term="学习笔记" scheme="http://haokaiyang.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+    <category term="Linux" scheme="http://haokaiyang.com/tags/Linux/"/>
     
   </entry>
   
@@ -358,9 +377,9 @@
     <category term="学习笔记" scheme="http://haokaiyang.com/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
     
-    <category term="Linux" scheme="http://haokaiyang.com/tags/Linux/"/>
-    
     <category term="学习笔记" scheme="http://haokaiyang.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+    <category term="Linux" scheme="http://haokaiyang.com/tags/Linux/"/>
     
   </entry>
   
@@ -426,29 +445,6 @@
     <category term="环境搭建" scheme="http://haokaiyang.com/tags/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/"/>
     
     <category term="MySQL" scheme="http://haokaiyang.com/tags/MySQL/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Mac下安装LNMP环境</title>
-    <link href="http://haokaiyang.com/2015/11/10/install-lnmp-on-osx/"/>
-    <id>http://haokaiyang.com/2015/11/10/install-lnmp-on-osx/</id>
-    <published>2015-11-10T05:11:23.000Z</published>
-    <updated>2018-05-17T15:38:11.000Z</updated>
-    
-    
-    <summary type="html">Mac下安装LNMP环境</summary>
-    
-    
-    
-    <category term="环境搭建" scheme="http://haokaiyang.com/categories/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/"/>
-    
-    
-    <category term="环境搭建" scheme="http://haokaiyang.com/tags/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/"/>
-    
-    <category term="Mac" scheme="http://haokaiyang.com/tags/Mac/"/>
-    
-    <category term="LNMP" scheme="http://haokaiyang.com/tags/LNMP/"/>
     
   </entry>
   

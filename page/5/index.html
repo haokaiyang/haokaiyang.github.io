@@ -165,18 +165,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">35</span>
+          <span class="site-state-item-count">36</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">11</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-count">24</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -212,6 +212,152 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://haokaiyang.com/2015/11/10/install-lnmp-on-osx/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="郝凯阳">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="郝凯阳">
+      <meta itemprop="description" content="Enjoy coding,Enjoy life:)">
+    </span>
+    
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 郝凯阳">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2015/11/10/install-lnmp-on-osx/" class="post-title-link" itemprop="url">Mac下安装LNMP环境</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2015-11-10 13:11:23" itemprop="dateCreated datePublished" datetime="2015-11-10T13:11:23+08:00">2015-11-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2018-05-17 23:38:11" itemprop="dateModified" datetime="2018-05-17T23:38:11+08:00">2018-05-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" itemprop="url" rel="index"><span itemprop="name">环境搭建</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.2k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>2 分钟</span>
+    </span>
+</div>
+
+            <div class="post-description">Mac下安装LNMP环境</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="安装homebrew"><a href="#安装homebrew" class="headerlink" title="安装homebrew"></a>安装homebrew</h2><ul>
+<li>简介: <a target="_blank" rel="noopener" href="http://brew.sh/index_zh-cn.html">Homebrew中文官网</a></li>
+<li>安装:<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ruby -e <span class="string">&quot;<span class="subst">$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)</span>&quot;</span></span><br></pre></td></tr></table></figure></li>
+<li>常用命令:<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">brew install 软件名 <span class="comment">#安装软件</span></span><br><span class="line">brew remove 软件名 <span class="comment">#卸载软件</span></span><br><span class="line">brew upgrade 软件名 <span class="comment">#更新软件</span></span><br><span class="line">brew tap 软件源地址 <span class="comment">#添加软件源</span></span><br><span class="line">brew untap 软件源地址 <span class="comment">#删除软件源</span></span><br><span class="line">brew update <span class="comment">#更新</span></span><br><span class="line">brew list <span class="comment">#列出当前所有的可用软件</span></span><br><span class="line">brew search /软件名[*]/ <span class="comment">#在软件源中搜索软件[支持模糊匹配]</span></span><br><span class="line">brew info 软件名 <span class="comment">#查看软件详细信息</span></span><br><span class="line">brew outdated <span class="comment">#查看已安装程序是否有更新</span></span><br><span class="line">brew cleanup <span class="comment">#清楚homebrew缓存或者旧版本</span></span><br><span class="line">brew options <span class="comment">#查看软件编译选项</span></span><br><span class="line">brew deps 软件名 <span class="comment">#查看包依赖</span></span><br></pre></td></tr></table></figure></li>
+<li>其它:因为在OS X 10.11 苹果增强了SIP,所以我们装homebrew可能比以前麻烦了点。<br><a href="/2015/10/02/install-homebrew-on-osx/">Mac OS X 10.11如何安装homebrew</a></li>
+<li>加入常用软件源<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">brew tap homebrew/dupes</span><br><span class="line">brew tap homebrew/versions</span><br><span class="line">brew tap homebrew/php</span><br></pre></td></tr></table></figure>
+<h2 id="安装php7"><a href="#安装php7" class="headerlink" title="安装php7"></a>安装php7</h2></li>
+<li>简介:安装PHP</li>
+<li>安装:<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">brew install php72 \</span><br><span class="line">--with-argon2 \</span><br><span class="line">--with-cgi \</span><br><span class="line">--with-debug \</span><br><span class="line">--with-enchant \</span><br><span class="line">--with-gmp \</span><br><span class="line">--with-homebrew-curl \</span><br><span class="line">--with-homebrew-libressl \</span><br><span class="line">--with-homebrew-libxml2 \</span><br><span class="line">--with-homebrew-libxslt \</span><br><span class="line">--with-httpd \</span><br><span class="line">--with-imap \</span><br><span class="line">--with-libmysql \</span><br><span class="line">--with-mssql \</span><br><span class="line">--with-pear \</span><br><span class="line">--with-phpdbg \</span><br><span class="line">--with-postgresql \</span><br><span class="line">--with-thread-safety \</span><br><span class="line">--with-webp</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>这里出了个小插曲,安装过程中imap提示404,我们通过FTP把包下载下来,放在目录&#x2F;Library&#x2F;Caches&#x2F;Homebrew,然后重新来一次就可以了。</p>
+<ul>
+<li>使我们安装的PHP7代替系统自带的:<br>由于OSX已经自带了PHP环境，因此需要修改系统路径，优先运行brew安装的版本，在~&#x2F;.bashrc里加入：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> PATH=<span class="string">&quot;/usr/local/bin:/usr/local/sbin:<span class="variable">$PATH</span>&quot;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>安装扩展<ul>
+<li><p>如果要安装新的php扩展，可以直接安装而不用每次重新编译php，所有的扩展可以通过</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew search php71</span><br></pre></td></tr></table></figure></li>
+<li><p>安装扩展例子</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install php71-redis</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>其它:</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">php-fpm -D <span class="comment">#启动php-fpm</span></span><br><span class="line">killall php-fpm <span class="comment">#停止php-fpm</span></span><br></pre></td></tr></table></figure></li>
+<li><p>将php-fpm加入开机启动</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ln</span> -sfv /usr/local/opt/php70/*.plist ~/Library/LaunchAgents</span><br><span class="line">launchctl load ~/Library/LaunchAgents/homebrew.mxcl.php70.plist</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<h2 id="安装nginx"><a href="#安装nginx" class="headerlink" title="安装nginx"></a>安装nginx</h2><ul>
+<li>安装<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install nginx</span><br></pre></td></tr></table></figure></li>
+<li>nginx 常用命令<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo nginx <span class="comment">#打开nginx</span></span><br><span class="line">sudo nginx -s reload|reopen|stop|quit <span class="comment">#重新加载配置|重启|停止|退出</span></span><br><span class="line">sudo nginx -t <span class="comment">#测试nginx配置是否有语法错误</span></span><br></pre></td></tr></table></figure></li>
+<li>nginx 配置文件地址<br>&#x2F;usr&#x2F;local&#x2F;etc&#x2F;nginx&#x2F;nginx.conf</li>
+<li>修改端口:nginx 安装后默认后默认监听8080端口，我们将端口修改为80端口，但是需要root权限，我们运行<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo <span class="built_in">chown</span> root:wheel /usr/local/Cellar/nginx/1.13.12/bin/nginx</span><br><span class="line">sudo <span class="built_in">chmod</span> u+s /usr/local/Cellar/nginx/1.13.12/bin/nginx</span><br></pre></td></tr></table></figure></li>
+<li>开机启动<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ln</span> -sfv /usr/local/opt/nginx/homebrew.mxcl.nginx.plist ~/Library/LaunchAgents/</span><br><span class="line">launchctl load ~/Library/LaunchAgents/homebrew.mxcl.nginx.plist</span><br></pre></td></tr></table></figure>
+<h2 id="安装mysql"><a href="#安装mysql" class="headerlink" title="安装mysql"></a>安装mysql</h2></li>
+<li>安装<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install mysql</span><br></pre></td></tr></table></figure></li>
+<li>命令<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql.server start</span><br><span class="line">mysql.server stop</span><br></pre></td></tr></table></figure></li>
+<li>设置密码<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqladmin -uroot password <span class="string">&quot;yourpassword&quot;</span></span><br></pre></td></tr></table></figure></li>
+<li>开机启动<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ln</span> -sfv /usr/local/Cellar/mysql/*.plist ~/Library/LaunchAgents</span><br><span class="line">launchctl load ~/Library/LaunchAgents/homebrew.mxcl.mysql.plist</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a target="_blank" rel="noopener" href="http://avnpc.com/pages/install-lnmp-on-osx?utm_source=tuicool&utm_medium=referral">Mac下安装LNMP(Nginx+PHP5.6)环境</a></li>
+<li><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000000606752">全新安装Mac OSX 开发者环境</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -638,147 +784,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://haokaiyang.com/2015/05/22/php-construct/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="郝凯阳">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="郝凯阳">
-      <meta itemprop="description" content="Enjoy coding,Enjoy life:)">
-    </span>
-    
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 郝凯阳">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2015/05/22/php-construct/" class="post-title-link" itemprop="url">PHP面向对象——构造函数、析构函数(转载)</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2015-05-22 23:55:48" itemprop="dateCreated datePublished" datetime="2015-05-22T23:55:48+08:00">2015-05-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-07-11 21:13:28" itemprop="dateModified" datetime="2022-07-11T21:13:28+08:00">2022-07-11</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/PHP/" itemprop="url" rel="index"><span itemprop="name">PHP</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>2.5k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>2 分钟</span>
-    </span>
-</div>
-
-            <div class="post-description">PHP面向对象——构造函数、析构函数(转载)</div>
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>原文地址:<a target="_blank" rel="noopener" href="http://www.cnblogs.com/giantpanda/archive/2012/11/07/2759458.html">http://www.cnblogs.com/giantpanda/archive/2012/11/07/2759458.html</a></p>
-<p>我们在创建和销毁对象时需要执行一些任务。例如，在创建对象时给属性赋值，在对象销毁时关闭数据连接等，这时就需要构造函数和析构函数。<br>在PHP中构造函数和析构函数是固定的，如下：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 构造函数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params">[argument1,argument2,...,argumentN]</span>)</span>&#123;</span><br><span class="line">    <span class="comment">/* Class initialization code */</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 析构函数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">__destruct</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h2><p>构造函数可以接受参数，能够在创建对象时赋值给对象属性<br>构造函数可以调用类方法或其他函数<br>构造函数可以调用其他类的构造函数</p>
-<ul>
-<li>构造函数使用例子：</li>
-</ul>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$name</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$age</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$gender</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"><span class="variable">$name</span>,<span class="variable">$age</span>,<span class="variable">$gender</span></span>)</span>&#123;</span><br><span class="line">        <span class="variable language_">$this</span>-&amp;gt;<span class="title function_ invoke__">setName</span>(<span class="variable">$name</span>);</span><br><span class="line">        <span class="variable language_">$this</span>-&amp;gt;<span class="title function_ invoke__">setAge</span>(<span class="variable">$age</span>);</span><br><span class="line">        <span class="variable language_">$this</span>-&amp;gt;<span class="title function_ invoke__">setGender</span>(<span class="variable">$gender</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">setName</span>(<span class="params"><span class="variable">$name</span></span>)</span>&#123;</span><br><span class="line">        <span class="variable language_">$this</span>-&amp;gt;name = <span class="variable">$name</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ... getter setter 方法</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable">$peron</span> = <span class="keyword">new</span> <span class="title class_">Person</span>(<span class="string">&quot;lee&quot;</span>,<span class="number">18</span>,<span class="string">&#x27;男&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>调用父类构造函数、调用无关类的构造函数：</li>
-</ul>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">parent</span>::<span class="title function_ invoke__">__construct</span>(); <span class="comment">// 调用父类的构造函数必须显示的使用parent调用父类构造函数</span></span><br><span class="line">    classname::<span class="title function_ invoke__">__construct</span>(); <span class="comment">// 调用其他类的构造函数，classname是类名</span></span><br><span class="line">    <span class="comment">//其他操作</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>继承和构造函数<br>PHP中的子类的构造函数不会主动调用父类的构造函数，要显示的使用parent::__construct()调用：</li>
-</ul>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Animal</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$name</span>;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"><span class="variable">$name</span></span>)</span>&#123;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;<span class="title function_ invoke__">setName</span>(<span class="variable">$name</span>)</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;动物类被创建！&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// ... 其他方法</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Birds</span> <span class="keyword">extends</span> <span class="title">Animal</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$name</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$leg</span>;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"><span class="variable">$name</span>,<span class="variable">$leg</span></span>)</span>&#123;</span><br><span class="line">        <span class="built_in">parent</span>::<span class="title function_ invoke__">__construct</span>(<span class="variable">$name</span>); <span class="comment">// 显示调用</span></span><br><span class="line">        <span class="variable language_">$this</span>-&gt;<span class="title function_ invoke__">setLeg</span>(<span class="variable">$leg</span>);</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;鸟类被创建！&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// ... 其他方法</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>如果涉及多层继承，当调用parent::__construct()时，会沿着父类向上搜索，直到找到最合适的构造函数，例如：</li>
-</ul>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 接上例</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Parrot</span> <span class="keyword">extends</span> <span class="title">Birds</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$name</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$leg</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$wing</span>;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"><span class="variable">$name</span></span>)</span>&#123;</span><br><span class="line">        <span class="built_in">parent</span>::<span class="title function_ invoke__">__construct</span>(<span class="variable">$name</span>); <span class="comment">// 此时没有找到父类（Birds类）合适的构造函数，只能向上搜索，搜索到Animal类时，才找到合适的构造函数</span></span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;鹦鹉类被创建！&quot;</span>;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;<span class="title function_ invoke__">smackTalk</span>();</span><br><span class="line">        <span class="comment">/*</span></span><br><span class="line"><span class="comment">        输出结果：</span></span><br><span class="line"><span class="comment">        &quot;动物类被创建！&quot;</span></span><br><span class="line"><span class="comment">        &quot;鹦鹉说话！&quot;</span></span><br><span class="line"><span class="comment">        */</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">smackTalk</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;鹦鹉说话！&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>如果想要依次调用几个父类的构造函数，可以使用类名直接调用构造函数，例如：</li>
-</ul>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"><span class="variable">$name</span>,<span class="variable">$leg</span></span>)</span>&#123;</span><br><span class="line">       <span class="title class_">Animal</span>::<span class="title function_ invoke__">__construct</span>(<span class="variable">$name</span>); <span class="comment">// 调用Animal构造函数</span></span><br><span class="line">        <span class="title class_">Birds</span>::<span class="title function_ invoke__">__construct</span>(<span class="variable">$name</span>,<span class="variable">$leg</span>); <span class="comment">// 调用Birds构造函数</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>PHP是不支持函数的重载，所有构造函数同样不能有多个。</p>
-<h2 id="析构函数"><a href="#析构函数" class="headerlink" title="析构函数"></a>析构函数</h2><p>析构函数是在销毁对象时，自动调用，不能显示的调用。<br>析构函数不能带参数。</p>
-<p>在以下几种情况下可能会调用析构函数（但不一定）：</p>
-<p>PHP页面加载完毕之后；<br>unset()类；<br>变量引用指向别的对象或值时；<br>PHP的内存回收机制和JAVA的很类似，对没有任何引用的对象进行销毁回收，采用引用计数器的技术。</p>
-<p>例子：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">test</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">__destruct</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;当对象销毁时会调用！！！&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="variable">$a</span> = <span class="variable">$b</span> = <span class="variable">$c</span> = <span class="keyword">new</span> <span class="title function_ invoke__">test</span>();</span><br><span class="line"></span><br><span class="line"><span class="variable">$a</span> = <span class="literal">null</span>;</span><br><span class="line"><span class="keyword">unset</span>(<span class="variable">$b</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;&lt;hr /&gt;&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>此例子，如下图，有三个变量引用$a,$b,$c指向test对象，test对象就有3个引用计数，当$a &#x3D; null时，$a对test对象的引用丢失，计数-1，变为2，当$b被unset()时，$b对test对象的引用也丢失了，计数再-1，变为1，最后页面加载完毕，$c指向test对象的引用自动被释放，此时计数再-1，变为0，test对象已没有变量引用，就会被销毁，此时就会调用析构函数。</p>
-<p><img data-src="/images/construct1.png" alt="PHP面向对象——构造函数、析构函数1"></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 </div>
@@ -801,7 +808,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">145k</span>
+    <span title="站点总字数">146k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">

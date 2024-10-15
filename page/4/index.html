@@ -165,18 +165,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">35</span>
+          <span class="site-state-item-count">36</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">11</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-count">24</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -212,6 +212,151 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://haokaiyang.com/2017/02/27/centos7-learning-notes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="郝凯阳">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="郝凯阳">
+      <meta itemprop="description" content="Enjoy coding,Enjoy life:)">
+    </span>
+    
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 郝凯阳">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2017/02/27/centos7-learning-notes/" class="post-title-link" itemprop="url">《鸟哥的Linux私房菜》主机规划与硬盘分区学习笔记</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2017-02-27 22:44:13" itemprop="dateCreated datePublished" datetime="2017-02-27T22:44:13+08:00">2017-02-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-07-11 21:13:29" itemprop="dateModified" datetime="2022-07-11T21:13:29+08:00">2022-07-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.4k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+            <div class="post-description">《鸟哥的Linux私房菜》主机规划与硬盘分区学习笔记</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="计算机硬件五大功能部分"><a href="#计算机硬件五大功能部分" class="headerlink" title="计算机硬件五大功能部分:"></a>计算机硬件五大功能部分:</h2><ul>
+<li>输入单元</li>
+<li>运算单元</li>
+<li>控制单元</li>
+<li>d存储器</li>
+<li>输出单元</li>
+</ul>
+<h2 id="常见硬件与在Linux下文件对照表"><a href="#常见硬件与在Linux下文件对照表" class="headerlink" title="常见硬件与在Linux下文件对照表"></a>常见硬件与在Linux下文件对照表</h2><p>|设备 | 设备在Linux中的文件名|<br> |—-|———————-|<br>|SCSI&#x2F;SATA&#x2F;USB硬盘 | &#x2F;dev&#x2F;sd<a href="%E6%A0%B9%E6%8D%AELinux%E6%A0%B8%E5%BF%83%E4%BE%A6%E6%B5%8B%E5%88%B0%E7%A1%AC%E7%9B%98%E7%9A%84%E9%A1%BA%E5%BA%8F%E5%86%B3%E5%AE%9A">a-p</a>|<br>|USB | &#x2F;dev&#x2F;sd[a-p] (与SATA相同) |<br>|VirtI&#x2F;O界面 | &#x2F;dev&#x2F;vd[a-p] (用于虚拟机內)|<br>|软盘 | &#x2F;dev&#x2F;fd[0-1] |<br>|打印机 | &#x2F;dev&#x2F;lp[0-2] (25针打印机)<br>&#x2F;dev&#x2F;usb&#x2F;lp[0-15] (USB 介面) |<br>|鼠标 |  &#x2F;dev&#x2F;input&#x2F;mouse[0-15] (通用)<br>&#x2F;dev&#x2F;psaux (PS&#x2F;2界面)<br>&#x2F;dev&#x2F;mouse (当前鼠标)  |<br>|CDROM&#x2F;DVDROM |  &#x2F;dev&#x2F;scd[0-1] (通用)<br>&#x2F;dev&#x2F;sr[0-1] (通用，常见于CentOS)<br>&#x2F;dev&#x2F;cdrom (当前 CDROM)|<br>|IDE硬盘 | &#x2F;dev&#x2F;hd[a-d] (旧式系统才有)|</p>
+<h2 id="硬盘的两种分区格式-MBR与GPT"><a href="#硬盘的两种分区格式-MBR与GPT" class="headerlink" title="硬盘的两种分区格式:MBR与GPT"></a>硬盘的两种分区格式:MBR与GPT</h2><h3 id="MSDOS-MBR-分区格式与限制"><a href="#MSDOS-MBR-分区格式与限制" class="headerlink" title="MSDOS(MBR)分区格式与限制:"></a>MSDOS(MBR)分区格式与限制:</h3><h4 id="MBR主引导扇区的512bytes中包含"><a href="#MBR主引导扇区的512bytes中包含" class="headerlink" title="MBR主引导扇区的512bytes中包含:"></a>MBR主引导扇区的512bytes中包含:</h4><ol>
+<li>主要开机记录区(MBR):可以安装系统引导程序的地方,有446bytes</li>
+<li>分区表:记录整个硬盘的分割状态，有64bytes</li>
+</ol>
+<h4 id="MBR主分区，扩展分区与逻辑分区的特性"><a href="#MBR主分区，扩展分区与逻辑分区的特性" class="headerlink" title="MBR主分区，扩展分区与逻辑分区的特性"></a>MBR主分区，扩展分区与逻辑分区的特性</h4><ol>
+<li>主分区与扩展分区最多可以有四个</li>
+<li>扩展分区最多只能有一个(操作系统限制)</li>
+<li>逻辑分区是由扩展分区切割出来的分割槽</li>
+<li>主分区和逻辑分区能够被格式化后，作为资料存取的分区，扩展分区无法格式化</li>
+<li>逻辑分区的数量和操作系统有关。</li>
+</ol>
+<h4 id="限制"><a href="#限制" class="headerlink" title="限制:"></a>限制:</h4><ol>
+<li>操作系统无法抓取到2.2T以上的硬盘容量</li>
+<li>MBR仅有一个主引导扇区，被破坏后，经常无法或很难恢复</li>
+<li>MBR内存放系统引导程序的扇区仅446bytes，无法容纳更多。</li>
+</ol>
+<h3 id="GUID-GPT"><a href="#GUID-GPT" class="headerlink" title="GUID(GPT)"></a>GUID(GPT)</h3><p><strong>GPT将所有区块以LBA(Logical Block Address,默认512bytes)来规划，第一个LBA称为LBA0<br>GPT使用了34个LBA扇区来记录分区信息，且除了前面的34个，整个磁盘最后33个也拿来作为备份。</strong></p>
+<ul>
+<li>LBA0(MBR 相容扇区)<br>分为两部分，其中有一个部分储存系统引导程序，还有一个标志，表示此硬盘位GPT格式。</li>
+<li>LBA1(GPT表头记录)<br>记录了分区本身位置与大小，记录了备份GPT扇区位置，放置了分割表的检验码)(CRC32)，操作系统根据这个检验码判断GPT是否正确。</li>
+<li>LBA2-33(实际记录分区信息)</li>
+</ul>
+<h2 id="BIOS搭配MBR-x2F-GPT开机流程"><a href="#BIOS搭配MBR-x2F-GPT开机流程" class="headerlink" title="BIOS搭配MBR&#x2F;GPT开机流程"></a>BIOS搭配MBR&#x2F;GPT开机流程</h2><p><strong>BIOS是写入到主板上的固件</strong></p>
+<h3 id="MBR开机流程"><a href="#MBR开机流程" class="headerlink" title="MBR开机流程:"></a>MBR开机流程:</h3><ol>
+<li>BIOS:开机执行的固件，会认识第一个可开机的装置;</li>
+<li>MBR:第一个可开机装置的第一个扇区内的主要开机记录扇区;</li>
+<li>boot loader:一个可以读取核心文件来执行的软件;</li>
+<li>核心文件:开始操作启动的功能。</li>
+</ol>
+<h2 id="Linux文件名称详解"><a href="#Linux文件名称详解" class="headerlink" title="Linux文件名称详解:"></a>Linux文件名称详解:</h2><p>CentOS-7-x86_64-Everything-1503-01.iso</p>
+<ul>
+<li>CentOS-7:版本</li>
+<li>x86_64:64位操作系统</li>
+<li>Everything:包括全部软件</li>
+<li>1503:15年3月发布</li>
+<li>01.iso:与CentOS7搭配,7.1版</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -846,154 +991,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://haokaiyang.com/2015/11/10/install-lnmp-on-osx/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="郝凯阳">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="郝凯阳">
-      <meta itemprop="description" content="Enjoy coding,Enjoy life:)">
-    </span>
-    
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 郝凯阳">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2015/11/10/install-lnmp-on-osx/" class="post-title-link" itemprop="url">Mac下安装LNMP环境</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2015-11-10 13:11:23" itemprop="dateCreated datePublished" datetime="2015-11-10T13:11:23+08:00">2015-11-10</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2018-05-17 23:38:11" itemprop="dateModified" datetime="2018-05-17T23:38:11+08:00">2018-05-17</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" itemprop="url" rel="index"><span itemprop="name">环境搭建</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>2.2k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>2 分钟</span>
-    </span>
-</div>
-
-            <div class="post-description">Mac下安装LNMP环境</div>
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="安装homebrew"><a href="#安装homebrew" class="headerlink" title="安装homebrew"></a>安装homebrew</h2><ul>
-<li>简介: <a target="_blank" rel="noopener" href="http://brew.sh/index_zh-cn.html">Homebrew中文官网</a></li>
-<li>安装:<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ruby -e <span class="string">&quot;<span class="subst">$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)</span>&quot;</span></span><br></pre></td></tr></table></figure></li>
-<li>常用命令:<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">brew install 软件名 <span class="comment">#安装软件</span></span><br><span class="line">brew remove 软件名 <span class="comment">#卸载软件</span></span><br><span class="line">brew upgrade 软件名 <span class="comment">#更新软件</span></span><br><span class="line">brew tap 软件源地址 <span class="comment">#添加软件源</span></span><br><span class="line">brew untap 软件源地址 <span class="comment">#删除软件源</span></span><br><span class="line">brew update <span class="comment">#更新</span></span><br><span class="line">brew list <span class="comment">#列出当前所有的可用软件</span></span><br><span class="line">brew search /软件名[*]/ <span class="comment">#在软件源中搜索软件[支持模糊匹配]</span></span><br><span class="line">brew info 软件名 <span class="comment">#查看软件详细信息</span></span><br><span class="line">brew outdated <span class="comment">#查看已安装程序是否有更新</span></span><br><span class="line">brew cleanup <span class="comment">#清楚homebrew缓存或者旧版本</span></span><br><span class="line">brew options <span class="comment">#查看软件编译选项</span></span><br><span class="line">brew deps 软件名 <span class="comment">#查看包依赖</span></span><br></pre></td></tr></table></figure></li>
-<li>其它:因为在OS X 10.11 苹果增强了SIP,所以我们装homebrew可能比以前麻烦了点。<br><a href="/2015/10/02/install-homebrew-on-osx/">Mac OS X 10.11如何安装homebrew</a></li>
-<li>加入常用软件源<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">brew tap homebrew/dupes</span><br><span class="line">brew tap homebrew/versions</span><br><span class="line">brew tap homebrew/php</span><br></pre></td></tr></table></figure>
-<h2 id="安装php7"><a href="#安装php7" class="headerlink" title="安装php7"></a>安装php7</h2></li>
-<li>简介:安装PHP</li>
-<li>安装:<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">brew install php72 \</span><br><span class="line">--with-argon2 \</span><br><span class="line">--with-cgi \</span><br><span class="line">--with-debug \</span><br><span class="line">--with-enchant \</span><br><span class="line">--with-gmp \</span><br><span class="line">--with-homebrew-curl \</span><br><span class="line">--with-homebrew-libressl \</span><br><span class="line">--with-homebrew-libxml2 \</span><br><span class="line">--with-homebrew-libxslt \</span><br><span class="line">--with-httpd \</span><br><span class="line">--with-imap \</span><br><span class="line">--with-libmysql \</span><br><span class="line">--with-mssql \</span><br><span class="line">--with-pear \</span><br><span class="line">--with-phpdbg \</span><br><span class="line">--with-postgresql \</span><br><span class="line">--with-thread-safety \</span><br><span class="line">--with-webp</span><br></pre></td></tr></table></figure></li>
-</ul>
-<p>这里出了个小插曲,安装过程中imap提示404,我们通过FTP把包下载下来,放在目录&#x2F;Library&#x2F;Caches&#x2F;Homebrew,然后重新来一次就可以了。</p>
-<ul>
-<li>使我们安装的PHP7代替系统自带的:<br>由于OSX已经自带了PHP环境，因此需要修改系统路径，优先运行brew安装的版本，在~&#x2F;.bashrc里加入：</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> PATH=<span class="string">&quot;/usr/local/bin:/usr/local/sbin:<span class="variable">$PATH</span>&quot;</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>安装扩展<ul>
-<li><p>如果要安装新的php扩展，可以直接安装而不用每次重新编译php，所有的扩展可以通过</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew search php71</span><br></pre></td></tr></table></figure></li>
-<li><p>安装扩展例子</p>
-  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install php71-redis</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>其它:</p>
-  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">php-fpm -D <span class="comment">#启动php-fpm</span></span><br><span class="line">killall php-fpm <span class="comment">#停止php-fpm</span></span><br></pre></td></tr></table></figure></li>
-<li><p>将php-fpm加入开机启动</p>
-  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ln</span> -sfv /usr/local/opt/php70/*.plist ~/Library/LaunchAgents</span><br><span class="line">launchctl load ~/Library/LaunchAgents/homebrew.mxcl.php70.plist</span><br></pre></td></tr></table></figure></li>
-</ul>
-</li>
-</ul>
-<h2 id="安装nginx"><a href="#安装nginx" class="headerlink" title="安装nginx"></a>安装nginx</h2><ul>
-<li>安装<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install nginx</span><br></pre></td></tr></table></figure></li>
-<li>nginx 常用命令<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo nginx <span class="comment">#打开nginx</span></span><br><span class="line">sudo nginx -s reload|reopen|stop|quit <span class="comment">#重新加载配置|重启|停止|退出</span></span><br><span class="line">sudo nginx -t <span class="comment">#测试nginx配置是否有语法错误</span></span><br></pre></td></tr></table></figure></li>
-<li>nginx 配置文件地址<br>&#x2F;usr&#x2F;local&#x2F;etc&#x2F;nginx&#x2F;nginx.conf</li>
-<li>修改端口:nginx 安装后默认后默认监听8080端口，我们将端口修改为80端口，但是需要root权限，我们运行<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo <span class="built_in">chown</span> root:wheel /usr/local/Cellar/nginx/1.13.12/bin/nginx</span><br><span class="line">sudo <span class="built_in">chmod</span> u+s /usr/local/Cellar/nginx/1.13.12/bin/nginx</span><br></pre></td></tr></table></figure></li>
-<li>开机启动<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ln</span> -sfv /usr/local/opt/nginx/homebrew.mxcl.nginx.plist ~/Library/LaunchAgents/</span><br><span class="line">launchctl load ~/Library/LaunchAgents/homebrew.mxcl.nginx.plist</span><br></pre></td></tr></table></figure>
-<h2 id="安装mysql"><a href="#安装mysql" class="headerlink" title="安装mysql"></a>安装mysql</h2></li>
-<li>安装<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install mysql</span><br></pre></td></tr></table></figure></li>
-<li>命令<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql.server start</span><br><span class="line">mysql.server stop</span><br></pre></td></tr></table></figure></li>
-<li>设置密码<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqladmin -uroot password <span class="string">&quot;yourpassword&quot;</span></span><br></pre></td></tr></table></figure></li>
-<li>开机启动<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ln</span> -sfv /usr/local/Cellar/mysql/*.plist ~/Library/LaunchAgents</span><br><span class="line">launchctl load ~/Library/LaunchAgents/homebrew.mxcl.mysql.plist</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
-<li><a target="_blank" rel="noopener" href="http://avnpc.com/pages/install-lnmp-on-osx?utm_source=tuicool&utm_medium=referral">Mac下安装LNMP(Nginx+PHP5.6)环境</a></li>
-<li><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000000606752">全新安装Mac OSX 开发者环境</a></li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 </div>
@@ -1016,7 +1015,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">145k</span>
+    <span title="站点总字数">146k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
