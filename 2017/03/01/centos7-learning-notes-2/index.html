@@ -30,7 +30,7 @@
 <meta property="og:description" content="《鸟哥的Linux私房菜》文件与目录管理学习笔记">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2017-03-01T12:30:00.000Z">
-<meta property="article:modified_time" content="2021-04-16T06:00:20.636Z">
+<meta property="article:modified_time" content="2022-07-11T13:13:29.441Z">
 <meta property="article:author" content="郝凯阳">
 <meta property="article:tag" content="Linux">
 <meta property="article:tag" content="学习笔记">
@@ -155,7 +155,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95%E7%9B%B8%E5%85%B3%E6%93%8D%E4%BD%9C"><span class="nav-number">1.</span> <span class="nav-text">目录相关操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%B9%E6%AE%8A%E7%9B%AE%E5%BD%95"><span class="nav-number">1.1.</span> <span class="nav-text">特殊目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E7%9B%AE%E5%BD%95%E5%A4%84%E7%90%86%E5%91%BD%E4%BB%A4"><span class="nav-number">1.2.</span> <span class="nav-text">常见目录处理命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#cd-%E6%9B%B4%E6%94%B9%E7%9B%AE%E5%BD%95"><span class="nav-number">1.2.1.</span> <span class="nav-text">cd:更改目录</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#pwd-%E6%98%BE%E7%A4%BA%E5%BD%93%E5%89%8D%E6%89%80%E5%9C%A8%E7%9B%AE%E5%BD%95"><span class="nav-number">1.2.2.</span> <span class="nav-text">pwd:显示当前所在目录</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#mkdir-%E5%88%9B%E5%BB%BA%E6%96%B0%E7%9B%AE%E5%BD%95"><span class="nav-number">1.2.3.</span> <span class="nav-text">mkdir:创建新目录</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#rmdir-%E5%88%A0%E9%99%A4%E7%A9%BA%E7%9B%AE%E5%BD%95"><span class="nav-number">1.2.4.</span> <span class="nav-text">rmdir:删除空目录</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E6%89%A7%E8%A1%8C%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84%E5%8F%98%E9%87%8F"><span class="nav-number">1.2.5.</span> <span class="nav-text">关于执行文件路径变量</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E4%B8%8E%E7%9B%AE%E5%BD%95%E7%AE%A1%E7%90%86"><span class="nav-number">2.</span> <span class="nav-text">文件与目录管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ls-%E6%98%BE%E7%A4%BA%E7%9B%AE%E6%A0%87%E5%88%97%E8%A1%A8"><span class="nav-number">2.1.</span> <span class="nav-text">ls:显示目标列表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cp-%E5%A4%8D%E5%88%B6%E6%96%87%E4%BB%B6%E6%88%96%E7%9B%AE%E5%BD%95"><span class="nav-number">2.2.</span> <span class="nav-text">cp:复制文件或目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rm-%E5%88%A0%E9%99%A4%E6%96%87%E4%BB%B6%E6%88%96%E7%9B%AE%E5%BD%95"><span class="nav-number">2.3.</span> <span class="nav-text">rm:删除文件或目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mv-%E7%A7%BB%E5%8A%A8%E6%96%87%E4%BB%B6%E6%88%96%E7%9B%AE%E5%BD%95%E3%80%81%E9%87%8D%E5%91%BD%E5%90%8D"><span class="nav-number">2.4.</span> <span class="nav-text">mv:移动文件或目录、重命名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E8%B7%AF%E5%BE%84%E6%96%87%E4%BB%B6%E5%90%8D%E4%B8%8E%E7%9B%AE%E5%BD%95%E5%90%8D%E7%A7%B0"><span class="nav-number">2.5.</span> <span class="nav-text">获取路径文件名与目录名称</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9"><span class="nav-number">3.</span> <span class="nav-text">查看文件内容</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%B4%E6%8E%A5%E6%9F%A5%E7%9C%8B"><span class="nav-number">3.1.</span> <span class="nav-text">直接查看</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#cat-concatenate"><span class="nav-number">3.1.1.</span> <span class="nav-text">cat(concatenate)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#tac%E5%8F%8D%E8%BD%AC%E6%98%BE%E7%A4%BA%E6%96%87%E4%BB%B6"><span class="nav-number">3.1.2.</span> <span class="nav-text">tac反转显示文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#nl%E6%B7%BB%E5%8A%A0%E8%A1%8C%E5%8F%B7%E6%89%93%E5%8D%B0"><span class="nav-number">3.1.3.</span> <span class="nav-text">nl添加行号打印</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BF%BB%E9%A1%B5%E6%9F%A5%E7%9C%8B"><span class="nav-number">3.2.</span> <span class="nav-text">翻页查看</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#more"><span class="nav-number">3.2.1.</span> <span class="nav-text">more</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#less"><span class="nav-number">3.2.2.</span> <span class="nav-text">less</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B5%84%E6%96%99%E6%88%AA%E5%8F%96"><span class="nav-number">3.3.</span> <span class="nav-text">资料截取</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#head-%E5%8F%96%E5%87%BA%E5%89%8D%E9%9D%A2%E5%87%A0%E8%A1%8C"><span class="nav-number">3.3.1.</span> <span class="nav-text">head(取出前面几行)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#tail"><span class="nav-number">3.3.2.</span> <span class="nav-text">tail</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#od"><span class="nav-number">3.4.</span> <span class="nav-text">od</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#touch-%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6%E6%97%B6%E9%97%B4%E6%88%96%E5%88%9B%E5%BB%BA%E6%96%B0%E6%96%87%E4%BB%B6"><span class="nav-number">3.5.</span> <span class="nav-text">touch:修改文件时间或创建新文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#umask"><span class="nav-number">4.</span> <span class="nav-text">umask</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E9%9A%90%E8%97%8F%E5%B1%9E%E6%80%A7"><span class="nav-number">5.</span> <span class="nav-text">文件隐藏属性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#chattr-%E8%AE%BE%E7%BD%AE%E6%96%87%E4%BB%B6%E9%9A%90%E8%97%8F%E5%B1%9E%E6%80%A7"><span class="nav-number">5.1.</span> <span class="nav-text">chattr:设置文件隐藏属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#lsattr-%E6%98%BE%E7%A4%BA%E6%96%87%E4%BB%B6%E9%9A%90%E8%97%8F%E5%B1%9E%E6%80%A7"><span class="nav-number">5.2.</span> <span class="nav-text">lsattr:显示文件隐藏属性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E7%89%B9%E6%AE%8A%E6%9D%83%E9%99%90-SUID-Set-UID-SGID-Set-GID-SBIT-Sticky-Bit"><span class="nav-number">6.</span> <span class="nav-text">文件特殊权限:SUID(Set UID),SGID(Set GID),SBIT(Sticky Bit)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SUID-Set-UID"><span class="nav-number">6.1.</span> <span class="nav-text">SUID(Set UID)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SGID-Set-GID"><span class="nav-number">6.2.</span> <span class="nav-text">SGID(Set GID)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SBIT-Sticky-Bit"><span class="nav-number">6.3.</span> <span class="nav-text">SBIT(Sticky Bit)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SUID-SGID-SBIT%E6%9D%83%E9%99%90%E8%AE%BE%E7%BD%AE"><span class="nav-number">6.4.</span> <span class="nav-text">SUID&#x2F;SGID&#x2F;SBIT权限设置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E5%AD%97%E6%B3%95"><span class="nav-number">6.4.1.</span> <span class="nav-text">数字法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%A6%E5%8F%B7%E6%B3%95"><span class="nav-number">6.4.2.</span> <span class="nav-text">符号法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#file-%E6%9F%A5%E7%9C%8B%E6%96%87%E4%BB%B6%E7%B1%BB%E5%9E%8B"><span class="nav-number">7.</span> <span class="nav-text">file:查看文件类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E5%8F%8A%E6%96%87%E4%BB%B6%E6%90%9C%E7%B4%A2"><span class="nav-number">8.</span> <span class="nav-text">命令及文件搜索</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E6%90%9C%E7%B4%A2"><span class="nav-number">8.1.</span> <span class="nav-text">命令搜索</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#which-%E6%9F%A5%E6%89%BE%E5%91%BD%E4%BB%A4"><span class="nav-number">8.1.1.</span> <span class="nav-text">which:查找命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#whereis-%E5%9C%A8%E7%89%B9%E5%AE%9A%E7%9B%AE%E5%BD%95%E4%B8%AD%E6%9F%A5%E6%89%BE%E6%96%87%E4%BB%B6"><span class="nav-number">8.1.2.</span> <span class="nav-text">whereis:在特定目录中查找文件</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#locate-updatedb"><span class="nav-number">8.2.</span> <span class="nav-text">locate&#x2F;updatedb</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#find"><span class="nav-number">8.3.</span> <span class="nav-text">find</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95%E7%9B%B8%E5%85%B3%E6%93%8D%E4%BD%9C"><span class="nav-number">1.</span> <span class="nav-text">目录相关操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%B9%E6%AE%8A%E7%9B%AE%E5%BD%95"><span class="nav-number">1.1.</span> <span class="nav-text">特殊目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E7%9B%AE%E5%BD%95%E5%A4%84%E7%90%86%E5%91%BD%E4%BB%A4"><span class="nav-number">1.2.</span> <span class="nav-text">常见目录处理命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#cd-%E6%9B%B4%E6%94%B9%E7%9B%AE%E5%BD%95"><span class="nav-number">1.2.1.</span> <span class="nav-text">cd:更改目录</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#pwd-%E6%98%BE%E7%A4%BA%E5%BD%93%E5%89%8D%E6%89%80%E5%9C%A8%E7%9B%AE%E5%BD%95"><span class="nav-number">1.2.2.</span> <span class="nav-text">pwd:显示当前所在目录</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#mkdir-%E5%88%9B%E5%BB%BA%E6%96%B0%E7%9B%AE%E5%BD%95"><span class="nav-number">1.2.3.</span> <span class="nav-text">mkdir:创建新目录</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#rmdir-%E5%88%A0%E9%99%A4%E7%A9%BA%E7%9B%AE%E5%BD%95"><span class="nav-number">1.2.4.</span> <span class="nav-text">rmdir:删除空目录</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E6%89%A7%E8%A1%8C%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84%E5%8F%98%E9%87%8F"><span class="nav-number">1.2.5.</span> <span class="nav-text">关于执行文件路径变量</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E4%B8%8E%E7%9B%AE%E5%BD%95%E7%AE%A1%E7%90%86"><span class="nav-number">2.</span> <span class="nav-text">文件与目录管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ls-%E6%98%BE%E7%A4%BA%E7%9B%AE%E6%A0%87%E5%88%97%E8%A1%A8"><span class="nav-number">2.1.</span> <span class="nav-text">ls:显示目标列表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cp-%E5%A4%8D%E5%88%B6%E6%96%87%E4%BB%B6%E6%88%96%E7%9B%AE%E5%BD%95"><span class="nav-number">2.2.</span> <span class="nav-text">cp:复制文件或目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rm-%E5%88%A0%E9%99%A4%E6%96%87%E4%BB%B6%E6%88%96%E7%9B%AE%E5%BD%95"><span class="nav-number">2.3.</span> <span class="nav-text">rm:删除文件或目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mv-%E7%A7%BB%E5%8A%A8%E6%96%87%E4%BB%B6%E6%88%96%E7%9B%AE%E5%BD%95%E3%80%81%E9%87%8D%E5%91%BD%E5%90%8D"><span class="nav-number">2.4.</span> <span class="nav-text">mv:移动文件或目录、重命名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E8%B7%AF%E5%BE%84%E6%96%87%E4%BB%B6%E5%90%8D%E4%B8%8E%E7%9B%AE%E5%BD%95%E5%90%8D%E7%A7%B0"><span class="nav-number">2.5.</span> <span class="nav-text">获取路径文件名与目录名称</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9"><span class="nav-number">3.</span> <span class="nav-text">查看文件内容</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%B4%E6%8E%A5%E6%9F%A5%E7%9C%8B"><span class="nav-number">3.1.</span> <span class="nav-text">直接查看</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#cat-concatenate"><span class="nav-number">3.1.1.</span> <span class="nav-text">cat(concatenate)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#tac%E5%8F%8D%E8%BD%AC%E6%98%BE%E7%A4%BA%E6%96%87%E4%BB%B6"><span class="nav-number">3.1.2.</span> <span class="nav-text">tac反转显示文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#nl%E6%B7%BB%E5%8A%A0%E8%A1%8C%E5%8F%B7%E6%89%93%E5%8D%B0"><span class="nav-number">3.1.3.</span> <span class="nav-text">nl添加行号打印</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BF%BB%E9%A1%B5%E6%9F%A5%E7%9C%8B"><span class="nav-number">3.2.</span> <span class="nav-text">翻页查看</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#more"><span class="nav-number">3.2.1.</span> <span class="nav-text">more</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#less"><span class="nav-number">3.2.2.</span> <span class="nav-text">less</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B5%84%E6%96%99%E6%88%AA%E5%8F%96"><span class="nav-number">3.3.</span> <span class="nav-text">资料截取</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#head-%E5%8F%96%E5%87%BA%E5%89%8D%E9%9D%A2%E5%87%A0%E8%A1%8C"><span class="nav-number">3.3.1.</span> <span class="nav-text">head(取出前面几行)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#tail"><span class="nav-number">3.3.2.</span> <span class="nav-text">tail</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#od"><span class="nav-number">3.4.</span> <span class="nav-text">od</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#touch-%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6%E6%97%B6%E9%97%B4%E6%88%96%E5%88%9B%E5%BB%BA%E6%96%B0%E6%96%87%E4%BB%B6"><span class="nav-number">3.5.</span> <span class="nav-text">touch:修改文件时间或创建新文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#umask"><span class="nav-number">4.</span> <span class="nav-text">umask</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E9%9A%90%E8%97%8F%E5%B1%9E%E6%80%A7"><span class="nav-number">5.</span> <span class="nav-text">文件隐藏属性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#chattr-%E8%AE%BE%E7%BD%AE%E6%96%87%E4%BB%B6%E9%9A%90%E8%97%8F%E5%B1%9E%E6%80%A7"><span class="nav-number">5.1.</span> <span class="nav-text">chattr:设置文件隐藏属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#lsattr-%E6%98%BE%E7%A4%BA%E6%96%87%E4%BB%B6%E9%9A%90%E8%97%8F%E5%B1%9E%E6%80%A7"><span class="nav-number">5.2.</span> <span class="nav-text">lsattr:显示文件隐藏属性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E7%89%B9%E6%AE%8A%E6%9D%83%E9%99%90-SUID-Set-UID-SGID-Set-GID-SBIT-Sticky-Bit"><span class="nav-number">6.</span> <span class="nav-text">文件特殊权限:SUID(Set UID),SGID(Set GID),SBIT(Sticky Bit)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SUID-Set-UID"><span class="nav-number">6.1.</span> <span class="nav-text">SUID(Set UID)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SGID-Set-GID"><span class="nav-number">6.2.</span> <span class="nav-text">SGID(Set GID)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SBIT-Sticky-Bit"><span class="nav-number">6.3.</span> <span class="nav-text">SBIT(Sticky Bit)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SUID-x2F-SGID-x2F-SBIT%E6%9D%83%E9%99%90%E8%AE%BE%E7%BD%AE"><span class="nav-number">6.4.</span> <span class="nav-text">SUID&#x2F;SGID&#x2F;SBIT权限设置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E5%AD%97%E6%B3%95"><span class="nav-number">6.4.1.</span> <span class="nav-text">数字法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%A6%E5%8F%B7%E6%B3%95"><span class="nav-number">6.4.2.</span> <span class="nav-text">符号法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#file-%E6%9F%A5%E7%9C%8B%E6%96%87%E4%BB%B6%E7%B1%BB%E5%9E%8B"><span class="nav-number">7.</span> <span class="nav-text">file:查看文件类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E5%8F%8A%E6%96%87%E4%BB%B6%E6%90%9C%E7%B4%A2"><span class="nav-number">8.</span> <span class="nav-text">命令及文件搜索</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E6%90%9C%E7%B4%A2"><span class="nav-number">8.1.</span> <span class="nav-text">命令搜索</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#which-%E6%9F%A5%E6%89%BE%E5%91%BD%E4%BB%A4"><span class="nav-number">8.1.1.</span> <span class="nav-text">which:查找命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#whereis-%E5%9C%A8%E7%89%B9%E5%AE%9A%E7%9B%AE%E5%BD%95%E4%B8%AD%E6%9F%A5%E6%89%BE%E6%96%87%E4%BB%B6"><span class="nav-number">8.1.2.</span> <span class="nav-text">whereis:在特定目录中查找文件</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#locate-x2F-updatedb"><span class="nav-number">8.2.</span> <span class="nav-text">locate&#x2F;updatedb</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#find"><span class="nav-number">8.3.</span> <span class="nav-text">find</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -263,7 +263,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2021-04-16 14:00:20" itemprop="dateModified" datetime="2021-04-16T14:00:20+08:00">2021-04-16</time>
+      <time title="修改时间：2022-07-11 21:13:29" itemprop="dateModified" datetime="2022-07-11T21:13:29+08:00">2022-07-11</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -316,26 +316,30 @@
 <li>~account  account用户的家目录</li>
 </ul>
 <h3 id="常见目录处理命令"><a href="#常见目录处理命令" class="headerlink" title="常见目录处理命令"></a>常见目录处理命令</h3><h4 id="cd-更改目录"><a href="#cd-更改目录" class="headerlink" title="cd:更改目录"></a>cd:更改目录</h4><p>change directory</p>
-<pre><code>命令:cd 目录</code></pre>
+<pre><code>命令:cd 目录
+</code></pre>
 <h4 id="pwd-显示当前所在目录"><a href="#pwd-显示当前所在目录" class="headerlink" title="pwd:显示当前所在目录"></a>pwd:显示当前所在目录</h4><p>Print Working Directory</p>
 <pre><code>命令:pwd [-P]
 选项及参数:
     -L 默认参数 当目录为软链接路径时,显示软链接路径
-    -P 当目录为软链接路径时,显示真实路径</code></pre>
+    -P 当目录为软链接路径时,显示真实路径
+</code></pre>
 <p>例子:</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[haokaiyang@CentOS7 bin]$ ls -l /bin</span><br><span class="line">lrwxrwxrwx. 1 root root 7 2月 27 21:01 /bin -&gt; usr/bin</span><br><span class="line">[haokaiyang@CentOS7 bin]$ <span class="built_in">pwd</span> -L</span><br><span class="line">/bin</span><br><span class="line">[haokaiyang@CentOS7 bin]$ <span class="built_in">pwd</span> -P</span><br><span class="line">/usr/bin</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[haokaiyang@CentOS7 bin]$ <span class="built_in">ls</span> -l /bin</span><br><span class="line">lrwxrwxrwx. 1 root root 7 2月 27 21:01 /bin -&gt; usr/bin</span><br><span class="line">[haokaiyang@CentOS7 bin]$ <span class="built_in">pwd</span> -L</span><br><span class="line">/bin</span><br><span class="line">[haokaiyang@CentOS7 bin]$ <span class="built_in">pwd</span> -P</span><br><span class="line">/usr/bin</span><br></pre></td></tr></table></figure>
 <h4 id="mkdir-创建新目录"><a href="#mkdir-创建新目录" class="headerlink" title="mkdir:创建新目录"></a>mkdir:创建新目录</h4><p>make directory</p>
 <pre><code>命令:mkdir [-mp] 目录
 选项及参数:
     -p 递归创建
-    -m 直接设置目录权限</code></pre>
+    -m 直接设置目录权限
+</code></pre>
 <p>例子:</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[haokaiyang@CentOS7 <span class="built_in">test</span>]$ mkdir -p -m 711 test1/test2/test3/test4</span><br><span class="line">[haokaiyang@CentOS7 <span class="built_in">test</span>]$ ls -l test1/</span><br><span class="line">总用量 0</span><br><span class="line">drwxrwxr-x. 3 haokaiyang haokaiyang 19 2月 28 21:08 test2</span><br><span class="line">[haokaiyang@CentOS7 <span class="built_in">test</span>]$ ls -l test1/test2/</span><br><span class="line">总用量 0</span><br><span class="line">drwxrwxr-x. 3 haokaiyang haokaiyang 19 2月 28 21:08 test3</span><br><span class="line">[haokaiyang@CentOS7 <span class="built_in">test</span>]$ ls -l test1/test2/test3/</span><br><span class="line">总用量 0</span><br><span class="line">drwx--x--x. 2 haokaiyang haokaiyang 6 2月 28 21:08 test4</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[haokaiyang@CentOS7 <span class="built_in">test</span>]$ <span class="built_in">mkdir</span> -p -m 711 test1/test2/test3/test4</span><br><span class="line">[haokaiyang@CentOS7 <span class="built_in">test</span>]$ <span class="built_in">ls</span> -l test1/</span><br><span class="line">总用量 0</span><br><span class="line">drwxrwxr-x. 3 haokaiyang haokaiyang 19 2月 28 21:08 test2</span><br><span class="line">[haokaiyang@CentOS7 <span class="built_in">test</span>]$ <span class="built_in">ls</span> -l test1/test2/</span><br><span class="line">总用量 0</span><br><span class="line">drwxrwxr-x. 3 haokaiyang haokaiyang 19 2月 28 21:08 test3</span><br><span class="line">[haokaiyang@CentOS7 <span class="built_in">test</span>]$ <span class="built_in">ls</span> -l test1/test2/test3/</span><br><span class="line">总用量 0</span><br><span class="line">drwx--x--x. 2 haokaiyang haokaiyang 6 2月 28 21:08 test4</span><br></pre></td></tr></table></figure>
 <p>目录的权限默认值与<a href="#umask">umask</a>有关</p>
 <h4 id="rmdir-删除空目录"><a href="#rmdir-删除空目录" class="headerlink" title="rmdir:删除空目录"></a>rmdir:删除空目录</h4><pre><code>命令:rmdir [-p] 目录
 选项及参数:
-    -p 递归删除(目录中不能有其它文件)</code></pre>
-<h4 id="关于执行文件路径变量"><a href="#关于执行文件路径变量" class="headerlink" title="关于执行文件路径变量"></a>关于执行文件路径变量</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[haokaiyang@CentOS7 <span class="built_in">test</span>]$ <span class="built_in">echo</span> <span class="variable">$PATH</span></span><br><span class="line">/usr/<span class="built_in">local</span>/bin:/usr/<span class="built_in">local</span>/sbin:/usr/bin:/usr/sbin:/bin:/sbin:/home/haokaiyang/.<span class="built_in">local</span>/bin:/home/haokaiyang/bin</span><br><span class="line"><span class="comment">#添加路径/root到变量</span></span><br><span class="line">[haokaiyang@CentOS7 <span class="built_in">test</span>]$ PATH=<span class="string">&quot;<span class="variable">$PATH</span>:/root&quot;</span></span><br></pre></td></tr></table></figure>
+    -p 递归删除(目录中不能有其它文件)
+</code></pre>
+<h4 id="关于执行文件路径变量"><a href="#关于执行文件路径变量" class="headerlink" title="关于执行文件路径变量"></a>关于执行文件路径变量</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[haokaiyang@CentOS7 <span class="built_in">test</span>]$ <span class="built_in">echo</span> <span class="variable">$PATH</span></span><br><span class="line">/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin:/home/haokaiyang/.local/bin:/home/haokaiyang/bin</span><br><span class="line"><span class="comment">#添加路径/root到变量</span></span><br><span class="line">[haokaiyang@CentOS7 <span class="built_in">test</span>]$ PATH=<span class="string">&quot;<span class="variable">$PATH</span>:/root&quot;</span></span><br></pre></td></tr></table></figure>
 
 <h2 id="文件与目录管理"><a href="#文件与目录管理" class="headerlink" title="文件与目录管理"></a>文件与目录管理</h2><h3 id="ls-显示目标列表"><a href="#ls-显示目标列表" class="headerlink" title="ls:显示目标列表"></a>ls:显示目标列表</h3><pre><code>命令:ls [-aAdfFhilnrRSt] 文件名或目录名...
 选项及参数:
@@ -366,7 +370,8 @@
     --time=&#123;mtime,atime,ctime&#125;
         - mtime (modification time):在写入文件时随文件内容的更改而更改的时间
         - ctime (status time):是在写入文件、更改所有者、权限或链接设置时随Inode的内容更改而更改的时间
-        - atime (access time):读取文件或者执行文件时更改的时间</code></pre>
+        - atime (access time):读取文件或者执行文件时更改的时间
+</code></pre>
 <h3 id="cp-复制文件或目录"><a href="#cp-复制文件或目录" class="headerlink" title="cp:复制文件或目录"></a>cp:复制文件或目录</h3><pre><code>命令: cp [-adfilprsu] source destination
      cp [options] source1 source2 source3 .... directory
 选项及参数:
@@ -388,20 +393,23 @@
         1.numbered或t, 将使用备份编号,会在字尾加上~1~字符串,其数字编号依次递增
         2.simple或never 将使用简单备份,默认的备份字尾字符串是~, 也可通过-S来指定
         3.existing或nil将使用当前方式,程序会先检查是否存在着备份编号,若有则采用备份编号,若无则采用简单备份
-    -x 或 --one-file-system 复制的文件或目录存放的文件系统,必须与cp指令执行时所处的文件系统相同,否则不复制,亦不处理位于其他分区的文件</code></pre>
+    -x 或 --one-file-system 复制的文件或目录存放的文件系统,必须与cp指令执行时所处的文件系统相同,否则不复制,亦不处理位于其他分区的文件
+</code></pre>
 <h3 id="rm-删除文件或目录"><a href="#rm-删除文件或目录" class="headerlink" title="rm:删除文件或目录"></a>rm:删除文件或目录</h3><pre><code>命令: rm [-fir] 文件或目录
 选项及参数:
     -f 就是force的意思,忽略不存在的文件,不会出现警告
     -i 进行确认提示
-    -r 或者-R 递归移除目录</code></pre>
+    -r 或者-R 递归移除目录
+</code></pre>
 <h3 id="mv-移动文件或目录、重命名"><a href="#mv-移动文件或目录、重命名" class="headerlink" title="mv:移动文件或目录、重命名"></a>mv:移动文件或目录、重命名</h3><pre><code>命令: mv [-fiu] source destination
      mv [options] source1 source2 source3 .... directory
 选项及参数:
     -f force 不论目标文件是否存在,直接覆盖
     -i 进行确认提示
     -u 若目标文件存在且源文件比较新,才会更新
-    -v 显示详情</code></pre>
-<h3 id="获取路径文件名与目录名称"><a href="#获取路径文件名与目录名称" class="headerlink" title="获取路径文件名与目录名称"></a>获取路径文件名与目录名称</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#获取目录名称</span></span><br><span class="line">[haokaiyang@CentOS7 ~]$ dirname /home/haokaiyang/test4/aa.txt </span><br><span class="line">/home/haokaiyang/test4</span><br><span class="line"><span class="comment">#获取文件名称</span></span><br><span class="line">[haokaiyang@CentOS7 ~]$ basename /home/haokaiyang/test4/aa.txt </span><br><span class="line">aa.txt</span><br></pre></td></tr></table></figure>
+    -v 显示详情
+</code></pre>
+<h3 id="获取路径文件名与目录名称"><a href="#获取路径文件名与目录名称" class="headerlink" title="获取路径文件名与目录名称"></a>获取路径文件名与目录名称</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#获取目录名称</span></span><br><span class="line">[haokaiyang@CentOS7 ~]$ <span class="built_in">dirname</span> /home/haokaiyang/test4/aa.txt </span><br><span class="line">/home/haokaiyang/test4</span><br><span class="line"><span class="comment">#获取文件名称</span></span><br><span class="line">[haokaiyang@CentOS7 ~]$ <span class="built_in">basename</span> /home/haokaiyang/test4/aa.txt </span><br><span class="line">aa.txt</span><br></pre></td></tr></table></figure>
 
 <h2 id="查看文件内容"><a href="#查看文件内容" class="headerlink" title="查看文件内容"></a>查看文件内容</h2><h3 id="直接查看"><a href="#直接查看" class="headerlink" title="直接查看"></a>直接查看</h3><h4 id="cat-concatenate"><a href="#cat-concatenate" class="headerlink" title="cat(concatenate)"></a>cat(concatenate)</h4><pre><code>命令: cat
 选项及参数:
@@ -413,8 +421,10 @@
     -s --squeeze-blank 将所有的连续的多个空行替换为一个空行。
     -t 等价于 -vT 。
     -T --show-tabs 把 TAB 字符显示为 ^I 。
-    -v --show-nonprinting 除了 LFD 和 TAB 之外所有控制符用 ^ 和 M- 记方式显示。</code></pre>
-<h4 id="tac反转显示文件"><a href="#tac反转显示文件" class="headerlink" title="tac反转显示文件"></a>tac反转显示文件</h4><pre><code>命令: tac</code></pre>
+    -v --show-nonprinting 除了 LFD 和 TAB 之外所有控制符用 ^ 和 M- 记方式显示。
+</code></pre>
+<h4 id="tac反转显示文件"><a href="#tac反转显示文件" class="headerlink" title="tac反转显示文件"></a>tac反转显示文件</h4><pre><code>命令: tac
+</code></pre>
 <h4 id="nl添加行号打印"><a href="#nl添加行号打印" class="headerlink" title="nl添加行号打印"></a>nl添加行号打印</h4><pre><code>命令:nl 文件
 选项及参数:
     -b 指定行号指定方式
@@ -424,7 +434,8 @@
         -n ln 在屏幕左方显示
         -n rn 在自己栏位最右方显示,且不加0
         -n rz 在自己栏位最右方显示,且加0
-    -w num 行号栏位占用的字符数</code></pre>
+    -w num 行号栏位占用的字符数
+</code></pre>
 <h3 id="翻页查看"><a href="#翻页查看" class="headerlink" title="翻页查看"></a>翻页查看</h3><h4 id="more"><a href="#more" class="headerlink" title="more"></a>more</h4><pre><code>命令:more
 选项及参数:
     -num 指定屏幕行数
@@ -437,7 +448,8 @@
     - /string :向下搜索string
     - :f :显示文件名以及目前行数
     - q : 离开more
-    - b :往回翻页</code></pre>
+    - b :往回翻页
+</code></pre>
 <h4 id="less"><a href="#less" class="headerlink" title="less"></a>less</h4><pre><code>命令:less
 常用操作:
     - 空格 :向下翻页
@@ -449,16 +461,19 @@
     - N:反向重复前一个搜索
     - g:到文件第一行
     - G:到文件最后一行
-    - q : 离开less</code></pre>
+    - q : 离开less
+</code></pre>
 <h3 id="资料截取"><a href="#资料截取" class="headerlink" title="资料截取"></a>资料截取</h3><h4 id="head-取出前面几行"><a href="#head-取出前面几行" class="headerlink" title="head(取出前面几行)"></a>head(取出前面几行)</h4><pre><code>命令: head 
 选项及参数: 
     -n num 显示前num行
-    -c num 显示前num个字符</code></pre>
+    -c num 显示前num个字符
+</code></pre>
 <h4 id="tail"><a href="#tail" class="headerlink" title="tail"></a>tail</h4><pre><code>命令:tail
 选项及参数:
     -n num 显示后num行
     -f 当文件增长时,输出后续添加的数据
-    -s num 与-f合用,表示在每次反复的时间间隔s秒</code></pre>
+    -s num 与-f合用,表示在每次反复的时间间隔s秒
+</code></pre>
 <h3 id="od"><a href="#od" class="headerlink" title="od"></a>od</h3><pre><code>命令:od
 选项及参数:
     -t 后面接各种类型
@@ -469,11 +484,12 @@
         - o[size] 使用八进制输出,每个整数占用 size bytes
         - x[size] 使用十六进制输出,每个整数占用 size bytes
     -w[num] 设置每行最大字符数
-    -j[num] 略过设置字符数</code></pre>
+    -j[num] 略过设置字符数
+</code></pre>
 <p>鸟哥的书中提到了一个输出password的ASCII对照,使用的是</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[haokaiyang@CentOS7 ~]$ <span class="built_in">echo</span> password|od -t oCc</span><br><span class="line">0000000 160 141 163 163 167 157 162 144 012</span><br><span class="line">          p   a   s   s   w   o   r   d  \n</span><br><span class="line">0000011</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[haokaiyang@CentOS7 ~]$ <span class="built_in">echo</span> password|<span class="built_in">od</span> -t oCc</span><br><span class="line">0000000 160 141 163 163 167 157 162 144 012</span><br><span class="line">          p   a   s   s   w   o   r   d  \n</span><br><span class="line">0000011</span><br></pre></td></tr></table></figure>
 <p>很多人不懂什么意思,这里解释一下<br>对于od -t [dfox] 指令输出,对于源的读取默认是Int,也就是4个字节分割。<br>C表示char size,I表示int size,因此这个命令等价于以下两个命令</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[haokaiyang@CentOS7 ~]$ <span class="built_in">echo</span> password|od -t oC -t c</span><br><span class="line">0000000 160 141 163 163 167 157 162 144 012</span><br><span class="line">          p   a   s   s   w   o   r   d  \n</span><br><span class="line">0000011</span><br><span class="line">[haokaiyang@CentOS7 ~]$ <span class="built_in">echo</span> password|od -t o1c</span><br><span class="line">0000000 160 141 163 163 167 157 162 144 012</span><br><span class="line">          p   a   s   s   w   o   r   d  \n</span><br><span class="line">0000011</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[haokaiyang@CentOS7 ~]$ <span class="built_in">echo</span> password|<span class="built_in">od</span> -t oC -t c</span><br><span class="line">0000000 160 141 163 163 167 157 162 144 012</span><br><span class="line">          p   a   s   s   w   o   r   d  \n</span><br><span class="line">0000011</span><br><span class="line">[haokaiyang@CentOS7 ~]$ <span class="built_in">echo</span> password|<span class="built_in">od</span> -t o1c</span><br><span class="line">0000000 160 141 163 163 167 157 162 144 012</span><br><span class="line">          p   a   s   s   w   o   r   d  \n</span><br><span class="line">0000011</span><br></pre></td></tr></table></figure>
 
 <h3 id="touch-修改文件时间或创建新文件"><a href="#touch-修改文件时间或创建新文件" class="headerlink" title="touch:修改文件时间或创建新文件"></a>touch:修改文件时间或创建新文件</h3><pre><code>命令:touch
 选项及参数:
@@ -482,23 +498,23 @@
     -d 使用时间值
     -m 仅修改mtime
     -r file 参照文件file的时间戳修改指定文件的时间戳,不更改ctime
-    -t 后面接想要修改的时间而不用目前时间,格式为[YYYYMMDDhhmm]</code></pre>
+    -t 后面接想要修改的时间而不用目前时间,格式为[YYYYMMDDhhmm]
+</code></pre>
 <p>例子:</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#新建一个文件testtouch</span></span><br><span class="line">[haokaiyang@CentOS7 test4]$ touch testtouch </span><br><span class="line">[haokaiyang@CentOS7 test4]$ ll; ll --time=atime;ll --time=ctime;</span><br><span class="line">总用量 0</span><br><span class="line">-rw-rw-r--. 1 haokaiyang haokaiyang 0 3月   1 11:31 aa.txt</span><br><span class="line">-rw-rw-r--. 1 haokaiyang haokaiyang 0 3月   1 14:12 testtouch</span><br><span class="line">总用量 0</span><br><span class="line">-rw-rw-r--. 1 haokaiyang haokaiyang 0 3月   1 11:31 aa.txt</span><br><span class="line">-rw-rw-r--. 1 haokaiyang haokaiyang 0 3月   1 14:12 testtouch</span><br><span class="line">总用量 0</span><br><span class="line">-rw-rw-r--. 1 haokaiyang haokaiyang 0 3月   1 11:31 aa.txt</span><br><span class="line">-rw-rw-r--. 1 haokaiyang haokaiyang 0 3月   1 14:12 testtouch</span><br><span class="line">[haokaiyang@CentOS7 test4]$ touch -r aa.txt testtouch2</span><br><span class="line">[haokaiyang@CentOS7 test4]$ ll; ll --time=atime;ll --time=ctime;</span><br><span class="line">总用量 0</span><br><span class="line">-rw-rw-r--. 1 haokaiyang haokaiyang 0 3月   1 11:31 aa.txt</span><br><span class="line">-rw-rw-r--. 1 haokaiyang haokaiyang 0 3月   1 14:12 testtouch</span><br><span class="line">-rw-rw-r--. 1 haokaiyang haokaiyang 0 3月   1 11:31 testtouch2</span><br><span class="line">总用量 0</span><br><span class="line">-rw-rw-r--. 1 haokaiyang haokaiyang 0 3月   1 11:31 aa.txt</span><br><span class="line">-rw-rw-r--. 1 haokaiyang haokaiyang 0 3月   1 14:12 testtouch</span><br><span class="line">-rw-rw-r--. 1 haokaiyang haokaiyang 0 3月   1 11:31 testtouch2</span><br><span class="line">总用量 0</span><br><span class="line">-rw-rw-r--. 1 haokaiyang haokaiyang 0 3月   1 11:31 aa.txt</span><br><span class="line">-rw-rw-r--. 1 haokaiyang haokaiyang 0 3月   1 14:12 testtouch</span><br><span class="line">-rw-rw-r--. 1 haokaiyang haokaiyang 0 3月   1 14:16 testtouch2</span><br><span class="line"><span class="comment">#修改testtouch2的mtime</span></span><br><span class="line">[haokaiyang@CentOS7 test4]$ touch -m -t 201301140520 testtouch2</span><br><span class="line">[haokaiyang@CentOS7 test4]$ ll --full-time testtouch2</span><br><span class="line">-rw-rw-r--. 1 haokaiyang haokaiyang 0 2013-01-14 05:20:00.000000000 +0800 testtouch2</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#新建一个文件testtouch</span></span><br><span class="line">[haokaiyang@CentOS7 test4]$ <span class="built_in">touch</span> testtouch </span><br><span class="line">[haokaiyang@CentOS7 test4]$ ll; ll --time=atime;ll --time=ctime;</span><br><span class="line">总用量 0</span><br><span class="line">-rw-rw-r--. 1 haokaiyang haokaiyang 0 3月   1 11:31 aa.txt</span><br><span class="line">-rw-rw-r--. 1 haokaiyang haokaiyang 0 3月   1 14:12 testtouch</span><br><span class="line">总用量 0</span><br><span class="line">-rw-rw-r--. 1 haokaiyang haokaiyang 0 3月   1 11:31 aa.txt</span><br><span class="line">-rw-rw-r--. 1 haokaiyang haokaiyang 0 3月   1 14:12 testtouch</span><br><span class="line">总用量 0</span><br><span class="line">-rw-rw-r--. 1 haokaiyang haokaiyang 0 3月   1 11:31 aa.txt</span><br><span class="line">-rw-rw-r--. 1 haokaiyang haokaiyang 0 3月   1 14:12 testtouch</span><br><span class="line">[haokaiyang@CentOS7 test4]$ <span class="built_in">touch</span> -r aa.txt testtouch2</span><br><span class="line">[haokaiyang@CentOS7 test4]$ ll; ll --time=atime;ll --time=ctime;</span><br><span class="line">总用量 0</span><br><span class="line">-rw-rw-r--. 1 haokaiyang haokaiyang 0 3月   1 11:31 aa.txt</span><br><span class="line">-rw-rw-r--. 1 haokaiyang haokaiyang 0 3月   1 14:12 testtouch</span><br><span class="line">-rw-rw-r--. 1 haokaiyang haokaiyang 0 3月   1 11:31 testtouch2</span><br><span class="line">总用量 0</span><br><span class="line">-rw-rw-r--. 1 haokaiyang haokaiyang 0 3月   1 11:31 aa.txt</span><br><span class="line">-rw-rw-r--. 1 haokaiyang haokaiyang 0 3月   1 14:12 testtouch</span><br><span class="line">-rw-rw-r--. 1 haokaiyang haokaiyang 0 3月   1 11:31 testtouch2</span><br><span class="line">总用量 0</span><br><span class="line">-rw-rw-r--. 1 haokaiyang haokaiyang 0 3月   1 11:31 aa.txt</span><br><span class="line">-rw-rw-r--. 1 haokaiyang haokaiyang 0 3月   1 14:12 testtouch</span><br><span class="line">-rw-rw-r--. 1 haokaiyang haokaiyang 0 3月   1 14:16 testtouch2</span><br><span class="line"><span class="comment">#修改testtouch2的mtime</span></span><br><span class="line">[haokaiyang@CentOS7 test4]$ <span class="built_in">touch</span> -m -t 201301140520 testtouch2</span><br><span class="line">[haokaiyang@CentOS7 test4]$ ll --full-time testtouch2</span><br><span class="line">-rw-rw-r--. 1 haokaiyang haokaiyang 0 2013-01-14 05:20:00.000000000 +0800 testtouch2</span><br></pre></td></tr></table></figure>
 
 <h2 id="umask"><a href="#umask" class="headerlink" title="umask"></a>umask</h2><p><span id="#umask">umask</span>是目前使用者在新建文件或目录时候的权限默认值</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#查看umask</span></span><br><span class="line">[haokaiyang@CentOS7 test4]$ <span class="built_in">umask</span></span><br><span class="line">0002</span><br><span class="line">[haokaiyang@CentOS7 test4]$ <span class="built_in">umask</span> -S</span><br><span class="line">u=rwx,g=rwx,o=rx</span><br></pre></td></tr></table></figure>
 <p>在权限的默认属性上,目录与文件是不一样的,但是一般文件则不应该有执行权限,所以这里分情况看待:</p>
 <ul>
-<li>若建立文件,则默认没有x权限,只有rw权限,也就是最大为666分<pre><code>  -rw-rw-rw-</code></pre>
-</li>
-<li>若建立目录,由于x表示是否可以进入目录,所以rwx开放,最大权限为777<pre><code>  drwxrwxrwx</code></pre>
-</li>
+<li>若建立文件,则默认没有x权限,只有rw权限,也就是最大为666分<br>  -rw-rw-rw-</li>
+<li>若建立目录,由于x表示是否可以进入目录,所以rwx开放,最大权限为777<br>  drwxrwxrwx</li>
 </ul>
 <p>umask的分数为需要减掉的权限,拿umask为022举例来说</p>
 <pre><code>建立文件时 (-rw-rw-rw-) - (-----w--w-) ==&gt; -rw-r--r--
-建立目录时 (drwxrwxrwx) - (d----w--w-) ==&gt; drwxr-xr-x</code></pre>
-<h2 id="文件隐藏属性"><a href="#文件隐藏属性" class="headerlink" title="文件隐藏属性"></a>文件隐藏属性</h2><h3 id="chattr-设置文件隐藏属性"><a href="#chattr-设置文件隐藏属性" class="headerlink" title="chattr:设置文件隐藏属性"></a>chattr:设置文件隐藏属性</h3><p>注意:chattr指令只能在Ext2/Ext3/Ext4的系统上完全生效,xfs仅支持AadiS</p>
+建立目录时 (drwxrwxrwx) - (d----w--w-) ==&gt; drwxr-xr-x
+</code></pre>
+<h2 id="文件隐藏属性"><a href="#文件隐藏属性" class="headerlink" title="文件隐藏属性"></a>文件隐藏属性</h2><h3 id="chattr-设置文件隐藏属性"><a href="#chattr-设置文件隐藏属性" class="headerlink" title="chattr:设置文件隐藏属性"></a>chattr:设置文件隐藏属性</h3><p>注意:chattr指令只能在Ext2&#x2F;Ext3&#x2F;Ext4的系统上完全生效,xfs仅支持AadiS</p>
 <pre><code>命令: chattr [+-=][ASacdistu] 文件或目录名称
 选项及参数:
     + :增加一个特殊参数
@@ -513,7 +529,8 @@
     i:设定文件不能被删除、改名、设定链接关系,同时不能写入或新增内容。i参数对于文件 系统的安全设置有很大帮助。
     j:即journal,设定此参数使得当通过mount参数:data=ordered 或者 data=writeback 挂 载的文件系统,文件在写入时会先被记录(在journal中)。如果filesystem被设定参数为 data=journal,则该参数自动失效。
     s:保密性地删除文件或目录,即硬盘空间被全部收回。
-    u:与s相反,当设定为u时,数据内容其实还存在磁盘中,可以用于undeletion。</code></pre>
+    u:与s相反,当设定为u时,数据内容其实还存在磁盘中,可以用于undeletion。
+</code></pre>
 <p>各参数选项中常用到的是a和i。a选项强制只可添加不可删除,多用于日志系统的安全设定。而i是更为严格的安全设定,只有superuser (root) 或具有CAP_LINUX_IMMUTABLE处理能力(标识)的进程能够施加该选项。</p>
 <h3 id="lsattr-显示文件隐藏属性"><a href="#lsattr-显示文件隐藏属性" class="headerlink" title="lsattr:显示文件隐藏属性"></a>lsattr:显示文件隐藏属性</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#用chattr防止文件被修改</span></span><br><span class="line">[root@CentOS7 test4]<span class="comment"># chattr +i aa.txt </span></span><br><span class="line">[root@CentOS7 test4]<span class="comment"># lsattr</span></span><br><span class="line">----i----------- ./aa.txt</span><br><span class="line">[root@CentOS7 test4]<span class="comment"># echo 111 &gt; aa.txt </span></span><br><span class="line">bash: aa.txt: 权限不够</span><br></pre></td></tr></table></figure>
 
@@ -526,12 +543,12 @@
 </ul>
 <p>举例说明下:</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[haokaiyang@CentOS7 ~]$ ll /bin/passwd </span><br><span class="line">-rwsr-xr-x. 1 root root 27832 6月  10 2014 /bin/passwd</span><br><span class="line">[haokaiyang@CentOS7 ~]$ ll /etc/shadow</span><br><span class="line">----------. 1 root root 1261 2月  27 18:21 /etc/shadow</span><br></pre></td></tr></table></figure>
-<p>/etc/shadow是禁止让我的账号haokaiyang操作的,但为什么我可以修改密码呢？这就是SUID的功能:</p>
+<p>&#x2F;etc&#x2F;shadow是禁止让我的账号haokaiyang操作的,但为什么我可以修改密码呢？这就是SUID的功能:</p>
 <ol>
-<li>haokaiyang对/bin/passwd有x权限,表示我可以执行passwd</li>
+<li>haokaiyang对&#x2F;bin&#x2F;passwd有x权限,表示我可以执行passwd</li>
 <li>passwd的执行者是root账号</li>
 <li>haokaiyang在执行passwd的过程中,会暂时获得root权限</li>
-<li>/etc/shadow 就可以被我修改了</li>
+<li>&#x2F;etc&#x2F;shadow 就可以被我修改了</li>
 </ol>
 <h3 id="SGID-Set-GID"><a href="#SGID-Set-GID" class="headerlink" title="SGID(Set GID)"></a>SGID(Set GID)</h3><p>当s标志在文件拥有者的x的位置时候为SUID,出现在文件所属组的时候为SGID<br>SGID的功能</p>
 <ul>
@@ -539,7 +556,7 @@
 <li>程序执行者对于这个程序需要有x权限</li>
 <li>执行者将在执行过程中获得该程序群组支持</li>
 </ul>
-<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@CentOS7 haokaiyang]<span class="comment"># ll /bin/locate /var/lib/mlocate/mlocate.db </span></span><br><span class="line">-rwx--s--x. <span class="number">1</span> root slocate   <span class="number">40512</span> <span class="number">11</span>月  <span class="number">5</span> <span class="number">23</span>:<span class="number">0</span>7 /bin/locate</span><br><span class="line">-rw-r-----. <span class="number">1</span> root slocate <span class="number">3247926</span> <span class="number">3</span>月   <span class="number">1</span> <span class="number">10</span>:<span class="number">10</span> /var/<span class="class"><span class="keyword">lib</span>/<span class="title">mlocate</span>/<span class="title">mlocate</span>.<span class="title">db</span></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@CentOS7 haokaiyang]# ll <span class="regexp">/bin/</span>locate <span class="regexp">/var/</span>lib<span class="regexp">/mlocate/m</span>locate.db </span><br><span class="line">-rwx--s--x. <span class="number">1</span> root slocate   <span class="number">40512</span> <span class="number">11</span>月  <span class="number">5</span> <span class="number">23</span>:<span class="number">07</span> <span class="regexp">/bin/</span>locate</span><br><span class="line">-rw-r-----. <span class="number">1</span> root slocate <span class="number">3247926</span> <span class="number">3</span>月   <span class="number">1</span> <span class="number">10</span>:<span class="number">10</span> <span class="regexp">/var/</span>lib<span class="regexp">/mlocate/m</span>locate.db</span><br></pre></td></tr></table></figure>
 <p>和SUID差不多,若haokaiyang去执行locate时,会获得slocate群组的支持,因为可以去读取mlocate.db<br>SGID也可以用于目录,当目录设置了SGID权限后</p>
 <ul>
 <li>使用者若对于此目录有rx权限时,该使用者能够进入此目录</li>
@@ -549,20 +566,23 @@
 <h3 id="SBIT-Sticky-Bit"><a href="#SBIT-Sticky-Bit" class="headerlink" title="SBIT(Sticky Bit)"></a>SBIT(Sticky Bit)</h3><p>这个SBIT只针对目录,对于文件没有作用。<br>SBIT对于目录的作用为:</p>
 <ul>
 <li>当使用者对于此目录有wx权限时</li>
-<li>当使用者在该目录下建立文件或目录时,仅有自己和root才有权利删除<br>举例:<br>/tmp本身权限为drwxrwxrwt 所有人都可以在/tmp中新增、修改、删除文件,但仅有该文件/目录建立者和root才能够删除自己的目录或文件。</li>
+<li>当使用者在该目录下建立文件或目录时,仅有自己和root才有权利删除<br>举例:<br>&#x2F;tmp本身权限为drwxrwxrwt 所有人都可以在&#x2F;tmp中新增、修改、删除文件,但仅有该文件&#x2F;目录建立者和root才能够删除自己的目录或文件。</li>
 </ul>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@CentOS7 tmp]<span class="comment"># ll / | grep tmp</span></span><br><span class="line">drwxrwxrwt.  20 root root 4096 3月   1 15:49 tmp</span><br><span class="line">[root@CentOS7 tmp]<span class="comment"># touch myfile</span></span><br><span class="line">[root@CentOS7 tmp]<span class="comment"># chmod 777 myfile</span></span><br><span class="line">[root@CentOS7 tmp]<span class="comment"># exit</span></span><br><span class="line"><span class="built_in">exit</span></span><br><span class="line">[haokaiyang@CentOS7 tmp]$ ll myfile</span><br><span class="line">-rwxrwxrwx. 1 root root 0 3月   1 15:51 myfile</span><br><span class="line">[haokaiyang@CentOS7 tmp]$ rm -f myfile</span><br><span class="line">rm: 无法删除<span class="string">&quot;myfile&quot;</span>: 不允许的操作</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@CentOS7 tmp]<span class="comment"># ll / | grep tmp</span></span><br><span class="line">drwxrwxrwt.  20 root root 4096 3月   1 15:49 tmp</span><br><span class="line">[root@CentOS7 tmp]<span class="comment"># touch myfile</span></span><br><span class="line">[root@CentOS7 tmp]<span class="comment"># chmod 777 myfile</span></span><br><span class="line">[root@CentOS7 tmp]<span class="comment"># exit</span></span><br><span class="line"><span class="built_in">exit</span></span><br><span class="line">[haokaiyang@CentOS7 tmp]$ ll myfile</span><br><span class="line">-rwxrwxrwx. 1 root root 0 3月   1 15:51 myfile</span><br><span class="line">[haokaiyang@CentOS7 tmp]$ <span class="built_in">rm</span> -f myfile</span><br><span class="line"><span class="built_in">rm</span>: 无法删除<span class="string">&quot;myfile&quot;</span>: 不允许的操作</span><br></pre></td></tr></table></figure>
 
-<h3 id="SUID-SGID-SBIT权限设置"><a href="#SUID-SGID-SBIT权限设置" class="headerlink" title="SUID/SGID/SBIT权限设置"></a>SUID/SGID/SBIT权限设置</h3><h4 id="数字法"><a href="#数字法" class="headerlink" title="数字法"></a>数字法</h4><p>4为SUID<br>2为SGID<br>1为SBIT</p>
-<pre><code>chmod 4755 myfile</code></pre>
+<h3 id="SUID-x2F-SGID-x2F-SBIT权限设置"><a href="#SUID-x2F-SGID-x2F-SBIT权限设置" class="headerlink" title="SUID&#x2F;SGID&#x2F;SBIT权限设置"></a>SUID&#x2F;SGID&#x2F;SBIT权限设置</h3><h4 id="数字法"><a href="#数字法" class="headerlink" title="数字法"></a>数字法</h4><p>4为SUID<br>2为SGID<br>1为SBIT</p>
+<pre><code>chmod 4755 myfile
+</code></pre>
 <h4 id="符号法"><a href="#符号法" class="headerlink" title="符号法"></a>符号法</h4><p>SUID为u+s<br>SGID为g+s<br>SBIT为o+t</p>
 <h2 id="file-查看文件类型"><a href="#file-查看文件类型" class="headerlink" title="file:查看文件类型"></a>file:查看文件类型</h2><pre><code>命令:file 文件
 选项及参数:
     -b 不输出文件名
-    -z 试图查看压缩文件内部信息</code></pre>
+    -z 试图查看压缩文件内部信息
+</code></pre>
 <h2 id="命令及文件搜索"><a href="#命令及文件搜索" class="headerlink" title="命令及文件搜索"></a>命令及文件搜索</h2><h3 id="命令搜索"><a href="#命令搜索" class="headerlink" title="命令搜索"></a>命令搜索</h3><h4 id="which-查找命令"><a href="#which-查找命令" class="headerlink" title="which:查找命令"></a>which:查找命令</h4><pre><code>命令: which
 选项及参数: 
-    -a 列出所有在PATH中可以找到的命令,而不止第一个</code></pre>
+    -a 列出所有在PATH中可以找到的命令,而不止第一个
+</code></pre>
 <p>###文件搜索</p>
 <h4 id="whereis-在特定目录中查找文件"><a href="#whereis-在特定目录中查找文件" class="headerlink" title="whereis:在特定目录中查找文件"></a>whereis:在特定目录中查找文件</h4><pre><code>命令:whereis
 选项及参数:
@@ -570,24 +590,27 @@
     -b 只找binary格式的文件
     -m 只找在手册文件manual路径下的文件
     -s 只找source 来源的文件
-    -u 查找不在上述三个项目当中的其它特殊文件</code></pre>
-<h3 id="locate-updatedb"><a href="#locate-updatedb" class="headerlink" title="locate/updatedb"></a>locate/updatedb</h3><pre><code>命令: locate [-ir] keyword
+    -u 查找不在上述三个项目当中的其它特殊文件
+</code></pre>
+<h3 id="locate-x2F-updatedb"><a href="#locate-x2F-updatedb" class="headerlink" title="locate&#x2F;updatedb"></a>locate&#x2F;updatedb</h3><pre><code>命令: locate [-ir] keyword
 选项及参数:
     -i 忽略大小写差异
     -c 不输出文件名,仅计算找到文件数量
     -l num 仅输出num行
     -S 输出locate所使用的资料库文件相关信息,包括资料库记录的文件/目录数量等
-    -r 后面可接正则表达式的显示方式</code></pre>
-<p>updatedb:根据/etc/updatedb.conf去搜索系统硬盘内的文件,并更新/var/lib/mlocate内的资料库文件<br>locate:  根据/var/lib/mlocate内存在的资料库记载,找出使用者输入的关键词</p>
+    -r 后面可接正则表达式的显示方式
+</code></pre>
+<p>updatedb:根据&#x2F;etc&#x2F;updatedb.conf去搜索系统硬盘内的文件,并更新&#x2F;var&#x2F;lib&#x2F;mlocate内的资料库文件<br>locate:  根据&#x2F;var&#x2F;lib&#x2F;mlocate内存在的资料库记载,找出使用者输入的关键词</p>
 <h3 id="find"><a href="#find" class="headerlink" title="find"></a>find</h3><pre><code>命令:find [PATH] [option] [action]
 选项及参数:
 1.与时间有关的参数: 共有-atime,-ctime与-mtime,以-mtime说明
     -mtime n: n为数字,意义为在n天之前的[一天之内]更改过内容的文件
     -mtime +n:列出在n天之前(不含n本身)北更改过内容的文件
     -mtime -n:列出在n天之内(含n本身)被更改过内容的文件
-    -newer file :file为一个存在的文件,列出比file还要新的文件</code></pre>
+    -newer file :file为一个存在的文件,列出比file还要新的文件
+</code></pre>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#例子:将过去系统里24小时内有更改过内容的文件列出来</span></span><br><span class="line">[root@CentOS7 tmp]<span class="comment"># find /var -mtime 0</span></span><br><span class="line"><span class="comment">#例子:寻找/etc下面比/etc/passwd新的</span></span><br><span class="line">[root@CentOS7 tmp]<span class="comment"># find /etc -newer /etc/passwd</span></span><br></pre></td></tr></table></figure>
-<p>+4代表大于等于5天前的文件 ex: find /var -mtime +4<br>-4代表小于等于4天前的文件 ex: find /var -mtime -4<br> 4代表4-5那一天的文件 ex:find /var -mtime 4</p>
+<p>+4代表大于等于5天前的文件 ex: find &#x2F;var -mtime +4<br>-4代表小于等于4天前的文件 ex: find &#x2F;var -mtime -4<br> 4代表4-5那一天的文件 ex:find &#x2F;var -mtime 4</p>
 <pre><code>2.与使用者或群组有关的参数
     -uid n :n为数字,这个数字是使用者的账号ID,即UID,这个UID是记录在/etc/passwd里面与账号名称对应的数字
     -gid n:n为数字,这个数字是群组名称的ID,即GID,这个GID记录在/etc/group中
@@ -601,12 +624,14 @@
     -type TYPE :搜索文件类型为TYPE的,类型包含一般文件f,硬件b,c,目录d,链接l,socket(s)以及FIFO(p)
     -perm mode 搜索权限刚好等于mode的文件
     -perm -mode 搜索文件权限必须要全部包括mode的文件,即搜索0744(-rwxr--r--)时候,0755(-rwxr-xr-x)也会被列出来,因为0755中包含了0744的权限。
-    -perm /mode 搜索文件权限包含任何一个mode的权限的文件,即搜索0755(-rwxr-xr-x)时候,文件属性为600(-rw-------)也会被搜索出来</code></pre>
+    -perm /mode 搜索文件权限包含任何一个mode的权限的文件,即搜索0755(-rwxr-xr-x)时候,文件属性为600(-rw-------)也会被搜索出来
+</code></pre>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#找出含有SUID或SGID或SBIT的文件</span></span><br><span class="line">[root@CentOS7 tmp]<span class="comment"># find / -perm /7000</span></span><br></pre></td></tr></table></figure>
 
 <pre><code>4.额外操作
 -exec command:command为其它命令,-exec后面再接命令来处理搜索到的结果
--print :将结果打印屏幕上,默认</code></pre>
+-print :将结果打印屏幕上,默认
+</code></pre>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@CentOS7 tmp]<span class="comment"># find / -perm /7000 -exec ls -l &#123;&#125; \;</span></span><br><span class="line"><span class="comment">#带有运算符的例子</span></span><br><span class="line"><span class="comment">#找出/etc下,文件大小在50k到60k之间的文件,并且列出文件权限</span></span><br><span class="line">[root@CentOS7 tmp]<span class="comment"># find /etc -size +50k -a -size -60k -exec ls -l &#123;&#125; \;</span></span><br><span class="line">-a 表示and的意思</span><br><span class="line"><span class="comment">#找出/etc下,文件大于1500k以及容量等于0的文件,且列出文件权限</span></span><br><span class="line">[root@CentOS7 tmp]<span class="comment"># find /etc -size +1500k -o -size 0 -exec ls -l &#123;&#125; \;</span></span><br><span class="line">-o 表示or的意思</span><br><span class="line"><span class="comment">#找出在/etc下,文件大于50k且文件所属者不是root的文件,且列出文件权限</span></span><br><span class="line">[root@CentOS7 tmp]<span class="comment"># find /etc -size +50k -a ! -user root -exec ls -ld &#123;&#125; \;</span></span><br><span class="line"> ! 表示反向选择</span><br></pre></td></tr></table></figure>
 
     </div>
@@ -665,13 +690,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">143k</span>
+    <span title="站点总字数">145k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:10</span>
+    <span title="站点阅读时长">2:12</span>
   </span>
 </div>
 <div class="busuanzi-count">

@@ -257,7 +257,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2021-04-16 14:00:20" itemprop="dateModified" datetime="2021-04-16T14:00:20+08:00">2021-04-16</time>
+      <time title="修改时间：2022-07-11 21:13:28" itemprop="dateModified" datetime="2022-07-11T21:13:28+08:00">2022-07-11</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -276,7 +276,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>534</span>
+      <span>549</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -295,13 +295,13 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>原文地址:<a target="_blank" rel="noopener" href="http://www.zyidai.com/php-directory_separator.html">http://www.zyidai.com/php-directory_separator.html</a><br>DIRECTORY_SEPARATOR是php的内部常量，用于显示系统分隔符的命令，不需要任何定义与包含即可直接使用。<br>在windows下路径分隔符是\（当然/在部分系统上也是可以正常运行的），在linux上路径的分隔符是/，这就导致了一个问题，比如开发机器是windows，有一个图片上传程序，调试机器上指定的上传文件保存目录是：</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span><span class="title">ine</span><span class="params">(<span class="string">&#x27;ROOT&#x27;</span>, dirname(<span class="keyword">__FILE__</span>)</span></span>.<span class="string">&quot;/upload&quot;</span>);</span><br></pre></td></tr></table></figure>
+          <p>原文地址:<a target="_blank" rel="noopener" href="http://www.zyidai.com/php-directory_separator.html">http://www.zyidai.com/php-directory_separator.html</a><br>DIRECTORY_SEPARATOR是php的内部常量，用于显示系统分隔符的命令，不需要任何定义与包含即可直接使用。<br>在windows下路径分隔符是\（当然&#x2F;在部分系统上也是可以正常运行的），在linux上路径的分隔符是&#x2F;，这就导致了一个问题，比如开发机器是windows，有一个图片上传程序，调试机器上指定的上传文件保存目录是：</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">define(&#x27;ROOT&#x27;, dirname(<span class="name">__FILE__</span>).<span class="string">&quot;/upload&quot;</span>)<span class="comment">;</span></span><br></pre></td></tr></table></figure>
 
 <p>在本地调试都很正常，但是上传到linux服务器的时候会发现会出错。于是php引入了DIRECTORY_SEPARATOR变量，可以将上面的写法改写为：</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span><span class="title">ine</span><span class="params">(ROOT, dirname(<span class="keyword">__FILE__</span>)</span></span>.DIRECTORY_SEPARATOR.<span class="string">&quot;upload&quot;</span>);</span><br></pre></td></tr></table></figure>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">define(<span class="name">ROOT</span>, dirname(<span class="name">__FILE__</span>).DIRECTORY_SEPARATOR.<span class="string">&quot;upload&quot;</span>)<span class="comment">;</span></span><br></pre></td></tr></table></figure>
 
-<p>DIRECTORY_SEPARATOR是一个返回跟操作系统相关的路径分隔符的php内置命令，在windows上返回\，而在linux或者类unix上返回/，通常在定义包含文件路径或者上传保存目录的时候会用到。</p>
+<p>DIRECTORY_SEPARATOR是一个返回跟操作系统相关的路径分隔符的php内置命令，在windows上返回\，而在linux或者类unix上返回&#x2F;，通常在定义包含文件路径或者上传保存目录的时候会用到。</p>
 
       
     </div>
@@ -364,7 +364,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2021-04-16 14:00:20" itemprop="dateModified" datetime="2021-04-16T14:00:20+08:00">2021-04-16</time>
+      <time title="修改时间：2022-07-11 21:13:29" itemprop="dateModified" datetime="2022-07-11T21:13:29+08:00">2022-07-11</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -383,7 +383,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>266</span>
+      <span>286</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -402,9 +402,9 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p><strong>FILE</strong> 返回当前 路径+文件名<br>dirname(<strong>FILE</strong>) 返回当前文件路径的 路径部分<br>dirname(dirname(<strong>FILE</strong>));得到的是文件上一层目录名（不含最后一个“/”号）</p>
-<p>此文件存放位置:E:/htdocs/me/file.php</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$a</span> = <span class="keyword">__FILE__</span>;</span><br><span class="line"><span class="variable">$b</span> = dirname(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="variable">$c</span> = dirname(dirname(<span class="keyword">__FILE__</span>));</span><br><span class="line"><span class="keyword">echo</span> <span class="variable">$a</span>;    <span class="comment">//E:\hotdocs\me\file.php</span></span><br><span class="line"><span class="keyword">echo</span> <span class="variable">$b</span>;    <span class="comment">//E:\hotdocs\me</span></span><br><span class="line"><span class="keyword">echo</span> <span class="variable">$c</span>;    <span class="comment">//E:\hotdocs</span></span><br></pre></td></tr></table></figure>
+          <p><strong>FILE</strong> 返回当前 路径+文件名<br>dirname(<strong>FILE</strong>) 返回当前文件路径的 路径部分<br>dirname(dirname(<strong>FILE</strong>));得到的是文件上一层目录名（不含最后一个“&#x2F;”号）</p>
+<p>此文件存放位置:E:&#x2F;htdocs&#x2F;me&#x2F;file.php</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$a</span> = <span class="keyword">__FILE__</span>;</span><br><span class="line"><span class="variable">$b</span> = <span class="title function_ invoke__">dirname</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="variable">$c</span> = <span class="title function_ invoke__">dirname</span>(<span class="title function_ invoke__">dirname</span>(<span class="keyword">__FILE__</span>));</span><br><span class="line"><span class="keyword">echo</span> <span class="variable">$a</span>;    <span class="comment">//E:\hotdocs\me\file.php</span></span><br><span class="line"><span class="keyword">echo</span> <span class="variable">$b</span>;    <span class="comment">//E:\hotdocs\me</span></span><br><span class="line"><span class="keyword">echo</span> <span class="variable">$c</span>;    <span class="comment">//E:\hotdocs</span></span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -467,7 +467,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2021-04-16 14:00:20" itemprop="dateModified" datetime="2021-04-16T14:00:20+08:00">2021-04-16</time>
+      <time title="修改时间：2022-07-11 21:13:29" itemprop="dateModified" datetime="2022-07-11T21:13:29+08:00">2022-07-11</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -486,7 +486,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>776</span>
+      <span>676</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -506,16 +506,16 @@
     
     <div class="post-body" itemprop="articleBody">
           <p><em>注：路径仅作参考</em><br>如图所示，列表前面的小图标有时候会全部出现的是XX，不显示。</p>
-<p><img data-src="/images/wamp-icons1.png" alt="Wamp server 目录浏览时icons图标不显示解决方法1"><br>打开apache安装目录（D:\wamp\bin\apache\apache2.4.9\conf\extra）下的httpd-autoindex.conf文件;<br>查找 Alias /icons/ “c:/Apache24/icons/”,如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Alias &#x2F;icons&#x2F; &quot;c:&#x2F;Apache24&#x2F;icons&#x2F;&quot;</span><br><span class="line"></span><br><span class="line">&lt;Directory &quot;c:&#x2F;Apache24&#x2F;icons&quot;&gt;</span><br><span class="line">    Options Indexes MultiViews</span><br><span class="line">    AllowOverride None</span><br><span class="line">    Require all granted</span><br><span class="line">&lt;&#x2F;Directory&gt;</span><br></pre></td></tr></table></figure>
+<p><img data-src="/images/wamp-icons1.png" alt="Wamp server 目录浏览时icons图标不显示解决方法1"><br>打开apache安装目录（D:\wamp\bin\apache\apache2.4.9\conf\extra）下的httpd-autoindex.conf文件;<br>查找 Alias &#x2F;icons&#x2F; “c:&#x2F;Apache24&#x2F;icons&#x2F;”,如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Alias /icons/ &quot;c:/Apache24/icons/&quot;</span><br><span class="line"></span><br><span class="line">&lt;Directory &quot;c:/Apache24/icons&quot;&gt;</span><br><span class="line">    Options Indexes MultiViews</span><br><span class="line">    AllowOverride None</span><br><span class="line">    Require all granted</span><br><span class="line">&lt;/Directory&gt;</span><br></pre></td></tr></table></figure>
 
 <p>更改为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Alias &#x2F;icons&#x2F; &quot;D:&#x2F;wamp&#x2F;bin&#x2F;apache&#x2F;apache2.4.9&#x2F;icons&#x2F;&quot;</span><br><span class="line"></span><br><span class="line">&lt;Directory &quot;D:&#x2F;wamp&#x2F;bin&#x2F;apache&#x2F;apache2.4.9&#x2F;icons&#x2F;&quot;&gt;</span><br><span class="line">    Options Indexes MultiViews</span><br><span class="line">    AllowOverride None</span><br><span class="line">    Require all granted</span><br><span class="line">&lt;&#x2F;Directory&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Alias /icons/ &quot;D:/wamp/bin/apache/apache2.4.9/icons/&quot;</span><br><span class="line"></span><br><span class="line">&lt;Directory &quot;D:/wamp/bin/apache/apache2.4.9/icons/&quot;&gt;</span><br><span class="line">    Options Indexes MultiViews</span><br><span class="line">    AllowOverride None</span><br><span class="line">    Require all granted</span><br><span class="line">&lt;/Directory&gt;</span><br></pre></td></tr></table></figure>
 
 <p>重启wamp后，如图所示：</p>
 <p><img data-src="/images/wamp-icons2.jpg" alt="Wamp server 目录浏览时icons图标不显示解决方法2"></p>
 <p>或者和我一样在httpd.conf中注释调这个功能：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># Fancy directory listings</span><br><span class="line">#Include conf&#x2F;extra&#x2F;httpd-autoindex.conf</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># Fancy directory listings</span><br><span class="line">#Include conf/extra/httpd-autoindex.conf</span><br></pre></td></tr></table></figure>
 
 <p>注释掉后是这样：</p>
 <p><img data-src="/images/wamp-icons3.jpg" alt="Wamp server 目录浏览时icons图标不显示解决方法3"></p>
@@ -581,7 +581,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2021-04-16 14:00:20" itemprop="dateModified" datetime="2021-04-16T14:00:20+08:00">2021-04-16</time>
+      <time title="修改时间：2022-07-11 21:13:29" itemprop="dateModified" datetime="2022-07-11T21:13:29+08:00">2022-07-11</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -683,7 +683,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2021-04-16 14:00:20" itemprop="dateModified" datetime="2021-04-16T14:00:20+08:00">2021-04-16</time>
+      <time title="修改时间：2022-07-11 21:13:30" itemprop="dateModified" datetime="2022-07-11T21:13:30+08:00">2022-07-11</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -702,7 +702,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>684</span>
+      <span>779</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -721,17 +721,17 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>我的版本如下:<br>Wamp版本：2.5<br>安装目录：D:/wamp/<br>www目录：D:/wamp/www/<br>变更到：E:/htdocs/</p>
-<h2 id="更换localhost默认路径"><a href="#更换localhost默认路径" class="headerlink" title="更换localhost默认路径"></a>更换localhost默认路径</h2><p>修改D:\wamp\bin\apache\apache2.4.9\conf \httpd.conf<br>查找： DocumentRoot “D:/wamp/www/“(230行左右)</p>
-<p>修改：DocumentRoot “E:/htdocs”</p>
-<p>查找： &lt;Directory “D:/wamp/www/“&gt;(252行左右)</p>
-<p>修改： &lt;Directory “E:/htdocs”&gt;</p>
+          <p>我的版本如下:<br>Wamp版本：2.5<br>安装目录：D:&#x2F;wamp&#x2F;<br>www目录：D:&#x2F;wamp&#x2F;www&#x2F;<br>变更到：E:&#x2F;htdocs&#x2F;</p>
+<h2 id="更换localhost默认路径"><a href="#更换localhost默认路径" class="headerlink" title="更换localhost默认路径"></a>更换localhost默认路径</h2><p>修改D:\wamp\bin\apache\apache2.4.9\conf \httpd.conf<br>查找： DocumentRoot “D:&#x2F;wamp&#x2F;www&#x2F;“(230行左右)</p>
+<p>修改：DocumentRoot “E:&#x2F;htdocs”</p>
+<p>查找： &lt;Directory “D:&#x2F;wamp&#x2F;www&#x2F;“&gt;(252行左右)</p>
+<p>修改： &lt;Directory “E:&#x2F;htdocs”&gt;</p>
 <h2 id="更换状态栏中“www目录”指向文件夹路径"><a href="#更换状态栏中“www目录”指向文件夹路径" class="headerlink" title="更换状态栏中“www目录”指向文件夹路径"></a>更换状态栏中“www目录”指向文件夹路径</h2><p>修改wampmanager.ini和wampmanager.tpl<br>修改D:\wamp\wampmanager.ini:</p>
-<p>查找：Type: item; Caption: “www directory”; Action: shellexecute; FileName: “D:/wamp/www”;</p>
-<p>修改：Type: item; Caption: “www directory”; Action: shellexecute; FileName: “E:/htdocs”;</p>
+<p>查找：Type: item; Caption: “www directory”; Action: shellexecute; FileName: “D:&#x2F;wamp&#x2F;www”;</p>
+<p>修改：Type: item; Caption: “www directory”; Action: shellexecute; FileName: “E:&#x2F;htdocs”;</p>
 <p>修改D:\wamp\wampmanager.tpl:</p>
 <p>查找：Type: item; Caption: “${wwwwDirectory}”; Action: shellexecute; FileName: “${wwwDir}”;</p>
-<p>修改：Type: item; Caption: “${wwwwDirectory}”; Action: shellexecute; FileName: “E:/htdocs”;</p>
+<p>修改：Type: item; Caption: “${wwwwDirectory}”; Action: shellexecute; FileName: “E:&#x2F;htdocs”;</p>
 
       
     </div>
@@ -774,13 +774,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">143k</span>
+    <span title="站点总字数">145k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:10</span>
+    <span title="站点阅读时长">2:12</span>
   </span>
 </div>
 <div class="busuanzi-count">

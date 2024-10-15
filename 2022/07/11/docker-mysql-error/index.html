@@ -25,23 +25,23 @@
     <meta name="description" content="Docker 下 Mysql 启动错误">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Docker 下 Mysql 启动错误：Please Read &quot;Security&quot; Section of the Manual to Find Out How to Run Mysqld as Root!">
-<meta property="og:url" content="http://haokaiyang.com/2021/04/16/docker-mysql-error/index.html">
+<meta property="og:url" content="http://haokaiyang.com/2022/07/11/docker-mysql-error/index.html">
 <meta property="og:site_name" content="郝凯阳">
 <meta property="og:description" content="Docker 下 Mysql 启动错误">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-04-16T06:00:20.642Z">
-<meta property="article:modified_time" content="2021-04-16T06:00:20.642Z">
+<meta property="article:published_time" content="2022-07-11T13:13:28.620Z">
+<meta property="article:modified_time" content="2022-07-11T13:13:28.630Z">
 <meta property="article:author" content="郝凯阳">
 <meta property="article:tag" content="Docker">
 <meta property="article:tag" content="Mysql">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://haokaiyang.com/2021/04/16/docker-mysql-error/">
+<link rel="canonical" href="http://haokaiyang.com/2022/07/11/docker-mysql-error/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://haokaiyang.com/2021/04/16/docker-mysql-error/","path":"2021/04/16/docker-mysql-error/","title":"Docker 下 Mysql 启动错误：Please Read \"Security\" Section of the Manual to Find Out How to Run Mysqld as Root!"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://haokaiyang.com/2022/07/11/docker-mysql-error/","path":"2022/07/11/docker-mysql-error/","title":"Docker 下 Mysql 启动错误：Please Read \"Security\" Section of the Manual to Find Out How to Run Mysqld as Root!"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
 <title>Docker 下 Mysql 启动错误：Please Read "Security" Section of the Manual to Find Out How to Run Mysqld as Root! | 郝凯阳</title>
@@ -227,7 +227,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://haokaiyang.com/2021/04/16/docker-mysql-error/">
+    <link itemprop="mainEntityOfPage" href="http://haokaiyang.com/2022/07/11/docker-mysql-error/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -256,7 +256,7 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2021-04-16 14:00:20" itemprop="dateCreated datePublished" datetime="2021-04-16T14:00:20+08:00">2021-04-16</time>
+      <time title="创建时间：2022-07-11 21:13:28" itemprop="dateCreated datePublished" datetime="2022-07-11T21:13:28+08:00">2022-07-11</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -302,19 +302,19 @@
     
     <div class="post-body" itemprop="articleBody">
         <h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p>系统: windows 10<br>Docker 版本: 19.03.13</p>
-<a id="more"></a>
+<span id="more"></span>
 
 <h2 id="Docker-compose-文件"><a href="#Docker-compose-文件" class="headerlink" title="Docker-compose 文件"></a>Docker-compose 文件</h2><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">version: <span class="string">&#x27;3.2&#x27;</span></span><br><span class="line">services:</span><br><span class="line">    ...</span><br><span class="line">    mysql:</span><br><span class="line">        image: <span class="string">&quot;$&#123;MYSQL_VERSION&#125;&quot;</span></span><br><span class="line">        command: <span class="string">&quot; --default-authentication-plugin=caching_sha2_password&quot;</span></span><br><span class="line">        volumes:</span><br><span class="line">            - .<span class="regexp">/etc/my</span>sql<span class="regexp">/my.cnf:/</span>etc/my.cnf</span><br><span class="line">            - .<span class="regexp">/etc/my</span>sql<span class="regexp">/my.cnf.d:/</span>etc/my.cnf.d</span><br><span class="line">            - .<span class="regexp">/etc/my</span>sql<span class="regexp">/data:/</span>var<span class="regexp">/lib/my</span>sql</span><br><span class="line">        environment:</span><br><span class="line">            MYSQL_ROOT_PASSWORD: <span class="variable">$&#123;MYSQL_ROOT_PASSWORD&#125;</span></span><br><span class="line">            MYSQL_ROOT_HOST: <span class="string">&quot;%&quot;</span></span><br><span class="line">            TZ: <span class="variable">$&#123;TZ&#125;</span></span><br><span class="line">        restart: on-failure</span><br><span class="line">    ...</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 
 <h2 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h2><p>Mysql 无法启动,启动就关闭,查看日志发现</p>
-<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Mysql启动错误：Please read <span class="string">&quot;Security&quot;</span> section of the<span class="built_in"> manual </span><span class="keyword">to</span> <span class="builtin-name">find</span> out how <span class="keyword">to</span> <span class="builtin-name">run</span> mysqld as root!</span><br></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Mysql启动错误：Please read <span class="string">&quot;Security&quot;</span> section of the<span class="built_in"> manual </span><span class="keyword">to</span> <span class="built_in">find</span> out how <span class="keyword">to</span> <span class="built_in">run</span> mysqld as root!</span><br></pre></td></tr></table></figure>
 <p>这步的解决方案很简单,只需要在 my.cnf 中添加或修改</p>
-<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">user</span>=mysql</span><br></pre></td></tr></table></figure>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">user</span><span class="operator">=</span>mysql</span><br></pre></td></tr></table></figure>
 <p>修改后还是无法启动</p>
 <p>继续查看日志</p>
-<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Warnin<span class="variable">g:</span> World-writable config <span class="keyword">file</span> <span class="string">&#x27;/etc/mysql/my.cnf&#x27;</span> <span class="keyword">is</span> ignored</span><br></pre></td></tr></table></figure>
-<p>由于 /etc/mysql/my.conf 的权限是 777,配置文件会被忽略。<br>这步的解决办法也很简单</p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Warning: World-writable config <span class="built_in">file</span> &#x27;/etc/mysql/<span class="keyword">my</span>.cnf&#x27; <span class="keyword">is</span> ignored</span><br></pre></td></tr></table></figure>
+<p>由于 &#x2F;etc&#x2F;mysql&#x2F;my.conf 的权限是 777,配置文件会被忽略。<br>这步的解决办法也很简单</p>
 <figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod <span class="number">0444</span> <span class="regexp">/etc/my</span>sql/my.cnf</span><br></pre></td></tr></table></figure>
 <p>但由于我是 windows ，只能想点别的招数了。<br>然后我修改了 docker-compose 文件中 mysql 的 command 部分</p>
 <figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">docker-compose.yml</span><br><span class="line">version: <span class="string">&#x27;3.2&#x27;</span></span><br><span class="line"></span><br><span class="line">services:</span><br><span class="line">    ...</span><br><span class="line">    mysql:</span><br><span class="line">        image: <span class="string">&quot;$&#123;MYSQL_VERSION&#125;&quot;</span></span><br><span class="line">        command: &gt; </span><br><span class="line">            bash -c <span class="string">&quot;chmod 0444 /etc/my.cnf &amp;&amp; /usr/sbin/mysqld --default-authentication-plugin=caching_sha2_password&quot;</span></span><br><span class="line">        volumes:</span><br><span class="line">            - .<span class="regexp">/etc/my</span>sql<span class="regexp">/my.cnf:/</span>etc/my.cnf</span><br><span class="line">            - .<span class="regexp">/etc/my</span>sql<span class="regexp">/my.cnf.d:/</span>etc/my.cnf.d</span><br><span class="line">            - .<span class="regexp">/etc/my</span>sql<span class="regexp">/data:/</span>var<span class="regexp">/lib/my</span>sql</span><br><span class="line">        environment:</span><br><span class="line">            MYSQL_ROOT_PASSWORD: <span class="variable">$&#123;MYSQL_ROOT_PASSWORD&#125;</span></span><br><span class="line">            MYSQL_ROOT_HOST: <span class="string">&quot;%&quot;</span></span><br><span class="line">            TZ: <span class="variable">$&#123;TZ&#125;</span></span><br><span class="line">        restart: on-failure</span><br><span class="line">    ...</span><br><span class="line"></span><br></pre></td></tr></table></figure>
@@ -336,14 +336,11 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2021/04/16/weekly-2021-16/" rel="prev" title="Weekly Read | 2021年 16 周">
-                  <i class="fa fa-chevron-left"></i> Weekly Read | 2021年 16 周
+                <a href="/2021/04/23/weekly-2021-17/" rel="prev" title="Weekly Read | 2021年 17 周">
+                  <i class="fa fa-chevron-left"></i> Weekly Read | 2021年 17 周
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2021/04/23/weekly-2021-17/" rel="next" title="Weekly Read | 2021年 17 周">
-                  Weekly Read | 2021年 17 周 <i class="fa fa-chevron-right"></i>
-                </a>
             </div>
           </div>
     </footer>
@@ -376,13 +373,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">143k</span>
+    <span title="站点总字数">145k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:10</span>
+    <span title="站点阅读时长">2:12</span>
   </span>
 </div>
 <div class="busuanzi-count">

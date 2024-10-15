@@ -317,19 +317,16 @@
 <li>加入常用软件源<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">brew tap homebrew/dupes</span><br><span class="line">brew tap homebrew/versions</span><br><span class="line">brew tap homebrew/php</span><br></pre></td></tr></table></figure>
 <h2 id="安装php7"><a href="#安装php7" class="headerlink" title="安装php7"></a>安装php7</h2></li>
 <li>简介:安装PHP</li>
-<li>安装:<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">brew install php72 \</span><br><span class="line">--with-argon2 \</span><br><span class="line">--with-cgi \</span><br><span class="line">--with-debug \</span><br><span class="line">--with-enchant \</span><br><span class="line">--with-gmp \</span><br><span class="line">--with-homebrew-curl \</span><br><span class="line">--with-homebrew-libressl \</span><br><span class="line">--with-homebrew-libxml2 \</span><br><span class="line">--with-homebrew-libxslt \</span><br><span class="line">--with-httpd \</span><br><span class="line">--with-imap \</span><br><span class="line">--with-libmysql \</span><br><span class="line">--with-mssql \</span><br><span class="line">--with-pear \</span><br><span class="line">--with-phpdbg \</span><br><span class="line">--with-postgresql \</span><br><span class="line">--with-thread-safety \</span><br><span class="line">--with-webp</span><br></pre></td></tr></table></figure>
-
-</li>
+<li>安装:<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">brew install php72 \</span><br><span class="line">--with-argon2 \</span><br><span class="line">--with-cgi \</span><br><span class="line">--with-debug \</span><br><span class="line">--with-enchant \</span><br><span class="line">--with-gmp \</span><br><span class="line">--with-homebrew-curl \</span><br><span class="line">--with-homebrew-libressl \</span><br><span class="line">--with-homebrew-libxml2 \</span><br><span class="line">--with-homebrew-libxslt \</span><br><span class="line">--with-httpd \</span><br><span class="line">--with-imap \</span><br><span class="line">--with-libmysql \</span><br><span class="line">--with-mssql \</span><br><span class="line">--with-pear \</span><br><span class="line">--with-phpdbg \</span><br><span class="line">--with-postgresql \</span><br><span class="line">--with-thread-safety \</span><br><span class="line">--with-webp</span><br></pre></td></tr></table></figure></li>
 </ul>
-<p>这里出了个小插曲,安装过程中imap提示404,我们通过FTP把包下载下来,放在目录/Library/Caches/Homebrew,然后重新来一次就可以了。</p>
+<p>这里出了个小插曲,安装过程中imap提示404,我们通过FTP把包下载下来,放在目录&#x2F;Library&#x2F;Caches&#x2F;Homebrew,然后重新来一次就可以了。</p>
 <ul>
-<li>使我们安装的PHP7代替系统自带的:<br>由于OSX已经自带了PHP环境，因此需要修改系统路径，优先运行brew安装的版本，在~/.bashrc里加入：</li>
+<li>使我们安装的PHP7代替系统自带的:<br>由于OSX已经自带了PHP环境，因此需要修改系统路径，优先运行brew安装的版本，在~&#x2F;.bashrc里加入：</li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> PATH=<span class="string">&quot;/usr/local/bin:/usr/local/sbin:<span class="variable">$PATH</span>&quot;</span></span><br></pre></td></tr></table></figure>
 
 <ul>
-<li><p>安装扩展</p>
-<ul>
+<li>安装扩展<ul>
 <li><p>如果要安装新的php扩展，可以直接安装而不用每次重新编译php，所有的扩展可以通过</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew search php71</span><br></pre></td></tr></table></figure></li>
 <li><p>安装扩展例子</p>
@@ -338,35 +335,25 @@
 <li><p>其它:</p>
   <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">php-fpm -D <span class="comment">#启动php-fpm</span></span><br><span class="line">killall php-fpm <span class="comment">#停止php-fpm</span></span><br></pre></td></tr></table></figure></li>
 <li><p>将php-fpm加入开机启动</p>
-  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ln -sfv /usr/<span class="built_in">local</span>/opt/php70/*.plist ~/Library/LaunchAgents</span><br><span class="line">launchctl load ~/Library/LaunchAgents/homebrew.mxcl.php70.plist</span><br></pre></td></tr></table></figure>
-<h2 id="安装nginx"><a href="#安装nginx" class="headerlink" title="安装nginx"></a>安装nginx</h2></li>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ln</span> -sfv /usr/local/opt/php70/*.plist ~/Library/LaunchAgents</span><br><span class="line">launchctl load ~/Library/LaunchAgents/homebrew.mxcl.php70.plist</span><br></pre></td></tr></table></figure></li>
 </ul>
 </li>
-<li><p>安装</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install nginx</span><br></pre></td></tr></table></figure></li>
-<li><p>nginx 常用命令</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo nginx <span class="comment">#打开nginx</span></span><br><span class="line">sudo nginx -s reload|reopen|stop|quit <span class="comment">#重新加载配置|重启|停止|退出</span></span><br><span class="line">sudo nginx -t <span class="comment">#测试nginx配置是否有语法错误</span></span><br></pre></td></tr></table></figure></li>
-<li><p>nginx 配置文件地址<br>/usr/local/etc/nginx/nginx.conf</p>
-</li>
-<li><p>修改端口:nginx 安装后默认后默认监听8080端口，我们将端口修改为80端口，但是需要root权限，我们运行</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo chown root:wheel /usr/<span class="built_in">local</span>/Cellar/nginx/1.13.12/bin/nginx</span><br><span class="line">sudo chmod u+s /usr/<span class="built_in">local</span>/Cellar/nginx/1.13.12/bin/nginx</span><br></pre></td></tr></table></figure></li>
-<li><p>开机启动</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ln -sfv /usr/<span class="built_in">local</span>/opt/nginx/homebrew.mxcl.nginx.plist ~/Library/LaunchAgents/</span><br><span class="line">launchctl load ~/Library/LaunchAgents/homebrew.mxcl.nginx.plist</span><br></pre></td></tr></table></figure>
+</ul>
+<h2 id="安装nginx"><a href="#安装nginx" class="headerlink" title="安装nginx"></a>安装nginx</h2><ul>
+<li>安装<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install nginx</span><br></pre></td></tr></table></figure></li>
+<li>nginx 常用命令<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo nginx <span class="comment">#打开nginx</span></span><br><span class="line">sudo nginx -s reload|reopen|stop|quit <span class="comment">#重新加载配置|重启|停止|退出</span></span><br><span class="line">sudo nginx -t <span class="comment">#测试nginx配置是否有语法错误</span></span><br></pre></td></tr></table></figure></li>
+<li>nginx 配置文件地址<br>&#x2F;usr&#x2F;local&#x2F;etc&#x2F;nginx&#x2F;nginx.conf</li>
+<li>修改端口:nginx 安装后默认后默认监听8080端口，我们将端口修改为80端口，但是需要root权限，我们运行<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo <span class="built_in">chown</span> root:wheel /usr/local/Cellar/nginx/1.13.12/bin/nginx</span><br><span class="line">sudo <span class="built_in">chmod</span> u+s /usr/local/Cellar/nginx/1.13.12/bin/nginx</span><br></pre></td></tr></table></figure></li>
+<li>开机启动<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ln</span> -sfv /usr/local/opt/nginx/homebrew.mxcl.nginx.plist ~/Library/LaunchAgents/</span><br><span class="line">launchctl load ~/Library/LaunchAgents/homebrew.mxcl.nginx.plist</span><br></pre></td></tr></table></figure>
 <h2 id="安装mysql"><a href="#安装mysql" class="headerlink" title="安装mysql"></a>安装mysql</h2></li>
-<li><p> 安装</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install mysql</span><br></pre></td></tr></table></figure></li>
-<li><p>命令</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql.server start</span><br><span class="line">mysql.server stop</span><br></pre></td></tr></table></figure></li>
-<li><p>设置密码</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqladmin -uroot password <span class="string">&quot;yourpassword&quot;</span></span><br></pre></td></tr></table></figure></li>
-<li><p>开机启动</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ln -sfv /usr/<span class="built_in">local</span>/Cellar/mysql/*.plist ~/Library/LaunchAgents</span><br><span class="line">launchctl load ~/Library/LaunchAgents/homebrew.mxcl.mysql.plist</span><br></pre></td></tr></table></figure>
-
-</li>
+<li>安装<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install mysql</span><br></pre></td></tr></table></figure></li>
+<li>命令<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql.server start</span><br><span class="line">mysql.server stop</span><br></pre></td></tr></table></figure></li>
+<li>设置密码<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqladmin -uroot password <span class="string">&quot;yourpassword&quot;</span></span><br></pre></td></tr></table></figure></li>
+<li>开机启动<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ln</span> -sfv /usr/local/Cellar/mysql/*.plist ~/Library/LaunchAgents</span><br><span class="line">launchctl load ~/Library/LaunchAgents/homebrew.mxcl.mysql.plist</span><br></pre></td></tr></table></figure></li>
 </ul>
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
-<li>  <a target="_blank" rel="noopener" href="http://avnpc.com/pages/install-lnmp-on-osx?utm_source=tuicool&utm_medium=referral">Mac下安装LNMP(Nginx+PHP5.6)环境</a></li>
-<li>  <a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000000606752">全新安装Mac OSX 开发者环境</a></li>
+<li><a target="_blank" rel="noopener" href="http://avnpc.com/pages/install-lnmp-on-osx?utm_source=tuicool&utm_medium=referral">Mac下安装LNMP(Nginx+PHP5.6)环境</a></li>
+<li><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000000606752">全新安装Mac OSX 开发者环境</a></li>
 </ul>
 
     </div>
@@ -426,13 +413,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">143k</span>
+    <span title="站点总字数">145k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:10</span>
+    <span title="站点阅读时长">2:12</span>
   </span>
 </div>
 <div class="busuanzi-count">

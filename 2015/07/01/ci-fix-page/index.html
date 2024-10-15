@@ -30,10 +30,10 @@
 <meta property="og:description" content="CI框架分页类参数可以是负数的问题">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2015-07-01T02:40:08.000Z">
-<meta property="article:modified_time" content="2021-04-16T06:00:20.641Z">
+<meta property="article:modified_time" content="2022-07-11T13:13:29.796Z">
 <meta property="article:author" content="郝凯阳">
-<meta property="article:tag" content="CI框架">
 <meta property="article:tag" content="PHP">
+<meta property="article:tag" content="CI框架">
 <meta name="twitter:card" content="summary">
 
 
@@ -262,7 +262,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2021-04-16 14:00:20" itemprop="dateModified" datetime="2021-04-16T14:00:20+08:00">2021-04-16</time>
+      <time title="修改时间：2022-07-11 21:13:29" itemprop="dateModified" datetime="2022-07-11T21:13:29+08:00">2022-07-11</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -307,10 +307,10 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// If something isn&#x27;t quite right, back to the default base page.</span></span><br><span class="line"><span class="keyword">if</span> ( ! ctype_digit(<span class="keyword">$this</span>-&gt;cur_page) <span class="keyword">OR</span> (<span class="keyword">$this</span>-&gt;use_page_numbers &amp;&amp; (<span class="keyword">int</span>) <span class="keyword">$this</span>-&gt;cur_page === <span class="number">0</span>))</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">$this</span>-&gt;cur_page = <span class="variable">$base_page</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// Make sure we&#x27;re using integers for comparisons later.</span></span><br><span class="line">    <span class="keyword">$this</span>-&gt;cur_page = (<span class="keyword">int</span>) <span class="keyword">$this</span>-&gt;cur_page;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+        <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// If something isn&#x27;t quite right, back to the default base page.</span></span><br><span class="line"><span class="keyword">if</span> ( ! <span class="title function_ invoke__">ctype_digit</span>(<span class="variable">$this</span>-&gt;cur_page) <span class="title function_ invoke__">OR</span> (<span class="variable">$this</span>-&gt;use_page_numbers &amp;&amp; (<span class="keyword">int</span>) <span class="variable language_">$this</span>-&gt;cur_page === <span class="number">0</span>))</span><br><span class="line">&#123;</span><br><span class="line">    <span class="variable language_">$this</span>-&gt;cur_page = <span class="variable">$base_page</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// Make sure we&#x27;re using integers for comparisons later.</span></span><br><span class="line">    <span class="variable language_">$this</span>-&gt;cur_page = (<span class="keyword">int</span>) <span class="variable language_">$this</span>-&gt;cur_page;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>应改写为:</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// If something isn&#x27;t quite right, back to the default base page.</span></span><br><span class="line"><span class="keyword">if</span> ( ! ctype_digit(<span class="keyword">$this</span>-&gt;cur_page) <span class="keyword">OR</span> (<span class="keyword">$this</span>-&gt;use_page_numbers &amp;&amp; (<span class="keyword">int</span>) <span class="keyword">$this</span>-&gt;cur_page &lt;= <span class="number">0</span>))</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">$this</span>-&gt;cur_page = <span class="variable">$base_page</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// Make sure we&#x27;re using integers for comparisons later.</span></span><br><span class="line">    <span class="keyword">$this</span>-&gt;cur_page = (<span class="keyword">int</span>) <span class="keyword">$this</span>-&gt;cur_page;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// If something isn&#x27;t quite right, back to the default base page.</span></span><br><span class="line"><span class="keyword">if</span> ( ! <span class="title function_ invoke__">ctype_digit</span>(<span class="variable">$this</span>-&gt;cur_page) <span class="title function_ invoke__">OR</span> (<span class="variable">$this</span>-&gt;use_page_numbers &amp;&amp; (<span class="keyword">int</span>) <span class="variable language_">$this</span>-&gt;cur_page &lt;= <span class="number">0</span>))</span><br><span class="line">&#123;</span><br><span class="line">    <span class="variable language_">$this</span>-&gt;cur_page = <span class="variable">$base_page</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// Make sure we&#x27;re using integers for comparisons later.</span></span><br><span class="line">    <span class="variable language_">$this</span>-&gt;cur_page = (<span class="keyword">int</span>) <span class="variable language_">$this</span>-&gt;cur_page;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
     </div>
 
@@ -320,8 +320,8 @@
 
     <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/CI%E6%A1%86%E6%9E%B6/" rel="tag"># CI框架</a>
               <a href="/tags/PHP/" rel="tag"># PHP</a>
+              <a href="/tags/CI%E6%A1%86%E6%9E%B6/" rel="tag"># CI框架</a>
           </div>
 
         
@@ -368,13 +368,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">143k</span>
+    <span title="站点总字数">145k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:10</span>
+    <span title="站点阅读时长">2:12</span>
   </span>
 </div>
 <div class="busuanzi-count">
