@@ -118,343 +118,6 @@
       </tags>
   </entry>
   <entry>
-    <title>《鸟哥的Linux私房菜》文件与目录管理学习笔记</title>
-    <url>/2017/03/01/centos7-learning-notes-2/</url>
-    <content><![CDATA[<h2 id="目录相关操作"><a href="#目录相关操作" class="headerlink" title="目录相关操作"></a>目录相关操作</h2><h3 id="特殊目录"><a href="#特殊目录" class="headerlink" title="特殊目录"></a>特殊目录</h3><ul>
-<li>.         当前目录</li>
-<li>..        上层目录</li>
-<li>-        上次所在目录</li>
-<li>~         当前账号所在家目录</li>
-<li>~account  account用户的家目录</li>
-</ul>
-<h3 id="常见目录处理命令"><a href="#常见目录处理命令" class="headerlink" title="常见目录处理命令"></a>常见目录处理命令</h3><h4 id="cd-更改目录"><a href="#cd-更改目录" class="headerlink" title="cd:更改目录"></a>cd:更改目录</h4><p>change directory</p>
-<pre><code>命令:cd 目录
-</code></pre>
-<h4 id="pwd-显示当前所在目录"><a href="#pwd-显示当前所在目录" class="headerlink" title="pwd:显示当前所在目录"></a>pwd:显示当前所在目录</h4><p>Print Working Directory</p>
-<pre><code>命令:pwd [-P]
-选项及参数:
-    -L 默认参数 当目录为软链接路径时,显示软链接路径
-    -P 当目录为软链接路径时,显示真实路径
-</code></pre>
-<p>例子:</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">[haokaiyang@CentOS7 bin]$ <span class="built_in">ls</span> -l /bin</span><br><span class="line">lrwxrwxrwx. 1 root root 7 2月 27 21:01 /bin -&gt; usr/bin</span><br><span class="line">[haokaiyang@CentOS7 bin]$ <span class="built_in">pwd</span> -L</span><br><span class="line">/bin</span><br><span class="line">[haokaiyang@CentOS7 bin]$ <span class="built_in">pwd</span> -P</span><br><span class="line">/usr/bin</span><br></pre></td></tr></table></figure>
-<h4 id="mkdir-创建新目录"><a href="#mkdir-创建新目录" class="headerlink" title="mkdir:创建新目录"></a>mkdir:创建新目录</h4><p>make directory</p>
-<pre><code>命令:mkdir [-mp] 目录
-选项及参数:
-    -p 递归创建
-    -m 直接设置目录权限
-</code></pre>
-<p>例子:</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">[haokaiyang@CentOS7 <span class="built_in">test</span>]$ <span class="built_in">mkdir</span> -p -m 711 test1/test2/test3/test4</span><br><span class="line">[haokaiyang@CentOS7 <span class="built_in">test</span>]$ <span class="built_in">ls</span> -l test1/</span><br><span class="line">总用量 0</span><br><span class="line">drwxrwxr-x. 3 haokaiyang haokaiyang 19 2月 28 21:08 test2</span><br><span class="line">[haokaiyang@CentOS7 <span class="built_in">test</span>]$ <span class="built_in">ls</span> -l test1/test2/</span><br><span class="line">总用量 0</span><br><span class="line">drwxrwxr-x. 3 haokaiyang haokaiyang 19 2月 28 21:08 test3</span><br><span class="line">[haokaiyang@CentOS7 <span class="built_in">test</span>]$ <span class="built_in">ls</span> -l test1/test2/test3/</span><br><span class="line">总用量 0</span><br><span class="line">drwx--x--x. 2 haokaiyang haokaiyang 6 2月 28 21:08 test4</span><br></pre></td></tr></table></figure>
-<p>目录的权限默认值与<a href="#umask">umask</a>有关</p>
-<h4 id="rmdir-删除空目录"><a href="#rmdir-删除空目录" class="headerlink" title="rmdir:删除空目录"></a>rmdir:删除空目录</h4><pre><code>命令:rmdir [-p] 目录
-选项及参数:
-    -p 递归删除(目录中不能有其它文件)
-</code></pre>
-<h4 id="关于执行文件路径变量"><a href="#关于执行文件路径变量" class="headerlink" title="关于执行文件路径变量"></a>关于执行文件路径变量</h4><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">[haokaiyang@CentOS7 <span class="built_in">test</span>]$ <span class="built_in">echo</span> <span class="variable">$PATH</span></span><br><span class="line">/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin:/home/haokaiyang/.local/bin:/home/haokaiyang/bin</span><br><span class="line"><span class="comment">#添加路径/root到变量</span></span><br><span class="line">[haokaiyang@CentOS7 <span class="built_in">test</span>]$ PATH=<span class="string">&quot;<span class="variable">$PATH</span>:/root&quot;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="文件与目录管理"><a href="#文件与目录管理" class="headerlink" title="文件与目录管理"></a>文件与目录管理</h2><h3 id="ls-显示目标列表"><a href="#ls-显示目标列表" class="headerlink" title="ls:显示目标列表"></a>ls:显示目标列表</h3><pre><code>命令:ls [-aAdfFhilnrRSt] 文件名或目录名...
-选项及参数:
-    -a 列出全部文件,连同隐藏文件
-    -A 列出全部文件,连同隐藏文件,但不包括.和..两个目录
-    -c 输出文件的 i 节点的修正时刻,并以此排序
-    -d 仅列出目录本身,而不列出文件
-    -f 直接列出結果,而不進行排序 (ls 預設會以檔名排序！)
-    -F 根据目录,文件等信息,显示出来。例如:
-        *:代表可执行文件
-        /:代表目录
-        =:代表 socket 目录
-        |:代表 FIFO 文件；
-    -h 将文件容量以人类较易懂的方式列出来(例如GB,KB)
-    -i 列出 inode
-    -k 以 k 字节的方式表明文件的巨细
-    -l 以长格式的形式查看当前目录下所有可见文件的详细属性
-    -m 横向输出文件名,并以“,”作分格符
-    -n 用数字的 UID,GID 替代称号
-    -r 反转排序顺序,适当的按字母逆向排序或者首先排序最旧的文件
-    -R 递归列出所有子目录
-    -S 以文件容量大小排序
-    -t 按照最近一次修改时间(最近的最先)而不是名称排序
-    --color=never:不根据文件类型显示颜色；
-    --color=always:显示颜色
-    --color=auto:让系统判断是否显示颜色
-    --full-time:以完整时间格式输出
-    --time=&#123;mtime,atime,ctime&#125;
-        - mtime (modification time):在写入文件时随文件内容的更改而更改的时间
-        - ctime (status time):是在写入文件、更改所有者、权限或链接设置时随Inode的内容更改而更改的时间
-        - atime (access time):读取文件或者执行文件时更改的时间
-</code></pre>
-<h3 id="cp-复制文件或目录"><a href="#cp-复制文件或目录" class="headerlink" title="cp:复制文件或目录"></a>cp:复制文件或目录</h3><pre><code>命令: cp [-adfilprsu] source destination
-     cp [options] source1 source2 source3 .... directory
-选项及参数:
-    -a 或 --archive 此参数的效果和同时指定&#39;-dpr&#39;参数相同
-    -b 或--backup 　删除,覆盖目标文件之前的备份,备份文件会在字尾加上一个备份字符串。
-    -d 或--no-dereference 　当复制符号连接时,把目标文件或目录也建立为符号连接,并指向与源文件或目录连接的原始文件或目录。
-    -f 或 --force 强行复制文件或目录,不论目的文件或目录是否已经存在
-    -i 或 --interactive 覆盖文件之前先询问用户
-    -l 或 --link 对源文件建立硬链接,而非复制文件
-    -p 或 --preserve 保留源文件或目录的属性,包括所有者、所属组、权限与时间
-    -P 或 --parents 保留源文件或目录的路径,此路径可以是绝对路径或相对路径,且目的目录必须已经存在
-    -r 递归处理,将指定目录下的文件与子目录一并处理。若源文件或目录的形态,不属于目录或符号链接,则一律视为普通文件处理
-    -R 或 --recursive 递归处理,将指定目录下的文件及子目录一并处理
-    -s 或 --symbolic-link 对源文件建立符号链接,而非复制文件
-    -S &lt;备份字尾字符串&gt; 或 --suffix=&lt;备份字尾字符串&gt; 用&quot;-b&quot;参数备份目的文件后,备份文件的字尾会被加上一个备份字符串。默认的备份字尾符串是符号&quot;~&quot;
-    -u 或 --update 使用这项参数之后,只会在源文件的修改时间(Modification Time)较目的文件更新时,或是名称相互对应的目的文件并不存在,才复制文件
-    -v 或 --verbose 显示执行过程
-    -V &lt;备份方式&gt; 或 --version-control=&lt;备份方式&gt; 指定当备份文件时,备份文件名的命名方式,有以下3种:
-        1.numbered或t, 将使用备份编号,会在字尾加上~1~字符串,其数字编号依次递增
-        2.simple或never 将使用简单备份,默认的备份字尾字符串是~, 也可通过-S来指定
-        3.existing或nil将使用当前方式,程序会先检查是否存在着备份编号,若有则采用备份编号,若无则采用简单备份
-    -x 或 --one-file-system 复制的文件或目录存放的文件系统,必须与cp指令执行时所处的文件系统相同,否则不复制,亦不处理位于其他分区的文件
-</code></pre>
-<h3 id="rm-删除文件或目录"><a href="#rm-删除文件或目录" class="headerlink" title="rm:删除文件或目录"></a>rm:删除文件或目录</h3><pre><code>命令: rm [-fir] 文件或目录
-选项及参数:
-    -f 就是force的意思,忽略不存在的文件,不会出现警告
-    -i 进行确认提示
-    -r 或者-R 递归移除目录
-</code></pre>
-<h3 id="mv-移动文件或目录、重命名"><a href="#mv-移动文件或目录、重命名" class="headerlink" title="mv:移动文件或目录、重命名"></a>mv:移动文件或目录、重命名</h3><pre><code>命令: mv [-fiu] source destination
-     mv [options] source1 source2 source3 .... directory
-选项及参数:
-    -f force 不论目标文件是否存在,直接覆盖
-    -i 进行确认提示
-    -u 若目标文件存在且源文件比较新,才会更新
-    -v 显示详情
-</code></pre>
-<h3 id="获取路径文件名与目录名称"><a href="#获取路径文件名与目录名称" class="headerlink" title="获取路径文件名与目录名称"></a>获取路径文件名与目录名称</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment">#获取目录名称</span></span><br><span class="line">[haokaiyang@CentOS7 ~]$ <span class="built_in">dirname</span> /home/haokaiyang/test4/aa.txt </span><br><span class="line">/home/haokaiyang/test4</span><br><span class="line"><span class="comment">#获取文件名称</span></span><br><span class="line">[haokaiyang@CentOS7 ~]$ <span class="built_in">basename</span> /home/haokaiyang/test4/aa.txt </span><br><span class="line">aa.txt</span><br></pre></td></tr></table></figure>
-
-<h2 id="查看文件内容"><a href="#查看文件内容" class="headerlink" title="查看文件内容"></a>查看文件内容</h2><h3 id="直接查看"><a href="#直接查看" class="headerlink" title="直接查看"></a>直接查看</h3><h4 id="cat-concatenate"><a href="#cat-concatenate" class="headerlink" title="cat(concatenate)"></a>cat(concatenate)</h4><pre><code>命令: cat
-选项及参数:
-    -A --show-all等价于 -vET 。
-    -b --number-nonblank 给非空输出行编号。
-    -e 等价于 -vE 。
-    -E --show-ends 在每行结束显示 $ 。
-    -n --number 给所有输出行编号。
-    -s --squeeze-blank 将所有的连续的多个空行替换为一个空行。
-    -t 等价于 -vT 。
-    -T --show-tabs 把 TAB 字符显示为 ^I 。
-    -v --show-nonprinting 除了 LFD 和 TAB 之外所有控制符用 ^ 和 M- 记方式显示。
-</code></pre>
-<h4 id="tac反转显示文件"><a href="#tac反转显示文件" class="headerlink" title="tac反转显示文件"></a>tac反转显示文件</h4><pre><code>命令: tac
-</code></pre>
-<h4 id="nl添加行号打印"><a href="#nl添加行号打印" class="headerlink" title="nl添加行号打印"></a>nl添加行号打印</h4><pre><code>命令:nl 文件
-选项及参数:
-    -b 指定行号指定方式
-        -b a 不论是否空行,同样显示行号
-        -b b 空行不显示行号(默认)
-    -n 列出行号表示方式
-        -n ln 在屏幕左方显示
-        -n rn 在自己栏位最右方显示,且不加0
-        -n rz 在自己栏位最右方显示,且加0
-    -w num 行号栏位占用的字符数
-</code></pre>
-<h3 id="翻页查看"><a href="#翻页查看" class="headerlink" title="翻页查看"></a>翻页查看</h3><h4 id="more"><a href="#more" class="headerlink" title="more"></a>more</h4><pre><code>命令:more
-选项及参数:
-    -num 指定屏幕行数
-    -f 使用more计算行数,而不是屏幕行(soft warp)
-    -u 防止下划线
-    +num 从行号num开始显示
-常用操作:
-    - 空格 :向下翻页
-    - 回车 :向下翻一行
-    - /string :向下搜索string
-    - :f :显示文件名以及目前行数
-    - q : 离开more
-    - b :往回翻页
-</code></pre>
-<h4 id="less"><a href="#less" class="headerlink" title="less"></a>less</h4><pre><code>命令:less
-常用操作:
-    - 空格 :向下翻页
-    - pagedown :向下翻页
-    - pageup   :向上翻页
-    - /string :向下搜索string
-    - ?sting :向上搜索string
-    - n:重复前一个搜索
-    - N:反向重复前一个搜索
-    - g:到文件第一行
-    - G:到文件最后一行
-    - q : 离开less
-</code></pre>
-<h3 id="资料截取"><a href="#资料截取" class="headerlink" title="资料截取"></a>资料截取</h3><h4 id="head-取出前面几行"><a href="#head-取出前面几行" class="headerlink" title="head(取出前面几行)"></a>head(取出前面几行)</h4><pre><code>命令: head 
-选项及参数: 
-    -n num 显示前num行
-    -c num 显示前num个字符
-</code></pre>
-<h4 id="tail"><a href="#tail" class="headerlink" title="tail"></a>tail</h4><pre><code>命令:tail
-选项及参数:
-    -n num 显示后num行
-    -f 当文件增长时,输出后续添加的数据
-    -s num 与-f合用,表示在每次反复的时间间隔s秒
-</code></pre>
-<h3 id="od"><a href="#od" class="headerlink" title="od"></a>od</h3><pre><code>命令:od
-选项及参数:
-    -t 后面接各种类型
-        - a 默认字符输出
-        - c ASCII字符输出
-        - d[size] 使用十进制输出,每个整数占用 size bytes
-        - f[size] 使用浮点数输出,每个数占用 size bytes
-        - o[size] 使用八进制输出,每个整数占用 size bytes
-        - x[size] 使用十六进制输出,每个整数占用 size bytes
-    -w[num] 设置每行最大字符数
-    -j[num] 略过设置字符数
-</code></pre>
-<p>鸟哥的书中提到了一个输出password的ASCII对照,使用的是</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">[haokaiyang@CentOS7 ~]$ <span class="built_in">echo</span> password|<span class="built_in">od</span> -t oCc</span><br><span class="line">0000000 160 141 163 163 167 157 162 144 012</span><br><span class="line">          p   a   s   s   w   o   r   d  \n</span><br><span class="line">0000011</span><br></pre></td></tr></table></figure>
-<p>很多人不懂什么意思,这里解释一下<br>对于od -t [dfox] 指令输出,对于源的读取默认是Int,也就是4个字节分割。<br>C表示char size,I表示int size,因此这个命令等价于以下两个命令</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">[haokaiyang@CentOS7 ~]$ <span class="built_in">echo</span> password|<span class="built_in">od</span> -t oC -t c</span><br><span class="line">0000000 160 141 163 163 167 157 162 144 012</span><br><span class="line">          p   a   s   s   w   o   r   d  \n</span><br><span class="line">0000011</span><br><span class="line">[haokaiyang@CentOS7 ~]$ <span class="built_in">echo</span> password|<span class="built_in">od</span> -t o1c</span><br><span class="line">0000000 160 141 163 163 167 157 162 144 012</span><br><span class="line">          p   a   s   s   w   o   r   d  \n</span><br><span class="line">0000011</span><br></pre></td></tr></table></figure>
-
-<h3 id="touch-修改文件时间或创建新文件"><a href="#touch-修改文件时间或创建新文件" class="headerlink" title="touch:修改文件时间或创建新文件"></a>touch:修改文件时间或创建新文件</h3><pre><code>命令:touch
-选项及参数:
-    -a 修改access time
-    -c 仅修改文件时间,即使文件不存在也不创建
-    -d 使用时间值
-    -m 仅修改mtime
-    -r file 参照文件file的时间戳修改指定文件的时间戳,不更改ctime
-    -t 后面接想要修改的时间而不用目前时间,格式为[YYYYMMDDhhmm]
-</code></pre>
-<p>例子:</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment">#新建一个文件testtouch</span></span><br><span class="line">[haokaiyang@CentOS7 test4]$ <span class="built_in">touch</span> testtouch </span><br><span class="line">[haokaiyang@CentOS7 test4]$ ll; ll --time=atime;ll --time=ctime;</span><br><span class="line">总用量 0</span><br><span class="line">-rw-rw-r--. 1 haokaiyang haokaiyang 0 3月   1 11:31 aa.txt</span><br><span class="line">-rw-rw-r--. 1 haokaiyang haokaiyang 0 3月   1 14:12 testtouch</span><br><span class="line">总用量 0</span><br><span class="line">-rw-rw-r--. 1 haokaiyang haokaiyang 0 3月   1 11:31 aa.txt</span><br><span class="line">-rw-rw-r--. 1 haokaiyang haokaiyang 0 3月   1 14:12 testtouch</span><br><span class="line">总用量 0</span><br><span class="line">-rw-rw-r--. 1 haokaiyang haokaiyang 0 3月   1 11:31 aa.txt</span><br><span class="line">-rw-rw-r--. 1 haokaiyang haokaiyang 0 3月   1 14:12 testtouch</span><br><span class="line">[haokaiyang@CentOS7 test4]$ <span class="built_in">touch</span> -r aa.txt testtouch2</span><br><span class="line">[haokaiyang@CentOS7 test4]$ ll; ll --time=atime;ll --time=ctime;</span><br><span class="line">总用量 0</span><br><span class="line">-rw-rw-r--. 1 haokaiyang haokaiyang 0 3月   1 11:31 aa.txt</span><br><span class="line">-rw-rw-r--. 1 haokaiyang haokaiyang 0 3月   1 14:12 testtouch</span><br><span class="line">-rw-rw-r--. 1 haokaiyang haokaiyang 0 3月   1 11:31 testtouch2</span><br><span class="line">总用量 0</span><br><span class="line">-rw-rw-r--. 1 haokaiyang haokaiyang 0 3月   1 11:31 aa.txt</span><br><span class="line">-rw-rw-r--. 1 haokaiyang haokaiyang 0 3月   1 14:12 testtouch</span><br><span class="line">-rw-rw-r--. 1 haokaiyang haokaiyang 0 3月   1 11:31 testtouch2</span><br><span class="line">总用量 0</span><br><span class="line">-rw-rw-r--. 1 haokaiyang haokaiyang 0 3月   1 11:31 aa.txt</span><br><span class="line">-rw-rw-r--. 1 haokaiyang haokaiyang 0 3月   1 14:12 testtouch</span><br><span class="line">-rw-rw-r--. 1 haokaiyang haokaiyang 0 3月   1 14:16 testtouch2</span><br><span class="line"><span class="comment">#修改testtouch2的mtime</span></span><br><span class="line">[haokaiyang@CentOS7 test4]$ <span class="built_in">touch</span> -m -t 201301140520 testtouch2</span><br><span class="line">[haokaiyang@CentOS7 test4]$ ll --full-time testtouch2</span><br><span class="line">-rw-rw-r--. 1 haokaiyang haokaiyang 0 2013-01-14 05:20:00.000000000 +0800 testtouch2</span><br></pre></td></tr></table></figure>
-
-<h2 id="umask"><a href="#umask" class="headerlink" title="umask"></a>umask</h2><p><span id="#umask">umask</span>是目前使用者在新建文件或目录时候的权限默认值</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment">#查看umask</span></span><br><span class="line">[haokaiyang@CentOS7 test4]$ <span class="built_in">umask</span></span><br><span class="line">0002</span><br><span class="line">[haokaiyang@CentOS7 test4]$ <span class="built_in">umask</span> -S</span><br><span class="line">u=rwx,g=rwx,o=rx</span><br></pre></td></tr></table></figure>
-<p>在权限的默认属性上,目录与文件是不一样的,但是一般文件则不应该有执行权限,所以这里分情况看待:</p>
-<ul>
-<li>若建立文件,则默认没有x权限,只有rw权限,也就是最大为666分<br>  -rw-rw-rw-</li>
-<li>若建立目录,由于x表示是否可以进入目录,所以rwx开放,最大权限为777<br>  drwxrwxrwx</li>
-</ul>
-<p>umask的分数为需要减掉的权限,拿umask为022举例来说</p>
-<pre><code>建立文件时 (-rw-rw-rw-) - (-----w--w-) ==&gt; -rw-r--r--
-建立目录时 (drwxrwxrwx) - (d----w--w-) ==&gt; drwxr-xr-x
-</code></pre>
-<h2 id="文件隐藏属性"><a href="#文件隐藏属性" class="headerlink" title="文件隐藏属性"></a>文件隐藏属性</h2><h3 id="chattr-设置文件隐藏属性"><a href="#chattr-设置文件隐藏属性" class="headerlink" title="chattr:设置文件隐藏属性"></a>chattr:设置文件隐藏属性</h3><p>注意:chattr指令只能在Ext2&#x2F;Ext3&#x2F;Ext4的系统上完全生效,xfs仅支持AadiS</p>
-<pre><code>命令: chattr [+-=][ASacdistu] 文件或目录名称
-选项及参数:
-    + :增加一个特殊参数
-    - :删除一个特殊参数
-    = :仅设置后面加的参数
-
-    A:文件或目录的 atime (access time)不可被修改(modified), 可以有效预防例如手提电脑磁盘I/O错误的发生。
-    S:硬盘I/O同步选项,功能类似sync。
-    a:即append,设定该参数后,只能向文件中添加数据,而不能删除,多用于服务器日志文件安全,只有root才能设定这个属性。
-    c:即compresse,设定文件是否经压缩后再存储。读取时需要经过自动解压操作。
-    d:即no dump,设定文件不能成为dump程序的备份目标。
-    i:设定文件不能被删除、改名、设定链接关系,同时不能写入或新增内容。i参数对于文件 系统的安全设置有很大帮助。
-    j:即journal,设定此参数使得当通过mount参数:data=ordered 或者 data=writeback 挂 载的文件系统,文件在写入时会先被记录(在journal中)。如果filesystem被设定参数为 data=journal,则该参数自动失效。
-    s:保密性地删除文件或目录,即硬盘空间被全部收回。
-    u:与s相反,当设定为u时,数据内容其实还存在磁盘中,可以用于undeletion。
-</code></pre>
-<p>各参数选项中常用到的是a和i。a选项强制只可添加不可删除,多用于日志系统的安全设定。而i是更为严格的安全设定,只有superuser (root) 或具有CAP_LINUX_IMMUTABLE处理能力(标识)的进程能够施加该选项。</p>
-<h3 id="lsattr-显示文件隐藏属性"><a href="#lsattr-显示文件隐藏属性" class="headerlink" title="lsattr:显示文件隐藏属性"></a>lsattr:显示文件隐藏属性</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment">#用chattr防止文件被修改</span></span><br><span class="line">[root@CentOS7 test4]<span class="comment"># chattr +i aa.txt </span></span><br><span class="line">[root@CentOS7 test4]<span class="comment"># lsattr</span></span><br><span class="line">----i----------- ./aa.txt</span><br><span class="line">[root@CentOS7 test4]<span class="comment"># echo 111 &gt; aa.txt </span></span><br><span class="line">bash: aa.txt: 权限不够</span><br></pre></td></tr></table></figure>
-
-<h2 id="文件特殊权限-SUID-Set-UID-SGID-Set-GID-SBIT-Sticky-Bit"><a href="#文件特殊权限-SUID-Set-UID-SGID-Set-GID-SBIT-Sticky-Bit" class="headerlink" title="文件特殊权限:SUID(Set UID),SGID(Set GID),SBIT(Sticky Bit)"></a>文件特殊权限:SUID(Set UID),SGID(Set GID),SBIT(Sticky Bit)</h2><h3 id="SUID-Set-UID"><a href="#SUID-Set-UID" class="headerlink" title="SUID(Set UID)"></a>SUID(Set UID)</h3><p>当s标志出现在文件拥有者的x权限上时,此时被称为SUID(Set UID)<br>SUID的限制和功能</p>
-<ul>
-<li>SUID权限仅对 <strong>二进制程序</strong>有效,不能用于shell script</li>
-<li>执行者对于这个程序需要有x权限</li>
-<li>本权限仅在该程序执行过程中有效</li>
-<li>执行者将具有该程序拥有者的权限</li>
-</ul>
-<p>举例说明下:</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">[haokaiyang@CentOS7 ~]$ ll /bin/passwd </span><br><span class="line">-rwsr-xr-x. 1 root root 27832 6月  10 2014 /bin/passwd</span><br><span class="line">[haokaiyang@CentOS7 ~]$ ll /etc/shadow</span><br><span class="line">----------. 1 root root 1261 2月  27 18:21 /etc/shadow</span><br></pre></td></tr></table></figure>
-<p>&#x2F;etc&#x2F;shadow是禁止让我的账号haokaiyang操作的,但为什么我可以修改密码呢？这就是SUID的功能:</p>
-<ol>
-<li>haokaiyang对&#x2F;bin&#x2F;passwd有x权限,表示我可以执行passwd</li>
-<li>passwd的执行者是root账号</li>
-<li>haokaiyang在执行passwd的过程中,会暂时获得root权限</li>
-<li>&#x2F;etc&#x2F;shadow 就可以被我修改了</li>
-</ol>
-<h3 id="SGID-Set-GID"><a href="#SGID-Set-GID" class="headerlink" title="SGID(Set GID)"></a>SGID(Set GID)</h3><p>当s标志在文件拥有者的x的位置时候为SUID,出现在文件所属组的时候为SGID<br>SGID的功能</p>
-<ul>
-<li>SGID对二进制有效</li>
-<li>程序执行者对于这个程序需要有x权限</li>
-<li>执行者将在执行过程中获得该程序群组支持</li>
-</ul>
-<figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line">[root@CentOS7 haokaiyang]# ll <span class="regexp">/bin/</span>locate <span class="regexp">/var/</span>lib<span class="regexp">/mlocate/m</span>locate.db </span><br><span class="line">-rwx--s--x. <span class="number">1</span> root slocate   <span class="number">40512</span> <span class="number">11</span>月  <span class="number">5</span> <span class="number">23</span>:<span class="number">07</span> <span class="regexp">/bin/</span>locate</span><br><span class="line">-rw-r-----. <span class="number">1</span> root slocate <span class="number">3247926</span> <span class="number">3</span>月   <span class="number">1</span> <span class="number">10</span>:<span class="number">10</span> <span class="regexp">/var/</span>lib<span class="regexp">/mlocate/m</span>locate.db</span><br></pre></td></tr></table></figure>
-<p>和SUID差不多,若haokaiyang去执行locate时,会获得slocate群组的支持,因为可以去读取mlocate.db<br>SGID也可以用于目录,当目录设置了SGID权限后</p>
-<ul>
-<li>使用者若对于此目录有rx权限时,该使用者能够进入此目录</li>
-<li>使用者在此目录下的有效群组将会变成该目录的群组</li>
-<li>若使用者在此目录下具有w权限,则使用者所建立的新文件的所属组与此目录的所属组相同</li>
-</ul>
-<h3 id="SBIT-Sticky-Bit"><a href="#SBIT-Sticky-Bit" class="headerlink" title="SBIT(Sticky Bit)"></a>SBIT(Sticky Bit)</h3><p>这个SBIT只针对目录,对于文件没有作用。<br>SBIT对于目录的作用为:</p>
-<ul>
-<li>当使用者对于此目录有wx权限时</li>
-<li>当使用者在该目录下建立文件或目录时,仅有自己和root才有权利删除<br>举例:<br>&#x2F;tmp本身权限为drwxrwxrwt 所有人都可以在&#x2F;tmp中新增、修改、删除文件,但仅有该文件&#x2F;目录建立者和root才能够删除自己的目录或文件。</li>
-</ul>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">[root@CentOS7 tmp]<span class="comment"># ll / | grep tmp</span></span><br><span class="line">drwxrwxrwt.  20 root root 4096 3月   1 15:49 tmp</span><br><span class="line">[root@CentOS7 tmp]<span class="comment"># touch myfile</span></span><br><span class="line">[root@CentOS7 tmp]<span class="comment"># chmod 777 myfile</span></span><br><span class="line">[root@CentOS7 tmp]<span class="comment"># exit</span></span><br><span class="line"><span class="built_in">exit</span></span><br><span class="line">[haokaiyang@CentOS7 tmp]$ ll myfile</span><br><span class="line">-rwxrwxrwx. 1 root root 0 3月   1 15:51 myfile</span><br><span class="line">[haokaiyang@CentOS7 tmp]$ <span class="built_in">rm</span> -f myfile</span><br><span class="line"><span class="built_in">rm</span>: 无法删除<span class="string">&quot;myfile&quot;</span>: 不允许的操作</span><br></pre></td></tr></table></figure>
-
-<h3 id="SUID-x2F-SGID-x2F-SBIT权限设置"><a href="#SUID-x2F-SGID-x2F-SBIT权限设置" class="headerlink" title="SUID&#x2F;SGID&#x2F;SBIT权限设置"></a>SUID&#x2F;SGID&#x2F;SBIT权限设置</h3><h4 id="数字法"><a href="#数字法" class="headerlink" title="数字法"></a>数字法</h4><p>4为SUID<br>2为SGID<br>1为SBIT</p>
-<pre><code>chmod 4755 myfile
-</code></pre>
-<h4 id="符号法"><a href="#符号法" class="headerlink" title="符号法"></a>符号法</h4><p>SUID为u+s<br>SGID为g+s<br>SBIT为o+t</p>
-<h2 id="file-查看文件类型"><a href="#file-查看文件类型" class="headerlink" title="file:查看文件类型"></a>file:查看文件类型</h2><pre><code>命令:file 文件
-选项及参数:
-    -b 不输出文件名
-    -z 试图查看压缩文件内部信息
-</code></pre>
-<h2 id="命令及文件搜索"><a href="#命令及文件搜索" class="headerlink" title="命令及文件搜索"></a>命令及文件搜索</h2><h3 id="命令搜索"><a href="#命令搜索" class="headerlink" title="命令搜索"></a>命令搜索</h3><h4 id="which-查找命令"><a href="#which-查找命令" class="headerlink" title="which:查找命令"></a>which:查找命令</h4><pre><code>命令: which
-选项及参数: 
-    -a 列出所有在PATH中可以找到的命令,而不止第一个
-</code></pre>
-<p>###文件搜索</p>
-<h4 id="whereis-在特定目录中查找文件"><a href="#whereis-在特定目录中查找文件" class="headerlink" title="whereis:在特定目录中查找文件"></a>whereis:在特定目录中查找文件</h4><pre><code>命令:whereis
-选项及参数:
-    -l 可以列出whereis会出查找的几个主要目录
-    -b 只找binary格式的文件
-    -m 只找在手册文件manual路径下的文件
-    -s 只找source 来源的文件
-    -u 查找不在上述三个项目当中的其它特殊文件
-</code></pre>
-<h3 id="locate-x2F-updatedb"><a href="#locate-x2F-updatedb" class="headerlink" title="locate&#x2F;updatedb"></a>locate&#x2F;updatedb</h3><pre><code>命令: locate [-ir] keyword
-选项及参数:
-    -i 忽略大小写差异
-    -c 不输出文件名,仅计算找到文件数量
-    -l num 仅输出num行
-    -S 输出locate所使用的资料库文件相关信息,包括资料库记录的文件/目录数量等
-    -r 后面可接正则表达式的显示方式
-</code></pre>
-<p>updatedb:根据&#x2F;etc&#x2F;updatedb.conf去搜索系统硬盘内的文件,并更新&#x2F;var&#x2F;lib&#x2F;mlocate内的资料库文件<br>locate:  根据&#x2F;var&#x2F;lib&#x2F;mlocate内存在的资料库记载,找出使用者输入的关键词</p>
-<h3 id="find"><a href="#find" class="headerlink" title="find"></a>find</h3><pre><code>命令:find [PATH] [option] [action]
-选项及参数:
-1.与时间有关的参数: 共有-atime,-ctime与-mtime,以-mtime说明
-    -mtime n: n为数字,意义为在n天之前的[一天之内]更改过内容的文件
-    -mtime +n:列出在n天之前(不含n本身)北更改过内容的文件
-    -mtime -n:列出在n天之内(含n本身)被更改过内容的文件
-    -newer file :file为一个存在的文件,列出比file还要新的文件
-</code></pre>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment">#例子:将过去系统里24小时内有更改过内容的文件列出来</span></span><br><span class="line">[root@CentOS7 tmp]<span class="comment"># find /var -mtime 0</span></span><br><span class="line"><span class="comment">#例子:寻找/etc下面比/etc/passwd新的</span></span><br><span class="line">[root@CentOS7 tmp]<span class="comment"># find /etc -newer /etc/passwd</span></span><br></pre></td></tr></table></figure>
-<p>+4代表大于等于5天前的文件 ex: find &#x2F;var -mtime +4<br>-4代表小于等于4天前的文件 ex: find &#x2F;var -mtime -4<br> 4代表4-5那一天的文件 ex:find &#x2F;var -mtime 4</p>
-<pre><code>2.与使用者或群组有关的参数
-    -uid n :n为数字,这个数字是使用者的账号ID,即UID,这个UID是记录在/etc/passwd里面与账号名称对应的数字
-    -gid n:n为数字,这个数字是群组名称的ID,即GID,这个GID记录在/etc/group中
-    -user name:name为使用者账号名称
-    -group name:name为群组名称
-    -nouser:寻找文件拥有者不在/etc/passwd中的文件
-    -nogroup:寻找文件所属组不在/etc/group的文件
-3.与文件权限和名称有关的参数
-    -name filename 搜索文件名为filename的文件
-    -size [+-]SIZE 搜索比SIZE大或者小的文件,如 -size +50k
-    -type TYPE :搜索文件类型为TYPE的,类型包含一般文件f,硬件b,c,目录d,链接l,socket(s)以及FIFO(p)
-    -perm mode 搜索权限刚好等于mode的文件
-    -perm -mode 搜索文件权限必须要全部包括mode的文件,即搜索0744(-rwxr--r--)时候,0755(-rwxr-xr-x)也会被列出来,因为0755中包含了0744的权限。
-    -perm /mode 搜索文件权限包含任何一个mode的权限的文件,即搜索0755(-rwxr-xr-x)时候,文件属性为600(-rw-------)也会被搜索出来
-</code></pre>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment">#找出含有SUID或SGID或SBIT的文件</span></span><br><span class="line">[root@CentOS7 tmp]<span class="comment"># find / -perm /7000</span></span><br></pre></td></tr></table></figure>
-
-<pre><code>4.额外操作
--exec command:command为其它命令,-exec后面再接命令来处理搜索到的结果
--print :将结果打印屏幕上,默认
-</code></pre>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">[root@CentOS7 tmp]<span class="comment"># find / -perm /7000 -exec ls -l &#123;&#125; \;</span></span><br><span class="line"><span class="comment">#带有运算符的例子</span></span><br><span class="line"><span class="comment">#找出/etc下,文件大小在50k到60k之间的文件,并且列出文件权限</span></span><br><span class="line">[root@CentOS7 tmp]<span class="comment"># find /etc -size +50k -a -size -60k -exec ls -l &#123;&#125; \;</span></span><br><span class="line">-a 表示and的意思</span><br><span class="line"><span class="comment">#找出/etc下,文件大于1500k以及容量等于0的文件,且列出文件权限</span></span><br><span class="line">[root@CentOS7 tmp]<span class="comment"># find /etc -size +1500k -o -size 0 -exec ls -l &#123;&#125; \;</span></span><br><span class="line">-o 表示or的意思</span><br><span class="line"><span class="comment">#找出在/etc下,文件大于50k且文件所属者不是root的文件,且列出文件权限</span></span><br><span class="line">[root@CentOS7 tmp]<span class="comment"># find /etc -size +50k -a ! -user root -exec ls -ld &#123;&#125; \;</span></span><br><span class="line"> ! 表示反向选择</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>学习笔记</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-        <tag>学习笔记</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>《鸟哥的Linux私房菜》硬盘与文件系统管理学习笔记</title>
     <url>/2017/03/07/centos7-learning-notes-3/</url>
     <content><![CDATA[<h2 id="索引式文件系统的资料存取方式"><a href="#索引式文件系统的资料存取方式" class="headerlink" title="索引式文件系统的资料存取方式"></a>索引式文件系统的资料存取方式</h2><p>文件系统通常会将文件权限与文件属性(拥有者、群组、时间参数等)放置在inode中,实际资料则放置在data block区块中,还有一个超级区块(superblock)记录整个文件系统的信息,包括inode与block的总量、使用量、剩余量等。</p>
@@ -888,6 +551,343 @@ Minor 次要装置代码
       </tags>
   </entry>
   <entry>
+    <title>《鸟哥的Linux私房菜》文件与目录管理学习笔记</title>
+    <url>/2017/03/01/centos7-learning-notes-2/</url>
+    <content><![CDATA[<h2 id="目录相关操作"><a href="#目录相关操作" class="headerlink" title="目录相关操作"></a>目录相关操作</h2><h3 id="特殊目录"><a href="#特殊目录" class="headerlink" title="特殊目录"></a>特殊目录</h3><ul>
+<li>.         当前目录</li>
+<li>..        上层目录</li>
+<li>-        上次所在目录</li>
+<li>~         当前账号所在家目录</li>
+<li>~account  account用户的家目录</li>
+</ul>
+<h3 id="常见目录处理命令"><a href="#常见目录处理命令" class="headerlink" title="常见目录处理命令"></a>常见目录处理命令</h3><h4 id="cd-更改目录"><a href="#cd-更改目录" class="headerlink" title="cd:更改目录"></a>cd:更改目录</h4><p>change directory</p>
+<pre><code>命令:cd 目录
+</code></pre>
+<h4 id="pwd-显示当前所在目录"><a href="#pwd-显示当前所在目录" class="headerlink" title="pwd:显示当前所在目录"></a>pwd:显示当前所在目录</h4><p>Print Working Directory</p>
+<pre><code>命令:pwd [-P]
+选项及参数:
+    -L 默认参数 当目录为软链接路径时,显示软链接路径
+    -P 当目录为软链接路径时,显示真实路径
+</code></pre>
+<p>例子:</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">[haokaiyang@CentOS7 bin]$ <span class="built_in">ls</span> -l /bin</span><br><span class="line">lrwxrwxrwx. 1 root root 7 2月 27 21:01 /bin -&gt; usr/bin</span><br><span class="line">[haokaiyang@CentOS7 bin]$ <span class="built_in">pwd</span> -L</span><br><span class="line">/bin</span><br><span class="line">[haokaiyang@CentOS7 bin]$ <span class="built_in">pwd</span> -P</span><br><span class="line">/usr/bin</span><br></pre></td></tr></table></figure>
+<h4 id="mkdir-创建新目录"><a href="#mkdir-创建新目录" class="headerlink" title="mkdir:创建新目录"></a>mkdir:创建新目录</h4><p>make directory</p>
+<pre><code>命令:mkdir [-mp] 目录
+选项及参数:
+    -p 递归创建
+    -m 直接设置目录权限
+</code></pre>
+<p>例子:</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">[haokaiyang@CentOS7 <span class="built_in">test</span>]$ <span class="built_in">mkdir</span> -p -m 711 test1/test2/test3/test4</span><br><span class="line">[haokaiyang@CentOS7 <span class="built_in">test</span>]$ <span class="built_in">ls</span> -l test1/</span><br><span class="line">总用量 0</span><br><span class="line">drwxrwxr-x. 3 haokaiyang haokaiyang 19 2月 28 21:08 test2</span><br><span class="line">[haokaiyang@CentOS7 <span class="built_in">test</span>]$ <span class="built_in">ls</span> -l test1/test2/</span><br><span class="line">总用量 0</span><br><span class="line">drwxrwxr-x. 3 haokaiyang haokaiyang 19 2月 28 21:08 test3</span><br><span class="line">[haokaiyang@CentOS7 <span class="built_in">test</span>]$ <span class="built_in">ls</span> -l test1/test2/test3/</span><br><span class="line">总用量 0</span><br><span class="line">drwx--x--x. 2 haokaiyang haokaiyang 6 2月 28 21:08 test4</span><br></pre></td></tr></table></figure>
+<p>目录的权限默认值与<a href="#umask">umask</a>有关</p>
+<h4 id="rmdir-删除空目录"><a href="#rmdir-删除空目录" class="headerlink" title="rmdir:删除空目录"></a>rmdir:删除空目录</h4><pre><code>命令:rmdir [-p] 目录
+选项及参数:
+    -p 递归删除(目录中不能有其它文件)
+</code></pre>
+<h4 id="关于执行文件路径变量"><a href="#关于执行文件路径变量" class="headerlink" title="关于执行文件路径变量"></a>关于执行文件路径变量</h4><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">[haokaiyang@CentOS7 <span class="built_in">test</span>]$ <span class="built_in">echo</span> <span class="variable">$PATH</span></span><br><span class="line">/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin:/home/haokaiyang/.local/bin:/home/haokaiyang/bin</span><br><span class="line"><span class="comment">#添加路径/root到变量</span></span><br><span class="line">[haokaiyang@CentOS7 <span class="built_in">test</span>]$ PATH=<span class="string">&quot;<span class="variable">$PATH</span>:/root&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="文件与目录管理"><a href="#文件与目录管理" class="headerlink" title="文件与目录管理"></a>文件与目录管理</h2><h3 id="ls-显示目标列表"><a href="#ls-显示目标列表" class="headerlink" title="ls:显示目标列表"></a>ls:显示目标列表</h3><pre><code>命令:ls [-aAdfFhilnrRSt] 文件名或目录名...
+选项及参数:
+    -a 列出全部文件,连同隐藏文件
+    -A 列出全部文件,连同隐藏文件,但不包括.和..两个目录
+    -c 输出文件的 i 节点的修正时刻,并以此排序
+    -d 仅列出目录本身,而不列出文件
+    -f 直接列出結果,而不進行排序 (ls 預設會以檔名排序！)
+    -F 根据目录,文件等信息,显示出来。例如:
+        *:代表可执行文件
+        /:代表目录
+        =:代表 socket 目录
+        |:代表 FIFO 文件；
+    -h 将文件容量以人类较易懂的方式列出来(例如GB,KB)
+    -i 列出 inode
+    -k 以 k 字节的方式表明文件的巨细
+    -l 以长格式的形式查看当前目录下所有可见文件的详细属性
+    -m 横向输出文件名,并以“,”作分格符
+    -n 用数字的 UID,GID 替代称号
+    -r 反转排序顺序,适当的按字母逆向排序或者首先排序最旧的文件
+    -R 递归列出所有子目录
+    -S 以文件容量大小排序
+    -t 按照最近一次修改时间(最近的最先)而不是名称排序
+    --color=never:不根据文件类型显示颜色；
+    --color=always:显示颜色
+    --color=auto:让系统判断是否显示颜色
+    --full-time:以完整时间格式输出
+    --time=&#123;mtime,atime,ctime&#125;
+        - mtime (modification time):在写入文件时随文件内容的更改而更改的时间
+        - ctime (status time):是在写入文件、更改所有者、权限或链接设置时随Inode的内容更改而更改的时间
+        - atime (access time):读取文件或者执行文件时更改的时间
+</code></pre>
+<h3 id="cp-复制文件或目录"><a href="#cp-复制文件或目录" class="headerlink" title="cp:复制文件或目录"></a>cp:复制文件或目录</h3><pre><code>命令: cp [-adfilprsu] source destination
+     cp [options] source1 source2 source3 .... directory
+选项及参数:
+    -a 或 --archive 此参数的效果和同时指定&#39;-dpr&#39;参数相同
+    -b 或--backup 　删除,覆盖目标文件之前的备份,备份文件会在字尾加上一个备份字符串。
+    -d 或--no-dereference 　当复制符号连接时,把目标文件或目录也建立为符号连接,并指向与源文件或目录连接的原始文件或目录。
+    -f 或 --force 强行复制文件或目录,不论目的文件或目录是否已经存在
+    -i 或 --interactive 覆盖文件之前先询问用户
+    -l 或 --link 对源文件建立硬链接,而非复制文件
+    -p 或 --preserve 保留源文件或目录的属性,包括所有者、所属组、权限与时间
+    -P 或 --parents 保留源文件或目录的路径,此路径可以是绝对路径或相对路径,且目的目录必须已经存在
+    -r 递归处理,将指定目录下的文件与子目录一并处理。若源文件或目录的形态,不属于目录或符号链接,则一律视为普通文件处理
+    -R 或 --recursive 递归处理,将指定目录下的文件及子目录一并处理
+    -s 或 --symbolic-link 对源文件建立符号链接,而非复制文件
+    -S &lt;备份字尾字符串&gt; 或 --suffix=&lt;备份字尾字符串&gt; 用&quot;-b&quot;参数备份目的文件后,备份文件的字尾会被加上一个备份字符串。默认的备份字尾符串是符号&quot;~&quot;
+    -u 或 --update 使用这项参数之后,只会在源文件的修改时间(Modification Time)较目的文件更新时,或是名称相互对应的目的文件并不存在,才复制文件
+    -v 或 --verbose 显示执行过程
+    -V &lt;备份方式&gt; 或 --version-control=&lt;备份方式&gt; 指定当备份文件时,备份文件名的命名方式,有以下3种:
+        1.numbered或t, 将使用备份编号,会在字尾加上~1~字符串,其数字编号依次递增
+        2.simple或never 将使用简单备份,默认的备份字尾字符串是~, 也可通过-S来指定
+        3.existing或nil将使用当前方式,程序会先检查是否存在着备份编号,若有则采用备份编号,若无则采用简单备份
+    -x 或 --one-file-system 复制的文件或目录存放的文件系统,必须与cp指令执行时所处的文件系统相同,否则不复制,亦不处理位于其他分区的文件
+</code></pre>
+<h3 id="rm-删除文件或目录"><a href="#rm-删除文件或目录" class="headerlink" title="rm:删除文件或目录"></a>rm:删除文件或目录</h3><pre><code>命令: rm [-fir] 文件或目录
+选项及参数:
+    -f 就是force的意思,忽略不存在的文件,不会出现警告
+    -i 进行确认提示
+    -r 或者-R 递归移除目录
+</code></pre>
+<h3 id="mv-移动文件或目录、重命名"><a href="#mv-移动文件或目录、重命名" class="headerlink" title="mv:移动文件或目录、重命名"></a>mv:移动文件或目录、重命名</h3><pre><code>命令: mv [-fiu] source destination
+     mv [options] source1 source2 source3 .... directory
+选项及参数:
+    -f force 不论目标文件是否存在,直接覆盖
+    -i 进行确认提示
+    -u 若目标文件存在且源文件比较新,才会更新
+    -v 显示详情
+</code></pre>
+<h3 id="获取路径文件名与目录名称"><a href="#获取路径文件名与目录名称" class="headerlink" title="获取路径文件名与目录名称"></a>获取路径文件名与目录名称</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment">#获取目录名称</span></span><br><span class="line">[haokaiyang@CentOS7 ~]$ <span class="built_in">dirname</span> /home/haokaiyang/test4/aa.txt </span><br><span class="line">/home/haokaiyang/test4</span><br><span class="line"><span class="comment">#获取文件名称</span></span><br><span class="line">[haokaiyang@CentOS7 ~]$ <span class="built_in">basename</span> /home/haokaiyang/test4/aa.txt </span><br><span class="line">aa.txt</span><br></pre></td></tr></table></figure>
+
+<h2 id="查看文件内容"><a href="#查看文件内容" class="headerlink" title="查看文件内容"></a>查看文件内容</h2><h3 id="直接查看"><a href="#直接查看" class="headerlink" title="直接查看"></a>直接查看</h3><h4 id="cat-concatenate"><a href="#cat-concatenate" class="headerlink" title="cat(concatenate)"></a>cat(concatenate)</h4><pre><code>命令: cat
+选项及参数:
+    -A --show-all等价于 -vET 。
+    -b --number-nonblank 给非空输出行编号。
+    -e 等价于 -vE 。
+    -E --show-ends 在每行结束显示 $ 。
+    -n --number 给所有输出行编号。
+    -s --squeeze-blank 将所有的连续的多个空行替换为一个空行。
+    -t 等价于 -vT 。
+    -T --show-tabs 把 TAB 字符显示为 ^I 。
+    -v --show-nonprinting 除了 LFD 和 TAB 之外所有控制符用 ^ 和 M- 记方式显示。
+</code></pre>
+<h4 id="tac反转显示文件"><a href="#tac反转显示文件" class="headerlink" title="tac反转显示文件"></a>tac反转显示文件</h4><pre><code>命令: tac
+</code></pre>
+<h4 id="nl添加行号打印"><a href="#nl添加行号打印" class="headerlink" title="nl添加行号打印"></a>nl添加行号打印</h4><pre><code>命令:nl 文件
+选项及参数:
+    -b 指定行号指定方式
+        -b a 不论是否空行,同样显示行号
+        -b b 空行不显示行号(默认)
+    -n 列出行号表示方式
+        -n ln 在屏幕左方显示
+        -n rn 在自己栏位最右方显示,且不加0
+        -n rz 在自己栏位最右方显示,且加0
+    -w num 行号栏位占用的字符数
+</code></pre>
+<h3 id="翻页查看"><a href="#翻页查看" class="headerlink" title="翻页查看"></a>翻页查看</h3><h4 id="more"><a href="#more" class="headerlink" title="more"></a>more</h4><pre><code>命令:more
+选项及参数:
+    -num 指定屏幕行数
+    -f 使用more计算行数,而不是屏幕行(soft warp)
+    -u 防止下划线
+    +num 从行号num开始显示
+常用操作:
+    - 空格 :向下翻页
+    - 回车 :向下翻一行
+    - /string :向下搜索string
+    - :f :显示文件名以及目前行数
+    - q : 离开more
+    - b :往回翻页
+</code></pre>
+<h4 id="less"><a href="#less" class="headerlink" title="less"></a>less</h4><pre><code>命令:less
+常用操作:
+    - 空格 :向下翻页
+    - pagedown :向下翻页
+    - pageup   :向上翻页
+    - /string :向下搜索string
+    - ?sting :向上搜索string
+    - n:重复前一个搜索
+    - N:反向重复前一个搜索
+    - g:到文件第一行
+    - G:到文件最后一行
+    - q : 离开less
+</code></pre>
+<h3 id="资料截取"><a href="#资料截取" class="headerlink" title="资料截取"></a>资料截取</h3><h4 id="head-取出前面几行"><a href="#head-取出前面几行" class="headerlink" title="head(取出前面几行)"></a>head(取出前面几行)</h4><pre><code>命令: head 
+选项及参数: 
+    -n num 显示前num行
+    -c num 显示前num个字符
+</code></pre>
+<h4 id="tail"><a href="#tail" class="headerlink" title="tail"></a>tail</h4><pre><code>命令:tail
+选项及参数:
+    -n num 显示后num行
+    -f 当文件增长时,输出后续添加的数据
+    -s num 与-f合用,表示在每次反复的时间间隔s秒
+</code></pre>
+<h3 id="od"><a href="#od" class="headerlink" title="od"></a>od</h3><pre><code>命令:od
+选项及参数:
+    -t 后面接各种类型
+        - a 默认字符输出
+        - c ASCII字符输出
+        - d[size] 使用十进制输出,每个整数占用 size bytes
+        - f[size] 使用浮点数输出,每个数占用 size bytes
+        - o[size] 使用八进制输出,每个整数占用 size bytes
+        - x[size] 使用十六进制输出,每个整数占用 size bytes
+    -w[num] 设置每行最大字符数
+    -j[num] 略过设置字符数
+</code></pre>
+<p>鸟哥的书中提到了一个输出password的ASCII对照,使用的是</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">[haokaiyang@CentOS7 ~]$ <span class="built_in">echo</span> password|<span class="built_in">od</span> -t oCc</span><br><span class="line">0000000 160 141 163 163 167 157 162 144 012</span><br><span class="line">          p   a   s   s   w   o   r   d  \n</span><br><span class="line">0000011</span><br></pre></td></tr></table></figure>
+<p>很多人不懂什么意思,这里解释一下<br>对于od -t [dfox] 指令输出,对于源的读取默认是Int,也就是4个字节分割。<br>C表示char size,I表示int size,因此这个命令等价于以下两个命令</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">[haokaiyang@CentOS7 ~]$ <span class="built_in">echo</span> password|<span class="built_in">od</span> -t oC -t c</span><br><span class="line">0000000 160 141 163 163 167 157 162 144 012</span><br><span class="line">          p   a   s   s   w   o   r   d  \n</span><br><span class="line">0000011</span><br><span class="line">[haokaiyang@CentOS7 ~]$ <span class="built_in">echo</span> password|<span class="built_in">od</span> -t o1c</span><br><span class="line">0000000 160 141 163 163 167 157 162 144 012</span><br><span class="line">          p   a   s   s   w   o   r   d  \n</span><br><span class="line">0000011</span><br></pre></td></tr></table></figure>
+
+<h3 id="touch-修改文件时间或创建新文件"><a href="#touch-修改文件时间或创建新文件" class="headerlink" title="touch:修改文件时间或创建新文件"></a>touch:修改文件时间或创建新文件</h3><pre><code>命令:touch
+选项及参数:
+    -a 修改access time
+    -c 仅修改文件时间,即使文件不存在也不创建
+    -d 使用时间值
+    -m 仅修改mtime
+    -r file 参照文件file的时间戳修改指定文件的时间戳,不更改ctime
+    -t 后面接想要修改的时间而不用目前时间,格式为[YYYYMMDDhhmm]
+</code></pre>
+<p>例子:</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment">#新建一个文件testtouch</span></span><br><span class="line">[haokaiyang@CentOS7 test4]$ <span class="built_in">touch</span> testtouch </span><br><span class="line">[haokaiyang@CentOS7 test4]$ ll; ll --time=atime;ll --time=ctime;</span><br><span class="line">总用量 0</span><br><span class="line">-rw-rw-r--. 1 haokaiyang haokaiyang 0 3月   1 11:31 aa.txt</span><br><span class="line">-rw-rw-r--. 1 haokaiyang haokaiyang 0 3月   1 14:12 testtouch</span><br><span class="line">总用量 0</span><br><span class="line">-rw-rw-r--. 1 haokaiyang haokaiyang 0 3月   1 11:31 aa.txt</span><br><span class="line">-rw-rw-r--. 1 haokaiyang haokaiyang 0 3月   1 14:12 testtouch</span><br><span class="line">总用量 0</span><br><span class="line">-rw-rw-r--. 1 haokaiyang haokaiyang 0 3月   1 11:31 aa.txt</span><br><span class="line">-rw-rw-r--. 1 haokaiyang haokaiyang 0 3月   1 14:12 testtouch</span><br><span class="line">[haokaiyang@CentOS7 test4]$ <span class="built_in">touch</span> -r aa.txt testtouch2</span><br><span class="line">[haokaiyang@CentOS7 test4]$ ll; ll --time=atime;ll --time=ctime;</span><br><span class="line">总用量 0</span><br><span class="line">-rw-rw-r--. 1 haokaiyang haokaiyang 0 3月   1 11:31 aa.txt</span><br><span class="line">-rw-rw-r--. 1 haokaiyang haokaiyang 0 3月   1 14:12 testtouch</span><br><span class="line">-rw-rw-r--. 1 haokaiyang haokaiyang 0 3月   1 11:31 testtouch2</span><br><span class="line">总用量 0</span><br><span class="line">-rw-rw-r--. 1 haokaiyang haokaiyang 0 3月   1 11:31 aa.txt</span><br><span class="line">-rw-rw-r--. 1 haokaiyang haokaiyang 0 3月   1 14:12 testtouch</span><br><span class="line">-rw-rw-r--. 1 haokaiyang haokaiyang 0 3月   1 11:31 testtouch2</span><br><span class="line">总用量 0</span><br><span class="line">-rw-rw-r--. 1 haokaiyang haokaiyang 0 3月   1 11:31 aa.txt</span><br><span class="line">-rw-rw-r--. 1 haokaiyang haokaiyang 0 3月   1 14:12 testtouch</span><br><span class="line">-rw-rw-r--. 1 haokaiyang haokaiyang 0 3月   1 14:16 testtouch2</span><br><span class="line"><span class="comment">#修改testtouch2的mtime</span></span><br><span class="line">[haokaiyang@CentOS7 test4]$ <span class="built_in">touch</span> -m -t 201301140520 testtouch2</span><br><span class="line">[haokaiyang@CentOS7 test4]$ ll --full-time testtouch2</span><br><span class="line">-rw-rw-r--. 1 haokaiyang haokaiyang 0 2013-01-14 05:20:00.000000000 +0800 testtouch2</span><br></pre></td></tr></table></figure>
+
+<h2 id="umask"><a href="#umask" class="headerlink" title="umask"></a>umask</h2><p><span id="#umask">umask</span>是目前使用者在新建文件或目录时候的权限默认值</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment">#查看umask</span></span><br><span class="line">[haokaiyang@CentOS7 test4]$ <span class="built_in">umask</span></span><br><span class="line">0002</span><br><span class="line">[haokaiyang@CentOS7 test4]$ <span class="built_in">umask</span> -S</span><br><span class="line">u=rwx,g=rwx,o=rx</span><br></pre></td></tr></table></figure>
+<p>在权限的默认属性上,目录与文件是不一样的,但是一般文件则不应该有执行权限,所以这里分情况看待:</p>
+<ul>
+<li>若建立文件,则默认没有x权限,只有rw权限,也就是最大为666分<br>  -rw-rw-rw-</li>
+<li>若建立目录,由于x表示是否可以进入目录,所以rwx开放,最大权限为777<br>  drwxrwxrwx</li>
+</ul>
+<p>umask的分数为需要减掉的权限,拿umask为022举例来说</p>
+<pre><code>建立文件时 (-rw-rw-rw-) - (-----w--w-) ==&gt; -rw-r--r--
+建立目录时 (drwxrwxrwx) - (d----w--w-) ==&gt; drwxr-xr-x
+</code></pre>
+<h2 id="文件隐藏属性"><a href="#文件隐藏属性" class="headerlink" title="文件隐藏属性"></a>文件隐藏属性</h2><h3 id="chattr-设置文件隐藏属性"><a href="#chattr-设置文件隐藏属性" class="headerlink" title="chattr:设置文件隐藏属性"></a>chattr:设置文件隐藏属性</h3><p>注意:chattr指令只能在Ext2&#x2F;Ext3&#x2F;Ext4的系统上完全生效,xfs仅支持AadiS</p>
+<pre><code>命令: chattr [+-=][ASacdistu] 文件或目录名称
+选项及参数:
+    + :增加一个特殊参数
+    - :删除一个特殊参数
+    = :仅设置后面加的参数
+
+    A:文件或目录的 atime (access time)不可被修改(modified), 可以有效预防例如手提电脑磁盘I/O错误的发生。
+    S:硬盘I/O同步选项,功能类似sync。
+    a:即append,设定该参数后,只能向文件中添加数据,而不能删除,多用于服务器日志文件安全,只有root才能设定这个属性。
+    c:即compresse,设定文件是否经压缩后再存储。读取时需要经过自动解压操作。
+    d:即no dump,设定文件不能成为dump程序的备份目标。
+    i:设定文件不能被删除、改名、设定链接关系,同时不能写入或新增内容。i参数对于文件 系统的安全设置有很大帮助。
+    j:即journal,设定此参数使得当通过mount参数:data=ordered 或者 data=writeback 挂 载的文件系统,文件在写入时会先被记录(在journal中)。如果filesystem被设定参数为 data=journal,则该参数自动失效。
+    s:保密性地删除文件或目录,即硬盘空间被全部收回。
+    u:与s相反,当设定为u时,数据内容其实还存在磁盘中,可以用于undeletion。
+</code></pre>
+<p>各参数选项中常用到的是a和i。a选项强制只可添加不可删除,多用于日志系统的安全设定。而i是更为严格的安全设定,只有superuser (root) 或具有CAP_LINUX_IMMUTABLE处理能力(标识)的进程能够施加该选项。</p>
+<h3 id="lsattr-显示文件隐藏属性"><a href="#lsattr-显示文件隐藏属性" class="headerlink" title="lsattr:显示文件隐藏属性"></a>lsattr:显示文件隐藏属性</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment">#用chattr防止文件被修改</span></span><br><span class="line">[root@CentOS7 test4]<span class="comment"># chattr +i aa.txt </span></span><br><span class="line">[root@CentOS7 test4]<span class="comment"># lsattr</span></span><br><span class="line">----i----------- ./aa.txt</span><br><span class="line">[root@CentOS7 test4]<span class="comment"># echo 111 &gt; aa.txt </span></span><br><span class="line">bash: aa.txt: 权限不够</span><br></pre></td></tr></table></figure>
+
+<h2 id="文件特殊权限-SUID-Set-UID-SGID-Set-GID-SBIT-Sticky-Bit"><a href="#文件特殊权限-SUID-Set-UID-SGID-Set-GID-SBIT-Sticky-Bit" class="headerlink" title="文件特殊权限:SUID(Set UID),SGID(Set GID),SBIT(Sticky Bit)"></a>文件特殊权限:SUID(Set UID),SGID(Set GID),SBIT(Sticky Bit)</h2><h3 id="SUID-Set-UID"><a href="#SUID-Set-UID" class="headerlink" title="SUID(Set UID)"></a>SUID(Set UID)</h3><p>当s标志出现在文件拥有者的x权限上时,此时被称为SUID(Set UID)<br>SUID的限制和功能</p>
+<ul>
+<li>SUID权限仅对 <strong>二进制程序</strong>有效,不能用于shell script</li>
+<li>执行者对于这个程序需要有x权限</li>
+<li>本权限仅在该程序执行过程中有效</li>
+<li>执行者将具有该程序拥有者的权限</li>
+</ul>
+<p>举例说明下:</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">[haokaiyang@CentOS7 ~]$ ll /bin/passwd </span><br><span class="line">-rwsr-xr-x. 1 root root 27832 6月  10 2014 /bin/passwd</span><br><span class="line">[haokaiyang@CentOS7 ~]$ ll /etc/shadow</span><br><span class="line">----------. 1 root root 1261 2月  27 18:21 /etc/shadow</span><br></pre></td></tr></table></figure>
+<p>&#x2F;etc&#x2F;shadow是禁止让我的账号haokaiyang操作的,但为什么我可以修改密码呢？这就是SUID的功能:</p>
+<ol>
+<li>haokaiyang对&#x2F;bin&#x2F;passwd有x权限,表示我可以执行passwd</li>
+<li>passwd的执行者是root账号</li>
+<li>haokaiyang在执行passwd的过程中,会暂时获得root权限</li>
+<li>&#x2F;etc&#x2F;shadow 就可以被我修改了</li>
+</ol>
+<h3 id="SGID-Set-GID"><a href="#SGID-Set-GID" class="headerlink" title="SGID(Set GID)"></a>SGID(Set GID)</h3><p>当s标志在文件拥有者的x的位置时候为SUID,出现在文件所属组的时候为SGID<br>SGID的功能</p>
+<ul>
+<li>SGID对二进制有效</li>
+<li>程序执行者对于这个程序需要有x权限</li>
+<li>执行者将在执行过程中获得该程序群组支持</li>
+</ul>
+<figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line">[root@CentOS7 haokaiyang]# ll <span class="regexp">/bin/</span>locate <span class="regexp">/var/</span>lib<span class="regexp">/mlocate/m</span>locate.db </span><br><span class="line">-rwx--s--x. <span class="number">1</span> root slocate   <span class="number">40512</span> <span class="number">11</span>月  <span class="number">5</span> <span class="number">23</span>:<span class="number">07</span> <span class="regexp">/bin/</span>locate</span><br><span class="line">-rw-r-----. <span class="number">1</span> root slocate <span class="number">3247926</span> <span class="number">3</span>月   <span class="number">1</span> <span class="number">10</span>:<span class="number">10</span> <span class="regexp">/var/</span>lib<span class="regexp">/mlocate/m</span>locate.db</span><br></pre></td></tr></table></figure>
+<p>和SUID差不多,若haokaiyang去执行locate时,会获得slocate群组的支持,因为可以去读取mlocate.db<br>SGID也可以用于目录,当目录设置了SGID权限后</p>
+<ul>
+<li>使用者若对于此目录有rx权限时,该使用者能够进入此目录</li>
+<li>使用者在此目录下的有效群组将会变成该目录的群组</li>
+<li>若使用者在此目录下具有w权限,则使用者所建立的新文件的所属组与此目录的所属组相同</li>
+</ul>
+<h3 id="SBIT-Sticky-Bit"><a href="#SBIT-Sticky-Bit" class="headerlink" title="SBIT(Sticky Bit)"></a>SBIT(Sticky Bit)</h3><p>这个SBIT只针对目录,对于文件没有作用。<br>SBIT对于目录的作用为:</p>
+<ul>
+<li>当使用者对于此目录有wx权限时</li>
+<li>当使用者在该目录下建立文件或目录时,仅有自己和root才有权利删除<br>举例:<br>&#x2F;tmp本身权限为drwxrwxrwt 所有人都可以在&#x2F;tmp中新增、修改、删除文件,但仅有该文件&#x2F;目录建立者和root才能够删除自己的目录或文件。</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">[root@CentOS7 tmp]<span class="comment"># ll / | grep tmp</span></span><br><span class="line">drwxrwxrwt.  20 root root 4096 3月   1 15:49 tmp</span><br><span class="line">[root@CentOS7 tmp]<span class="comment"># touch myfile</span></span><br><span class="line">[root@CentOS7 tmp]<span class="comment"># chmod 777 myfile</span></span><br><span class="line">[root@CentOS7 tmp]<span class="comment"># exit</span></span><br><span class="line"><span class="built_in">exit</span></span><br><span class="line">[haokaiyang@CentOS7 tmp]$ ll myfile</span><br><span class="line">-rwxrwxrwx. 1 root root 0 3月   1 15:51 myfile</span><br><span class="line">[haokaiyang@CentOS7 tmp]$ <span class="built_in">rm</span> -f myfile</span><br><span class="line"><span class="built_in">rm</span>: 无法删除<span class="string">&quot;myfile&quot;</span>: 不允许的操作</span><br></pre></td></tr></table></figure>
+
+<h3 id="SUID-x2F-SGID-x2F-SBIT权限设置"><a href="#SUID-x2F-SGID-x2F-SBIT权限设置" class="headerlink" title="SUID&#x2F;SGID&#x2F;SBIT权限设置"></a>SUID&#x2F;SGID&#x2F;SBIT权限设置</h3><h4 id="数字法"><a href="#数字法" class="headerlink" title="数字法"></a>数字法</h4><p>4为SUID<br>2为SGID<br>1为SBIT</p>
+<pre><code>chmod 4755 myfile
+</code></pre>
+<h4 id="符号法"><a href="#符号法" class="headerlink" title="符号法"></a>符号法</h4><p>SUID为u+s<br>SGID为g+s<br>SBIT为o+t</p>
+<h2 id="file-查看文件类型"><a href="#file-查看文件类型" class="headerlink" title="file:查看文件类型"></a>file:查看文件类型</h2><pre><code>命令:file 文件
+选项及参数:
+    -b 不输出文件名
+    -z 试图查看压缩文件内部信息
+</code></pre>
+<h2 id="命令及文件搜索"><a href="#命令及文件搜索" class="headerlink" title="命令及文件搜索"></a>命令及文件搜索</h2><h3 id="命令搜索"><a href="#命令搜索" class="headerlink" title="命令搜索"></a>命令搜索</h3><h4 id="which-查找命令"><a href="#which-查找命令" class="headerlink" title="which:查找命令"></a>which:查找命令</h4><pre><code>命令: which
+选项及参数: 
+    -a 列出所有在PATH中可以找到的命令,而不止第一个
+</code></pre>
+<p>###文件搜索</p>
+<h4 id="whereis-在特定目录中查找文件"><a href="#whereis-在特定目录中查找文件" class="headerlink" title="whereis:在特定目录中查找文件"></a>whereis:在特定目录中查找文件</h4><pre><code>命令:whereis
+选项及参数:
+    -l 可以列出whereis会出查找的几个主要目录
+    -b 只找binary格式的文件
+    -m 只找在手册文件manual路径下的文件
+    -s 只找source 来源的文件
+    -u 查找不在上述三个项目当中的其它特殊文件
+</code></pre>
+<h3 id="locate-x2F-updatedb"><a href="#locate-x2F-updatedb" class="headerlink" title="locate&#x2F;updatedb"></a>locate&#x2F;updatedb</h3><pre><code>命令: locate [-ir] keyword
+选项及参数:
+    -i 忽略大小写差异
+    -c 不输出文件名,仅计算找到文件数量
+    -l num 仅输出num行
+    -S 输出locate所使用的资料库文件相关信息,包括资料库记录的文件/目录数量等
+    -r 后面可接正则表达式的显示方式
+</code></pre>
+<p>updatedb:根据&#x2F;etc&#x2F;updatedb.conf去搜索系统硬盘内的文件,并更新&#x2F;var&#x2F;lib&#x2F;mlocate内的资料库文件<br>locate:  根据&#x2F;var&#x2F;lib&#x2F;mlocate内存在的资料库记载,找出使用者输入的关键词</p>
+<h3 id="find"><a href="#find" class="headerlink" title="find"></a>find</h3><pre><code>命令:find [PATH] [option] [action]
+选项及参数:
+1.与时间有关的参数: 共有-atime,-ctime与-mtime,以-mtime说明
+    -mtime n: n为数字,意义为在n天之前的[一天之内]更改过内容的文件
+    -mtime +n:列出在n天之前(不含n本身)北更改过内容的文件
+    -mtime -n:列出在n天之内(含n本身)被更改过内容的文件
+    -newer file :file为一个存在的文件,列出比file还要新的文件
+</code></pre>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment">#例子:将过去系统里24小时内有更改过内容的文件列出来</span></span><br><span class="line">[root@CentOS7 tmp]<span class="comment"># find /var -mtime 0</span></span><br><span class="line"><span class="comment">#例子:寻找/etc下面比/etc/passwd新的</span></span><br><span class="line">[root@CentOS7 tmp]<span class="comment"># find /etc -newer /etc/passwd</span></span><br></pre></td></tr></table></figure>
+<p>+4代表大于等于5天前的文件 ex: find &#x2F;var -mtime +4<br>-4代表小于等于4天前的文件 ex: find &#x2F;var -mtime -4<br> 4代表4-5那一天的文件 ex:find &#x2F;var -mtime 4</p>
+<pre><code>2.与使用者或群组有关的参数
+    -uid n :n为数字,这个数字是使用者的账号ID,即UID,这个UID是记录在/etc/passwd里面与账号名称对应的数字
+    -gid n:n为数字,这个数字是群组名称的ID,即GID,这个GID记录在/etc/group中
+    -user name:name为使用者账号名称
+    -group name:name为群组名称
+    -nouser:寻找文件拥有者不在/etc/passwd中的文件
+    -nogroup:寻找文件所属组不在/etc/group的文件
+3.与文件权限和名称有关的参数
+    -name filename 搜索文件名为filename的文件
+    -size [+-]SIZE 搜索比SIZE大或者小的文件,如 -size +50k
+    -type TYPE :搜索文件类型为TYPE的,类型包含一般文件f,硬件b,c,目录d,链接l,socket(s)以及FIFO(p)
+    -perm mode 搜索权限刚好等于mode的文件
+    -perm -mode 搜索文件权限必须要全部包括mode的文件,即搜索0744(-rwxr--r--)时候,0755(-rwxr-xr-x)也会被列出来,因为0755中包含了0744的权限。
+    -perm /mode 搜索文件权限包含任何一个mode的权限的文件,即搜索0755(-rwxr-xr-x)时候,文件属性为600(-rw-------)也会被搜索出来
+</code></pre>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment">#找出含有SUID或SGID或SBIT的文件</span></span><br><span class="line">[root@CentOS7 tmp]<span class="comment"># find / -perm /7000</span></span><br></pre></td></tr></table></figure>
+
+<pre><code>4.额外操作
+-exec command:command为其它命令,-exec后面再接命令来处理搜索到的结果
+-print :将结果打印屏幕上,默认
+</code></pre>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">[root@CentOS7 tmp]<span class="comment"># find / -perm /7000 -exec ls -l &#123;&#125; \;</span></span><br><span class="line"><span class="comment">#带有运算符的例子</span></span><br><span class="line"><span class="comment">#找出/etc下,文件大小在50k到60k之间的文件,并且列出文件权限</span></span><br><span class="line">[root@CentOS7 tmp]<span class="comment"># find /etc -size +50k -a -size -60k -exec ls -l &#123;&#125; \;</span></span><br><span class="line">-a 表示and的意思</span><br><span class="line"><span class="comment">#找出/etc下,文件大于1500k以及容量等于0的文件,且列出文件权限</span></span><br><span class="line">[root@CentOS7 tmp]<span class="comment"># find /etc -size +1500k -o -size 0 -exec ls -l &#123;&#125; \;</span></span><br><span class="line">-o 表示or的意思</span><br><span class="line"><span class="comment">#找出在/etc下,文件大于50k且文件所属者不是root的文件,且列出文件权限</span></span><br><span class="line">[root@CentOS7 tmp]<span class="comment"># find /etc -size +50k -a ! -user root -exec ls -ld &#123;&#125; \;</span></span><br><span class="line"> ! 表示反向选择</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>学习笔记</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>《鸟哥的Linux私房菜》文件与文件系统的压缩、打包与备份学习笔记</title>
     <url>/2017/03/08/centos7-learning-notes-4/</url>
     <content><![CDATA[<h2 id="压缩的原理"><a href="#压缩的原理" class="headerlink" title="压缩的原理:"></a>压缩的原理:</h2><p>把文件的二进制代码压缩,把相邻的0,1减少,比如说000000，可以把它写成6个0的写法60，来减少该文件的空间。</p>
@@ -1119,286 +1119,6 @@ Minor 次要装置代码
 <figure class="highlight arcade"><table><tr><td class="code"><pre><span class="line">cpio -idvc &lt; <span class="regexp">/dev/</span>st0</span><br></pre></td></tr></table></figure>
 <p>cpio可以备份任何文件</p>
 ]]></content>
-      <categories>
-        <category>学习笔记</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-        <tag>学习笔记</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《鸟哥的Linux私房菜》正则表达式学习笔记</title>
-    <url>/2017/03/14/centos7-learning-notes-6/</url>
-    <content><![CDATA[<h2 id="特殊符号及代表意义"><a href="#特殊符号及代表意义" class="headerlink" title="特殊符号及代表意义"></a>特殊符号及代表意义</h2><table>
-<thead>
-<tr>
-<th>特殊符号</th>
-<th>代表意义</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>[:alnum:]</td>
-<td>英文小写字符及数字，即 0-9, A-Z, a-z</td>
-</tr>
-<tr>
-<td>[:alpha:]</td>
-<td>英文大小写字符，即 A-Z, a-z</td>
-</tr>
-<tr>
-<td>[:blank:]</td>
-<td>空格键与tab键</td>
-</tr>
-<tr>
-<td>[:cntrl:]</td>
-<td>键盘上面的控制按键，亦即包括 CR, LF, Tab, Del.. 等等</td>
-</tr>
-<tr>
-<td>[:digit:]</td>
-<td>代表数字，亦即 0-9</td>
-</tr>
-<tr>
-<td>[:graph:]</td>
-<td>除了空白字符 (空格键 [Tab] 按键) 外的其他所有按键</td>
-</tr>
-<tr>
-<td>[:lower:]</td>
-<td>代表小写字符，亦即 a-z</td>
-</tr>
-<tr>
-<td>[:print:]</td>
-<td>代表任何可以被打印出來的字符</td>
-</tr>
-<tr>
-<td>[:punct:]</td>
-<td>代表标点符号 (punctuation symbol)，亦即：” ‘ ? ! ; : # $…</td>
-</tr>
-<tr>
-<td>[:upper:]</td>
-<td>代表大写字符，亦即 A-Z</td>
-</tr>
-<tr>
-<td>[:space:]</td>
-<td>任何会产生生空白的字符，包括空白鍵, [Tab], CR 等等</td>
-</tr>
-<tr>
-<td>[:xdigit:]</td>
-<td>代表 16 进制的数字类型，因此包括： 0-9, A-F, a-f 的数字与字符</td>
-</tr>
-</tbody></table>
-<h2 id="grep进阶"><a href="#grep进阶" class="headerlink" title="grep进阶"></a>grep进阶</h2><pre><code>命令:grep [-A] [-B] [--color=auto] &#39;搜索字符串&#39; filename
-选项及参数:
-    -A 后面可加数字,为after的意思,除了列出该行外,后面的n行也列出来
-    -B 后面可加数字,为befer的意思,除了列出该列外,前面的n行业列出来
-</code></pre>
-<table>
-<thead>
-<tr>
-<th>RE字符</th>
-<th>意义</th>
-<th>例子</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>^word</td>
-<td>待搜素的字符串在行首</td>
-<td>grep -n ‘^#’ regular_express.txt</td>
-</tr>
-<tr>
-<td>word$</td>
-<td>待搜素的字符串在行尾</td>
-<td>grep -n ‘!$’ regular_express.txt</td>
-</tr>
-<tr>
-<td>.</td>
-<td>一定有一个任意字符</td>
-<td>grep -n ‘e.e’ regular_express.txt</td>
-</tr>
-<tr>
-<td>|转义特殊符号</td>
-<td>grep -n &#39; regular_express.txt</td>
-<td></td>
-</tr>
-<tr>
-<td>*</td>
-<td>代表重复前一个字符0-无穷次</td>
-<td>grep -n ‘ess*’ regular_express.txt</td>
-</tr>
-<tr>
-<td>[list]</td>
-<td>字符集合的RE字符,里面列出想要截取的字符</td>
-<td>grep -n ‘g[ld]’ regular_express.txt</td>
-</tr>
-<tr>
-<td>[n1-n2]</td>
-<td>字符集合的RE字符,里面列出想要截取的字符范围</td>
-<td>grep -n ‘[A-Z]’ regular_express.txt</td>
-</tr>
-<tr>
-<td>[^list]</td>
-<td>字符集合的RE字符,里面列出不要的字符串或范围</td>
-<td>grep -n ‘oo[^t]’ regular_express.txt</td>
-</tr>
-<tr>
-<td>{n,m}</td>
-<td>连续n到m的前一个RE字符<br>若为{n}连续n个前一个RE字符<br>{n,}连续n个以上的前一个RE字符</td>
-<td>grep -n ‘go{2,3}g’ regular_express.txt</td>
-</tr>
-</tbody></table>
-<h2 id="sed工具"><a href="#sed工具" class="headerlink" title="sed工具"></a>sed工具</h2><pre><code>命令:sed [-nefr] [动作]
-选项及参数:
-    -n 使用安静(silent)模式,在一般sed的用法中,所有来自stdin的资料一般都会列出到屏幕上,但如果加上-n参数后,则只有经过sed特殊处理的那一行(或者动作)才会被列出来
-    -e 直接在命令模式上进行sed的动作编辑
-    -f 直接将sed的工作写在一个文件内,-f filename 则可以执行filename内的sed动作
-    -r sed的动作支持的是延伸型正规表达式语法(默认是基础语法)
-    -i 直接修改读取的文件内容,而不是由屏幕输出
-动作说明: [n1[,n2]]function
-    n1,n2 不见得会存在,一般代表选择进行动作的行数,举例来说,如果我的动作是需要在10-20行之间进行的,则10,20(动作行为)
-</code></pre>
-<p>function下有这些东西:<br>a 新增,a的后面可以接字符串,而这些字符串会在新的一行出现(目前的下一行)<br>c 取代,c的后面可以接字符串,这些字符串可以取代n1,n2之间的行<br>d 删除,后面不用加任何东西<br>i 插入,i的后面可以接字符串,而这些字符串在新的一行出现(目前的上一行)<br>p 打印,将某个选择的资料打印<br>s 取代,可以直接进行替换的工作。可以搭配正则表达式,例如1,20s&#x2F;old&#x2F;new&#x2F;g就是啦</p>
-<figure class="highlight elixir"><table><tr><td class="code"><pre><span class="line"><span class="comment">#将/etc/passwd的内容列出来,同时删除2-5行</span></span><br><span class="line">[root<span class="variable">@CentOS7</span> ~]<span class="comment"># nl /etc/passwd | sed &#x27;2,5d&#x27;</span></span><br><span class="line">     <span class="number">1</span>  <span class="symbol">root:</span><span class="symbol">x:</span><span class="number">0</span><span class="symbol">:</span><span class="number">0</span><span class="symbol">:root</span><span class="symbol">:/root</span><span class="symbol">:/bin/bash</span></span><br><span class="line">     <span class="number">6</span>  <span class="symbol">sync:</span><span class="symbol">x:</span><span class="number">5</span><span class="symbol">:</span><span class="number">0</span><span class="symbol">:sync</span><span class="symbol">:/sbin</span><span class="symbol">:/bin/sync</span></span><br><span class="line">...省略...</span><br><span class="line"><span class="comment">#只看第一行</span></span><br><span class="line">[root<span class="variable">@CentOS7</span> ~]<span class="comment"># nl /etc/passwd | sed &#x27;2,$d&#x27;</span></span><br><span class="line">     <span class="number">1</span>  <span class="symbol">root:</span><span class="symbol">x:</span><span class="number">0</span><span class="symbol">:</span><span class="number">0</span><span class="symbol">:root</span><span class="symbol">:/root</span><span class="symbol">:/bin/bash</span></span><br><span class="line"><span class="comment">#在第二行后加上drink tea字符串</span></span><br><span class="line">[root<span class="variable">@CentOS7</span> ~]<span class="comment"># nl /etc/passwd | sed &#x27;2a drink tea&#x27;</span></span><br><span class="line">     <span class="number">1</span>  <span class="symbol">root:</span><span class="symbol">x:</span><span class="number">0</span><span class="symbol">:</span><span class="number">0</span><span class="symbol">:root</span><span class="symbol">:/root</span><span class="symbol">:/bin/bash</span></span><br><span class="line">     <span class="number">2</span>  <span class="symbol">bin:</span><span class="symbol">x:</span><span class="number">1</span><span class="symbol">:</span><span class="number">1</span><span class="symbol">:bin</span><span class="symbol">:/bin</span><span class="symbol">:/sbin/nologin</span></span><br><span class="line">drink tea</span><br><span class="line">     <span class="number">3</span>  <span class="symbol">daemon:</span><span class="symbol">x:</span><span class="number">2</span><span class="symbol">:</span><span class="number">2</span><span class="symbol">:daemon</span><span class="symbol">:/sbin</span><span class="symbol">:/sbin/nologin</span></span><br><span class="line">     <span class="number">4</span>  <span class="symbol">adm:</span><span class="symbol">x:</span><span class="number">3</span><span class="symbol">:</span><span class="number">4</span><span class="symbol">:adm</span><span class="symbol">:/var/adm</span><span class="symbol">:/sbin/nologin</span></span><br><span class="line"><span class="comment">#将第2-5行的内容替换成 No 2-5 number</span></span><br><span class="line">[root<span class="variable">@CentOS7</span> ~]<span class="comment"># nl /etc/passwd | sed &#x27;2,5c No 2-5 number&#x27;</span></span><br><span class="line">     <span class="number">1</span>  <span class="symbol">root:</span><span class="symbol">x:</span><span class="number">0</span><span class="symbol">:</span><span class="number">0</span><span class="symbol">:root</span><span class="symbol">:/root</span><span class="symbol">:/bin/bash</span></span><br><span class="line"><span class="title class_">No</span> <span class="number">2</span><span class="number">-5</span> number</span><br><span class="line">     <span class="number">6</span>  <span class="symbol">sync:</span><span class="symbol">x:</span><span class="number">5</span><span class="symbol">:</span><span class="number">0</span><span class="symbol">:sync</span><span class="symbol">:/sbin</span><span class="symbol">:/bin/sync</span></span><br><span class="line">     <span class="number">7</span>  <span class="symbol">shutdown:</span><span class="symbol">x:</span><span class="number">6</span><span class="symbol">:</span><span class="number">0</span><span class="symbol">:shutdown</span><span class="symbol">:/sbin</span><span class="symbol">:/sbin/shutdown</span></span><br><span class="line"><span class="comment">#仅列出5-7行</span></span><br><span class="line">[root<span class="variable">@CentOS7</span> ~]<span class="comment"># nl /etc/passwd |sed -n &#x27;5,7p&#x27;</span></span><br><span class="line">     <span class="number">5</span>  <span class="symbol">lp:</span><span class="symbol">x:</span><span class="number">4</span><span class="symbol">:</span><span class="number">7</span><span class="symbol">:lp</span><span class="symbol">:/var/spool/lpd</span><span class="symbol">:/sbin/nologin</span></span><br><span class="line">     <span class="number">6</span>  <span class="symbol">sync:</span><span class="symbol">x:</span><span class="number">5</span><span class="symbol">:</span><span class="number">0</span><span class="symbol">:sync</span><span class="symbol">:/sbin</span><span class="symbol">:/bin/sync</span></span><br><span class="line">     <span class="number">7</span>  <span class="symbol">shutdown:</span><span class="symbol">x:</span><span class="number">6</span><span class="symbol">:</span><span class="number">0</span><span class="symbol">:shutdown</span><span class="symbol">:/sbin</span><span class="symbol">:/sbin/shutdown</span></span><br><span class="line"><span class="comment">#查看本机ip</span></span><br><span class="line">[root<span class="variable">@CentOS7</span> ~]<span class="comment"># ifconfig enp0s3 | grep &#x27;inet &#x27;|sed &#x27;s/^.*inet //g&#x27; | sed &#x27;s/ *netmask.*$//g&#x27;</span></span><br><span class="line"><span class="number">10.0</span>.<span class="number">2.15</span></span><br><span class="line"><span class="comment">#直接修改文件内容(会修改原始文件,谨慎操作)</span></span><br><span class="line"><span class="comment">#将regular_express.txt中的.替换为!</span></span><br><span class="line">[root<span class="variable">@CentOS7</span> haokaiyang]<span class="comment"># sed -i &#x27;s/\.$/\!/g&#x27; regular_express.txt</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="延伸正则表达式"><a href="#延伸正则表达式" class="headerlink" title="延伸正则表达式"></a>延伸正则表达式</h2><table>
-<thead>
-<tr>
-<th>RE字符</th>
-<th>意义</th>
-<th>例子</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>+</td>
-<td>重复一个或一个以上的前一个RE字符</td>
-<td>搜索god,good,goood等字符串<br>egrep -n ‘go+d’ regular_express.txt</td>
-</tr>
-<tr>
-<td>?</td>
-<td>0个或一个的前一个RE字符</td>
-<td>搜索gd,god等字符串<br>egrep -n ‘go?d’ regular_express.txt</td>
-</tr>
-<tr>
-<td>&amp;#124;</td>
-<td>用or的方式找出字符串</td>
-<td>egrep -n ‘gd&amp;#124;good’ regular_express.txt</td>
-</tr>
-<tr>
-<td>()</td>
-<td>找出群组字符</td>
-<td>找出glad或good字符串<br>egrep -n ‘g(la&amp;#124;oo)d’ regular_express.txt</td>
-</tr>
-<tr>
-<td>()+</td>
-<td>多个重复群组的判断</td>
-<td>开头是A,结尾是C,中间有一个以上的xyz字符串的字符<br>echo ‘AxyzxyzxyzxyzC’,egrep ‘A(xyz)+C’</td>
-</tr>
-</tbody></table>
-<h2 id="文件格式化及相关处理"><a href="#文件格式化及相关处理" class="headerlink" title="文件格式化及相关处理"></a>文件格式化及相关处理</h2><h3 id="格式化打印-printf"><a href="#格式化打印-printf" class="headerlink" title="格式化打印:printf"></a>格式化打印:printf</h3><pre><code>命令:printf &#39;打印格式&#39; 实际内容
-选项及参数:
-格式方面有以下几个特殊格式:
-    \a 警告声音
-    \b backspace键
-    \f 清屏(form feed)
-    \n 输出新的一行
-    \r Enter按键
-    \t 水平tab按键
-    \v 垂直tab按键
-    \xNN NN为两位数的数字,可以转换数字成为字符串
-    关于C语言内,常见的变量格式
-    %ns 那个n是数字,s代表string,即多少个字符
-    %ni 那个n是数字,i代表integer,即多少整数位
-    %N.nf 那个n与N都是数字,f代表floating(浮点),假设十个位数,小数点两位.%10.2f
-</code></pre>
-<figure class="highlight llvm"><table><tr><td class="code"><pre><span class="line">Name     Chinese   English   Math    Average</span><br><span class="line">DmTsai        <span class="number">80</span>        <span class="number">60</span>     <span class="number">92</span>      <span class="number">77.33</span></span><br><span class="line">VBird         <span class="number">75</span>        <span class="number">55</span>     <span class="number">80</span>      <span class="number">70.00</span></span><br><span class="line">Ken           <span class="number">60</span>        <span class="number">90</span>     <span class="number">70</span>      <span class="number">73.33</span></span><br><span class="line"></span><br><span class="line">#将上诉信息第二行以后<span class="punctuation">,</span>分别用字符串<span class="punctuation">,</span>整数<span class="punctuation">,</span>小数来显示</span><br><span class="line">[haokaiyang<span class="title">@CentOS7</span> ~]$ printf &#x27;<span class="variable">%10</span>s <span class="variable">%5</span>i <span class="variable">%5</span>i <span class="variable">%5</span>i <span class="variable">%8</span>.<span class="number">2</span>f \n&#x27; $(cat printf.txt | grep -v Name)</span><br><span class="line">    DmTsai    <span class="number">80</span>    <span class="number">60</span>    <span class="number">92</span>    <span class="number">77.33</span> </span><br><span class="line">     VBird    <span class="number">75</span>    <span class="number">55</span>    <span class="number">80</span>    <span class="number">70.00</span> </span><br><span class="line">       Ken    <span class="number">60</span>    <span class="number">90</span>    <span class="number">70</span>    <span class="number">73.33</span> </span><br></pre></td></tr></table></figure>
-
-<h3 id="awk-优良的文本处理工具"><a href="#awk-优良的文本处理工具" class="headerlink" title="awk:优良的文本处理工具"></a>awk:优良的文本处理工具</h3><p>awk中,默认栏位的分割符是 空格键 或 tab键。</p>
-<pre><code>命令:awk &#39;条件类型1&#123;动作1&#125; 条件类型2&#123;动作2&#125; ...&#39; filename
-</code></pre>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line">[haokaiyang<span class="meta">@CentOS7</span> <span class="operator">~</span>]$ last <span class="operator">-</span>n <span class="number">5</span> <span class="operator">|</span>awk &#x27;&#123;print <span class="variable">$1</span> <span class="string">&quot;<span class="subst">\t</span>&quot;</span> <span class="variable">$3</span>&#125;&#x27;</span><br><span class="line">haokaiya    <span class="type">Mon</span></span><br><span class="line">haokaiya    :<span class="number">0</span></span><br><span class="line">haokaiya    :<span class="number">0</span></span><br><span class="line">(unknown    :<span class="number">0</span></span><br><span class="line">reboot  boot</span><br><span class="line"></span><br><span class="line">wtmp    <span class="type">Mon</span></span><br></pre></td></tr></table></figure>
-<h4 id="awk内置变量"><a href="#awk内置变量" class="headerlink" title="awk内置变量"></a>awk内置变量</h4><table>
-<thead>
-<tr>
-<th>变量名称</th>
-<th>意义</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>NF</td>
-<td>每一行($0)拥有的栏位总数</td>
-</tr>
-<tr>
-<td>NR</td>
-<td>目前awk所处理的是第几行的资料</td>
-</tr>
-<tr>
-<td>FS</td>
-<td>目前得到分割字符,默认是空格键</td>
-</tr>
-</tbody></table>
-<figure class="highlight pgsql"><table><tr><td class="code"><pre><span class="line">[haokaiyang@CentOS7 ~]$  last -n <span class="number">5</span>| awk <span class="string">&#x27;&#123;print $1 &quot;\t lines: &quot; NR &quot;\t columns: &quot; NF&#125;&#x27;</span></span><br><span class="line">haokaiya     lines: <span class="number">1</span>    <span class="keyword">columns</span>: <span class="number">9</span></span><br><span class="line">haokaiya     lines: <span class="number">2</span>    <span class="keyword">columns</span>: <span class="number">10</span></span><br><span class="line">haokaiya     lines: <span class="number">3</span>    <span class="keyword">columns</span>: <span class="number">10</span></span><br><span class="line">(<span class="type">unknown</span>     lines: <span class="number">4</span>    <span class="keyword">columns</span>: <span class="number">10</span></span><br><span class="line">reboot   lines: <span class="number">5</span>    <span class="keyword">columns</span>: <span class="number">11</span></span><br><span class="line">     lines: <span class="number">6</span>    <span class="keyword">columns</span>: <span class="number">0</span></span><br><span class="line">wtmp     lines: <span class="number">7</span>    <span class="keyword">columns</span>: <span class="number">7</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="awk的逻辑运算符"><a href="#awk的逻辑运算符" class="headerlink" title="awk的逻辑运算符"></a>awk的逻辑运算符</h4><table>
-<thead>
-<tr>
-<th>运算符号</th>
-<th>意义</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>&gt;</td>
-<td>大于</td>
-</tr>
-<tr>
-<td>&lt;</td>
-<td>小于</td>
-</tr>
-<tr>
-<td>&gt;&#x3D;</td>
-<td>大于或等于</td>
-</tr>
-<tr>
-<td>&lt;&#x3D;</td>
-<td>小于或等于</td>
-</tr>
-<tr>
-<td>&#x3D;&#x3D;</td>
-<td>等于</td>
-</tr>
-<tr>
-<td>!&#x3D;</td>
-<td>不等于</td>
-</tr>
-</tbody></table>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line">#查询第三栏小于<span class="number">10</span>以下的数据,并且仅列出账号与第三栏</span><br><span class="line">[haokaiyang<span class="meta">@CentOS7</span> <span class="operator">~</span>]$ cat <span class="operator">/</span>etc<span class="operator">/</span>passwd <span class="operator">|</span> awk &#x27;&#123;<span class="type">FS</span><span class="operator">=</span><span class="string">&quot;:&quot;</span>&#125; <span class="variable">$3</span> <span class="operator">&lt;</span> <span class="number">10</span> &#123;print <span class="variable">$1</span> <span class="string">&quot;<span class="subst">\t</span> &quot;</span> <span class="variable">$3</span>&#125;&#x27;</span><br><span class="line">root:x:<span class="number">0</span>:<span class="number">0</span>:root:<span class="operator">/</span>root:<span class="operator">/</span>bin<span class="operator">/</span>bash</span><br><span class="line">bin  <span class="number">1</span></span><br><span class="line">daemon   <span class="number">2</span></span><br><span class="line">adm  <span class="number">3</span></span><br><span class="line">lp   <span class="number">4</span></span><br><span class="line">sync     <span class="number">5</span></span><br><span class="line">shutdown     <span class="number">6</span></span><br><span class="line">halt     <span class="number">7</span></span><br><span class="line">mail     <span class="number">8</span></span><br><span class="line">#第一行是因为第一次读入默认还是以空格键位分割符的,虽然定义了<span class="type">FS</span>,但从第二行才开始生效</span><br><span class="line">#预设可以使用<span class="type">BEGIN这个关键字</span></span><br><span class="line">[haokaiyang<span class="meta">@CentOS7</span> <span class="operator">~</span>]$ cat <span class="operator">/</span>etc<span class="operator">/</span>passwd <span class="operator">|</span> awk &#x27;<span class="type">BEGIN</span> &#123;<span class="type">FS</span><span class="operator">=</span><span class="string">&quot;:&quot;</span>&#125; <span class="variable">$3</span> <span class="operator">&lt;</span> <span class="number">10</span> &#123;print <span class="variable">$1</span> <span class="string">&quot;<span class="subst">\t</span> &quot;</span> <span class="variable">$3</span>&#125;&#x27;</span><br><span class="line">root     <span class="number">0</span></span><br><span class="line">bin  <span class="number">1</span></span><br><span class="line">daemon   <span class="number">2</span></span><br><span class="line">adm  <span class="number">3</span></span><br><span class="line">lp   <span class="number">4</span></span><br><span class="line">sync     <span class="number">5</span></span><br><span class="line">shutdown     <span class="number">6</span></span><br><span class="line">halt     <span class="number">7</span></span><br><span class="line">mail     <span class="number">8</span></span><br><span class="line"></span><br><span class="line">#pay.txt</span><br><span class="line"><span class="type">Name</span>    1st     2nd     3th</span><br><span class="line"><span class="type">VBird</span>   <span class="number">23000</span>   <span class="number">24000</span>   <span class="number">25000</span></span><br><span class="line"><span class="type">DMTsai</span>  <span class="number">21000</span>   <span class="number">20000</span>   <span class="number">23000</span></span><br><span class="line"><span class="type">Bird2</span>   <span class="number">43000</span>   <span class="number">42000</span>   <span class="number">41000</span></span><br><span class="line">#计算<span class="type">Total</span></span><br><span class="line">#第一行只是说明,所以第一行不用统计</span><br><span class="line">#第二行以后开始统计</span><br><span class="line">[haokaiyang<span class="meta">@CentOS7</span> <span class="operator">~</span>]$ cat pay.txt <span class="operator">|</span> \</span><br><span class="line"><span class="operator">&gt;</span> awk &#x27;<span class="type">NR</span><span class="operator">==</span><span class="number">1</span>&#123;printf <span class="string">&quot;%10s %10s %10s %10s %10s<span class="subst">\n</span>&quot;</span>,<span class="variable">$1</span>,<span class="variable">$2</span>,<span class="variable">$3</span>,<span class="variable">$4</span>,<span class="string">&quot;Total&quot;</span> &#125;</span><br><span class="line"><span class="operator">&gt;</span> <span class="type">NR</span><span class="operator">&gt;=</span><span class="number">2</span>&#123;total <span class="operator">=</span> <span class="variable">$2</span> <span class="operator">+</span> <span class="variable">$3</span> <span class="operator">+</span> <span class="variable">$4</span></span><br><span class="line"><span class="operator">&gt;</span> printf <span class="string">&quot;%10s %10d %10d %10d %10.2f<span class="subst">\n</span>&quot;</span>, <span class="variable">$1</span>, <span class="variable">$2</span>, <span class="variable">$3</span>, <span class="variable">$4</span>, total&#125;&#x27;</span><br><span class="line">      <span class="type">Name</span>        1st        2nd        3th      <span class="type">Total</span></span><br><span class="line">     <span class="type">VBird</span>      <span class="number">23000</span>      <span class="number">24000</span>      <span class="number">25000</span>   <span class="number">72000.00</span></span><br><span class="line">    <span class="type">DMTsai</span>      <span class="number">21000</span>      <span class="number">20000</span>      <span class="number">23000</span>   <span class="number">64000.00</span></span><br><span class="line">     <span class="type">Bird2</span>      <span class="number">43000</span>      <span class="number">42000</span>      <span class="number">41000</span>  <span class="number">126000.00</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="文件对比工具"><a href="#文件对比工具" class="headerlink" title="文件对比工具"></a>文件对比工具</h3><h4 id="diff"><a href="#diff" class="headerlink" title="diff"></a>diff</h4><pre><code>命令: diff [-bBi] from-file to-file
-选项及参数:
-    from-file
-    to-file
-    from-file和to-file可以用-替换,代表stdin的意思
-    
-    -b 忽略一行中,仅有多个空白的差异(例如&quot;about me&quot; 与 &quot;about     me&quot;视为相同)
-    -B 忽略空白行差异
-    -i 忽略大小写差异
-</code></pre>
-<figure class="highlight elixir"><table><tr><td class="code"><pre><span class="line"><span class="comment">#实验准备</span></span><br><span class="line">[haokaiyang<span class="variable">@CentOS7</span> testpw]<span class="variable">$ </span>cp /etc/passwd passwd.old</span><br><span class="line">[haokaiyang<span class="variable">@CentOS7</span> testpw]<span class="variable">$ </span>cat /etc/passwd | sed -e <span class="string">&#x27;4d&#x27;</span> -e <span class="string">&#x27;6c no six line&#x27;</span> &gt;passwd.new</span><br><span class="line">[haokaiyang<span class="variable">@CentOS7</span> testpw]<span class="variable">$ </span>diff passwd.old passwd.new </span><br><span class="line"><span class="number">4</span>d3           左边第四行被删除(d)了,标准是右边的第三行  </span><br><span class="line">&lt; <span class="symbol">adm:</span><span class="symbol">x:</span><span class="number">3</span><span class="symbol">:</span><span class="number">4</span><span class="symbol">:adm</span><span class="symbol">:/var/adm</span><span class="symbol">:/sbin/nologin</span></span><br><span class="line"><span class="number">6</span>c5           左边的第六行被替换(c)成右边文件的第五行</span><br><span class="line">&lt; <span class="symbol">sync:</span><span class="symbol">x:</span><span class="number">5</span><span class="symbol">:</span><span class="number">0</span><span class="symbol">:sync</span><span class="symbol">:/sbin</span><span class="symbol">:/bin/sync</span> 右边第六行内容</span><br><span class="line">---</span><br><span class="line">&gt; no six line 右边第五行内容</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">[haokaiyang@CentOS7 ~]$  diff <span class="regexp">/etc/</span>rc0.d<span class="regexp">/ /</span>etc<span class="regexp">/rc5.d/</span></span><br><span class="line">只在 <span class="regexp">/etc/</span>rc0.d/ 存在：K90network</span><br><span class="line">只在 <span class="regexp">/etc/</span>rc5.d/ 存在：S10network</span><br></pre></td></tr></table></figure>
-
-<h4 id="cmp"><a href="#cmp" class="headerlink" title="cmp"></a>cmp</h4><pre><code>命令:cmp [-l] file1 file2
-选项及参数:
-    -l 显示十进制的字节数和八进制的不同字节
-</code></pre>
-<h4 id="patch"><a href="#patch" class="headerlink" title="patch"></a>patch</h4><figure class="highlight elixir"><table><tr><td class="code"><pre><span class="line"><span class="comment">#以passwd.old与passwd.new 制作补丁文件</span></span><br><span class="line">[haokaiyang<span class="variable">@CentOS7</span> testpw]<span class="variable">$ </span>diff -<span class="title class_">Naur</span> passwd.old passwd.new &gt; passwd.patch</span><br><span class="line">[haokaiyang<span class="variable">@CentOS7</span> testpw]<span class="variable">$ </span>cat passwd.patch </span><br><span class="line">--- passwd.old  <span class="number">2017</span><span class="number">-03</span><span class="number">-14</span> <span class="number">11</span><span class="symbol">:</span><span class="number">49</span><span class="symbol">:</span><span class="number">47.435808557</span> +<span class="number">0800</span></span><br><span class="line">+++ passwd.new  <span class="number">2017</span><span class="number">-03</span><span class="number">-14</span> <span class="number">11</span><span class="symbol">:</span><span class="number">50</span><span class="symbol">:</span><span class="number">21.191808557</span> +<span class="number">0800</span></span><br><span class="line">@@ <span class="number">-1</span>,<span class="number">9</span> +<span class="number">1</span>,<span class="number">8</span> @@   新旧文件要修改资料的限定范围,旧文件在<span class="number">1</span><span class="number">-9</span>行,新文件在<span class="number">1</span><span class="number">-8</span>行</span><br><span class="line"> <span class="symbol">root:</span><span class="symbol">x:</span><span class="number">0</span><span class="symbol">:</span><span class="number">0</span><span class="symbol">:root</span><span class="symbol">:/root</span><span class="symbol">:/bin/bash</span></span><br><span class="line"> <span class="symbol">bin:</span><span class="symbol">x:</span><span class="number">1</span><span class="symbol">:</span><span class="number">1</span><span class="symbol">:bin</span><span class="symbol">:/bin</span><span class="symbol">:/sbin/nologin</span></span><br><span class="line"> <span class="symbol">daemon:</span><span class="symbol">x:</span><span class="number">2</span><span class="symbol">:</span><span class="number">2</span><span class="symbol">:daemon</span><span class="symbol">:/sbin</span><span class="symbol">:/sbin/nologin</span></span><br><span class="line">-<span class="symbol">adm:</span><span class="symbol">x:</span><span class="number">3</span><span class="symbol">:</span><span class="number">4</span><span class="symbol">:adm</span><span class="symbol">:/var/adm</span><span class="symbol">:/sbin/nologin</span> 左侧文件删除</span><br><span class="line"> <span class="symbol">lp:</span><span class="symbol">x:</span><span class="number">4</span><span class="symbol">:</span><span class="number">7</span><span class="symbol">:lp</span><span class="symbol">:/var/spool/lpd</span><span class="symbol">:/sbin/nologin</span></span><br><span class="line">-<span class="symbol">sync:</span><span class="symbol">x:</span><span class="number">5</span><span class="symbol">:</span><span class="number">0</span><span class="symbol">:sync</span><span class="symbol">:/sbin</span><span class="symbol">:/bin/sync</span>      左侧文件删除</span><br><span class="line">+no six line                          右侧文件增加</span><br><span class="line"> <span class="symbol">shutdown:</span><span class="symbol">x:</span><span class="number">6</span><span class="symbol">:</span><span class="number">0</span><span class="symbol">:shutdown</span><span class="symbol">:/sbin</span><span class="symbol">:/sbin/shutdown</span></span><br><span class="line"> <span class="symbol">halt:</span><span class="symbol">x:</span><span class="number">7</span><span class="symbol">:</span><span class="number">0</span><span class="symbol">:halt</span><span class="symbol">:/sbin</span><span class="symbol">:/sbin/halt</span></span><br><span class="line"> <span class="symbol">mail:</span><span class="symbol">x:</span><span class="number">8</span><span class="symbol">:</span><span class="number">12</span><span class="symbol">:mail</span><span class="symbol">:/var/spool/mail</span><span class="symbol">:/sbin/nologin</span></span><br></pre></td></tr></table></figure>
-
-<pre><code>命令:patch -p0 &lt; patch_file &lt;==更新
-    patch -R -pN &lt; patch_file &lt;==还原
-选项及参数:
-    -p 后面可以接取消几层目录的意思
-    -R 代表还原,将新的档案还原成原来旧的版本
-</code></pre>
-<figure class="highlight crystal"><table><tr><td class="code"><pre><span class="line"><span class="comment">#将刚刚制作的patch file 用来更新旧版资料</span></span><br><span class="line">[haokaiyang<span class="variable">@CentOS7</span> testpw]<span class="variable">$ </span>patch -p0 &lt; passwd.patch </span><br><span class="line">patching file passwd.old</span><br><span class="line">[haokaiyang<span class="variable">@CentOS7</span> testpw]<span class="variable">$ </span>ll passwd*</span><br><span class="line">-rw-rw-r--. <span class="number">1</span> haokaiyang haokaiyang <span class="number">2271</span> <span class="number">3</span>月  <span class="number">14</span> <span class="number">11</span>:<span class="number">50</span> passwd.new</span><br><span class="line">-rw-r--r--. <span class="number">1</span> haokaiyang haokaiyang <span class="number">2271</span> <span class="number">3</span>月  <span class="number">14</span> <span class="number">13</span>:<span class="number">38</span> passwd.old</span><br><span class="line">-rw-rw-r--. <span class="number">1</span> haokaiyang haokaiyang  <span class="number">480</span> <span class="number">3</span>月  <span class="number">14</span> <span class="number">11</span>:<span class="number">54</span> passwd.patch</span><br><span class="line">[haokaiyang<span class="variable">@CentOS7</span> testpw]<span class="variable">$ </span>diff passwd.new passwd.old</span><br><span class="line"><span class="comment">#回复旧版文件的内容</span></span><br><span class="line">[haokaiyang<span class="variable">@CentOS7</span> testpw]<span class="variable">$ </span>patch -R -p0 &lt; passwd.patch </span><br><span class="line">patching file passwd.old</span><br><span class="line">[haokaiyang<span class="variable">@CentOS7</span> testpw]<span class="variable">$ </span>ll passwd*</span><br><span class="line">-rw-rw-r--. <span class="number">1</span> haokaiyang haokaiyang <span class="number">2271</span> <span class="number">3</span>月  <span class="number">14</span> <span class="number">11</span>:<span class="number">50</span> passwd.new</span><br><span class="line">-rw-r--r--. <span class="number">1</span> haokaiyang haokaiyang <span class="number">2328</span> <span class="number">3</span>月  <span class="number">14</span> <span class="number">13</span>:<span class="number">39</span> passwd.old</span><br><span class="line">-rw-rw-r--. <span class="number">1</span> haokaiyang haokaiyang  <span class="number">480</span> <span class="number">3</span>月  <span class="number">14</span> <span class="number">11</span>:<span class="number">54</span> passwd.patch</span><br></pre></td></tr></table></figure>
-
-<h3 id="文件打印准备-pr"><a href="#文件打印准备-pr" class="headerlink" title="文件打印准备:pr"></a>文件打印准备:pr</h3>]]></content>
       <categories>
         <category>学习笔记</category>
       </categories>
@@ -2033,12 +1753,290 @@ n 数字,意思是 要列出最近的n笔命令列出的意思
       </tags>
   </entry>
   <entry>
-    <title>CI框架分页类参数可以是负数的问题</title>
-    <url>/2015/07/01/ci-fix-page/</url>
-    <content><![CDATA[<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="comment">// If something isn&#x27;t quite right, back to the default base page.</span></span><br><span class="line"><span class="keyword">if</span> ( ! <span class="title function_ invoke__">ctype_digit</span>(<span class="variable">$this</span>-&gt;cur_page) <span class="title function_ invoke__">OR</span> (<span class="variable">$this</span>-&gt;use_page_numbers &amp;&amp; (<span class="keyword">int</span>) <span class="variable language_">$this</span>-&gt;cur_page === <span class="number">0</span>))</span><br><span class="line">&#123;</span><br><span class="line">    <span class="variable language_">$this</span>-&gt;cur_page = <span class="variable">$base_page</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// Make sure we&#x27;re using integers for comparisons later.</span></span><br><span class="line">    <span class="variable language_">$this</span>-&gt;cur_page = (<span class="keyword">int</span>) <span class="variable language_">$this</span>-&gt;cur_page;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+    <title>《鸟哥的Linux私房菜》正则表达式学习笔记</title>
+    <url>/2017/03/14/centos7-learning-notes-6/</url>
+    <content><![CDATA[<h2 id="特殊符号及代表意义"><a href="#特殊符号及代表意义" class="headerlink" title="特殊符号及代表意义"></a>特殊符号及代表意义</h2><table>
+<thead>
+<tr>
+<th>特殊符号</th>
+<th>代表意义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>[:alnum:]</td>
+<td>英文小写字符及数字，即 0-9, A-Z, a-z</td>
+</tr>
+<tr>
+<td>[:alpha:]</td>
+<td>英文大小写字符，即 A-Z, a-z</td>
+</tr>
+<tr>
+<td>[:blank:]</td>
+<td>空格键与tab键</td>
+</tr>
+<tr>
+<td>[:cntrl:]</td>
+<td>键盘上面的控制按键，亦即包括 CR, LF, Tab, Del.. 等等</td>
+</tr>
+<tr>
+<td>[:digit:]</td>
+<td>代表数字，亦即 0-9</td>
+</tr>
+<tr>
+<td>[:graph:]</td>
+<td>除了空白字符 (空格键 [Tab] 按键) 外的其他所有按键</td>
+</tr>
+<tr>
+<td>[:lower:]</td>
+<td>代表小写字符，亦即 a-z</td>
+</tr>
+<tr>
+<td>[:print:]</td>
+<td>代表任何可以被打印出來的字符</td>
+</tr>
+<tr>
+<td>[:punct:]</td>
+<td>代表标点符号 (punctuation symbol)，亦即：” ‘ ? ! ; : # $…</td>
+</tr>
+<tr>
+<td>[:upper:]</td>
+<td>代表大写字符，亦即 A-Z</td>
+</tr>
+<tr>
+<td>[:space:]</td>
+<td>任何会产生生空白的字符，包括空白鍵, [Tab], CR 等等</td>
+</tr>
+<tr>
+<td>[:xdigit:]</td>
+<td>代表 16 进制的数字类型，因此包括： 0-9, A-F, a-f 的数字与字符</td>
+</tr>
+</tbody></table>
+<h2 id="grep进阶"><a href="#grep进阶" class="headerlink" title="grep进阶"></a>grep进阶</h2><pre><code>命令:grep [-A] [-B] [--color=auto] &#39;搜索字符串&#39; filename
+选项及参数:
+    -A 后面可加数字,为after的意思,除了列出该行外,后面的n行也列出来
+    -B 后面可加数字,为befer的意思,除了列出该列外,前面的n行业列出来
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>RE字符</th>
+<th>意义</th>
+<th>例子</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>^word</td>
+<td>待搜素的字符串在行首</td>
+<td>grep -n ‘^#’ regular_express.txt</td>
+</tr>
+<tr>
+<td>word$</td>
+<td>待搜素的字符串在行尾</td>
+<td>grep -n ‘!$’ regular_express.txt</td>
+</tr>
+<tr>
+<td>.</td>
+<td>一定有一个任意字符</td>
+<td>grep -n ‘e.e’ regular_express.txt</td>
+</tr>
+<tr>
+<td>|转义特殊符号</td>
+<td>grep -n &#39; regular_express.txt</td>
+<td></td>
+</tr>
+<tr>
+<td>*</td>
+<td>代表重复前一个字符0-无穷次</td>
+<td>grep -n ‘ess*’ regular_express.txt</td>
+</tr>
+<tr>
+<td>[list]</td>
+<td>字符集合的RE字符,里面列出想要截取的字符</td>
+<td>grep -n ‘g[ld]’ regular_express.txt</td>
+</tr>
+<tr>
+<td>[n1-n2]</td>
+<td>字符集合的RE字符,里面列出想要截取的字符范围</td>
+<td>grep -n ‘[A-Z]’ regular_express.txt</td>
+</tr>
+<tr>
+<td>[^list]</td>
+<td>字符集合的RE字符,里面列出不要的字符串或范围</td>
+<td>grep -n ‘oo[^t]’ regular_express.txt</td>
+</tr>
+<tr>
+<td>{n,m}</td>
+<td>连续n到m的前一个RE字符<br>若为{n}连续n个前一个RE字符<br>{n,}连续n个以上的前一个RE字符</td>
+<td>grep -n ‘go{2,3}g’ regular_express.txt</td>
+</tr>
+</tbody></table>
+<h2 id="sed工具"><a href="#sed工具" class="headerlink" title="sed工具"></a>sed工具</h2><pre><code>命令:sed [-nefr] [动作]
+选项及参数:
+    -n 使用安静(silent)模式,在一般sed的用法中,所有来自stdin的资料一般都会列出到屏幕上,但如果加上-n参数后,则只有经过sed特殊处理的那一行(或者动作)才会被列出来
+    -e 直接在命令模式上进行sed的动作编辑
+    -f 直接将sed的工作写在一个文件内,-f filename 则可以执行filename内的sed动作
+    -r sed的动作支持的是延伸型正规表达式语法(默认是基础语法)
+    -i 直接修改读取的文件内容,而不是由屏幕输出
+动作说明: [n1[,n2]]function
+    n1,n2 不见得会存在,一般代表选择进行动作的行数,举例来说,如果我的动作是需要在10-20行之间进行的,则10,20(动作行为)
+</code></pre>
+<p>function下有这些东西:<br>a 新增,a的后面可以接字符串,而这些字符串会在新的一行出现(目前的下一行)<br>c 取代,c的后面可以接字符串,这些字符串可以取代n1,n2之间的行<br>d 删除,后面不用加任何东西<br>i 插入,i的后面可以接字符串,而这些字符串在新的一行出现(目前的上一行)<br>p 打印,将某个选择的资料打印<br>s 取代,可以直接进行替换的工作。可以搭配正则表达式,例如1,20s&#x2F;old&#x2F;new&#x2F;g就是啦</p>
+<figure class="highlight elixir"><table><tr><td class="code"><pre><span class="line"><span class="comment">#将/etc/passwd的内容列出来,同时删除2-5行</span></span><br><span class="line">[root<span class="variable">@CentOS7</span> ~]<span class="comment"># nl /etc/passwd | sed &#x27;2,5d&#x27;</span></span><br><span class="line">     <span class="number">1</span>  <span class="symbol">root:</span><span class="symbol">x:</span><span class="number">0</span><span class="symbol">:</span><span class="number">0</span><span class="symbol">:root</span><span class="symbol">:/root</span><span class="symbol">:/bin/bash</span></span><br><span class="line">     <span class="number">6</span>  <span class="symbol">sync:</span><span class="symbol">x:</span><span class="number">5</span><span class="symbol">:</span><span class="number">0</span><span class="symbol">:sync</span><span class="symbol">:/sbin</span><span class="symbol">:/bin/sync</span></span><br><span class="line">...省略...</span><br><span class="line"><span class="comment">#只看第一行</span></span><br><span class="line">[root<span class="variable">@CentOS7</span> ~]<span class="comment"># nl /etc/passwd | sed &#x27;2,$d&#x27;</span></span><br><span class="line">     <span class="number">1</span>  <span class="symbol">root:</span><span class="symbol">x:</span><span class="number">0</span><span class="symbol">:</span><span class="number">0</span><span class="symbol">:root</span><span class="symbol">:/root</span><span class="symbol">:/bin/bash</span></span><br><span class="line"><span class="comment">#在第二行后加上drink tea字符串</span></span><br><span class="line">[root<span class="variable">@CentOS7</span> ~]<span class="comment"># nl /etc/passwd | sed &#x27;2a drink tea&#x27;</span></span><br><span class="line">     <span class="number">1</span>  <span class="symbol">root:</span><span class="symbol">x:</span><span class="number">0</span><span class="symbol">:</span><span class="number">0</span><span class="symbol">:root</span><span class="symbol">:/root</span><span class="symbol">:/bin/bash</span></span><br><span class="line">     <span class="number">2</span>  <span class="symbol">bin:</span><span class="symbol">x:</span><span class="number">1</span><span class="symbol">:</span><span class="number">1</span><span class="symbol">:bin</span><span class="symbol">:/bin</span><span class="symbol">:/sbin/nologin</span></span><br><span class="line">drink tea</span><br><span class="line">     <span class="number">3</span>  <span class="symbol">daemon:</span><span class="symbol">x:</span><span class="number">2</span><span class="symbol">:</span><span class="number">2</span><span class="symbol">:daemon</span><span class="symbol">:/sbin</span><span class="symbol">:/sbin/nologin</span></span><br><span class="line">     <span class="number">4</span>  <span class="symbol">adm:</span><span class="symbol">x:</span><span class="number">3</span><span class="symbol">:</span><span class="number">4</span><span class="symbol">:adm</span><span class="symbol">:/var/adm</span><span class="symbol">:/sbin/nologin</span></span><br><span class="line"><span class="comment">#将第2-5行的内容替换成 No 2-5 number</span></span><br><span class="line">[root<span class="variable">@CentOS7</span> ~]<span class="comment"># nl /etc/passwd | sed &#x27;2,5c No 2-5 number&#x27;</span></span><br><span class="line">     <span class="number">1</span>  <span class="symbol">root:</span><span class="symbol">x:</span><span class="number">0</span><span class="symbol">:</span><span class="number">0</span><span class="symbol">:root</span><span class="symbol">:/root</span><span class="symbol">:/bin/bash</span></span><br><span class="line"><span class="title class_">No</span> <span class="number">2</span><span class="number">-5</span> number</span><br><span class="line">     <span class="number">6</span>  <span class="symbol">sync:</span><span class="symbol">x:</span><span class="number">5</span><span class="symbol">:</span><span class="number">0</span><span class="symbol">:sync</span><span class="symbol">:/sbin</span><span class="symbol">:/bin/sync</span></span><br><span class="line">     <span class="number">7</span>  <span class="symbol">shutdown:</span><span class="symbol">x:</span><span class="number">6</span><span class="symbol">:</span><span class="number">0</span><span class="symbol">:shutdown</span><span class="symbol">:/sbin</span><span class="symbol">:/sbin/shutdown</span></span><br><span class="line"><span class="comment">#仅列出5-7行</span></span><br><span class="line">[root<span class="variable">@CentOS7</span> ~]<span class="comment"># nl /etc/passwd |sed -n &#x27;5,7p&#x27;</span></span><br><span class="line">     <span class="number">5</span>  <span class="symbol">lp:</span><span class="symbol">x:</span><span class="number">4</span><span class="symbol">:</span><span class="number">7</span><span class="symbol">:lp</span><span class="symbol">:/var/spool/lpd</span><span class="symbol">:/sbin/nologin</span></span><br><span class="line">     <span class="number">6</span>  <span class="symbol">sync:</span><span class="symbol">x:</span><span class="number">5</span><span class="symbol">:</span><span class="number">0</span><span class="symbol">:sync</span><span class="symbol">:/sbin</span><span class="symbol">:/bin/sync</span></span><br><span class="line">     <span class="number">7</span>  <span class="symbol">shutdown:</span><span class="symbol">x:</span><span class="number">6</span><span class="symbol">:</span><span class="number">0</span><span class="symbol">:shutdown</span><span class="symbol">:/sbin</span><span class="symbol">:/sbin/shutdown</span></span><br><span class="line"><span class="comment">#查看本机ip</span></span><br><span class="line">[root<span class="variable">@CentOS7</span> ~]<span class="comment"># ifconfig enp0s3 | grep &#x27;inet &#x27;|sed &#x27;s/^.*inet //g&#x27; | sed &#x27;s/ *netmask.*$//g&#x27;</span></span><br><span class="line"><span class="number">10.0</span>.<span class="number">2.15</span></span><br><span class="line"><span class="comment">#直接修改文件内容(会修改原始文件,谨慎操作)</span></span><br><span class="line"><span class="comment">#将regular_express.txt中的.替换为!</span></span><br><span class="line">[root<span class="variable">@CentOS7</span> haokaiyang]<span class="comment"># sed -i &#x27;s/\.$/\!/g&#x27; regular_express.txt</span></span><br></pre></td></tr></table></figure>
 
-<p>应改写为:</p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="comment">// If something isn&#x27;t quite right, back to the default base page.</span></span><br><span class="line"><span class="keyword">if</span> ( ! <span class="title function_ invoke__">ctype_digit</span>(<span class="variable">$this</span>-&gt;cur_page) <span class="title function_ invoke__">OR</span> (<span class="variable">$this</span>-&gt;use_page_numbers &amp;&amp; (<span class="keyword">int</span>) <span class="variable language_">$this</span>-&gt;cur_page &lt;= <span class="number">0</span>))</span><br><span class="line">&#123;</span><br><span class="line">    <span class="variable language_">$this</span>-&gt;cur_page = <span class="variable">$base_page</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// Make sure we&#x27;re using integers for comparisons later.</span></span><br><span class="line">    <span class="variable language_">$this</span>-&gt;cur_page = (<span class="keyword">int</span>) <span class="variable language_">$this</span>-&gt;cur_page;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="延伸正则表达式"><a href="#延伸正则表达式" class="headerlink" title="延伸正则表达式"></a>延伸正则表达式</h2><table>
+<thead>
+<tr>
+<th>RE字符</th>
+<th>意义</th>
+<th>例子</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>+</td>
+<td>重复一个或一个以上的前一个RE字符</td>
+<td>搜索god,good,goood等字符串<br>egrep -n ‘go+d’ regular_express.txt</td>
+</tr>
+<tr>
+<td>?</td>
+<td>0个或一个的前一个RE字符</td>
+<td>搜索gd,god等字符串<br>egrep -n ‘go?d’ regular_express.txt</td>
+</tr>
+<tr>
+<td>&amp;#124;</td>
+<td>用or的方式找出字符串</td>
+<td>egrep -n ‘gd&amp;#124;good’ regular_express.txt</td>
+</tr>
+<tr>
+<td>()</td>
+<td>找出群组字符</td>
+<td>找出glad或good字符串<br>egrep -n ‘g(la&amp;#124;oo)d’ regular_express.txt</td>
+</tr>
+<tr>
+<td>()+</td>
+<td>多个重复群组的判断</td>
+<td>开头是A,结尾是C,中间有一个以上的xyz字符串的字符<br>echo ‘AxyzxyzxyzxyzC’,egrep ‘A(xyz)+C’</td>
+</tr>
+</tbody></table>
+<h2 id="文件格式化及相关处理"><a href="#文件格式化及相关处理" class="headerlink" title="文件格式化及相关处理"></a>文件格式化及相关处理</h2><h3 id="格式化打印-printf"><a href="#格式化打印-printf" class="headerlink" title="格式化打印:printf"></a>格式化打印:printf</h3><pre><code>命令:printf &#39;打印格式&#39; 实际内容
+选项及参数:
+格式方面有以下几个特殊格式:
+    \a 警告声音
+    \b backspace键
+    \f 清屏(form feed)
+    \n 输出新的一行
+    \r Enter按键
+    \t 水平tab按键
+    \v 垂直tab按键
+    \xNN NN为两位数的数字,可以转换数字成为字符串
+    关于C语言内,常见的变量格式
+    %ns 那个n是数字,s代表string,即多少个字符
+    %ni 那个n是数字,i代表integer,即多少整数位
+    %N.nf 那个n与N都是数字,f代表floating(浮点),假设十个位数,小数点两位.%10.2f
+</code></pre>
+<figure class="highlight llvm"><table><tr><td class="code"><pre><span class="line">Name     Chinese   English   Math    Average</span><br><span class="line">DmTsai        <span class="number">80</span>        <span class="number">60</span>     <span class="number">92</span>      <span class="number">77.33</span></span><br><span class="line">VBird         <span class="number">75</span>        <span class="number">55</span>     <span class="number">80</span>      <span class="number">70.00</span></span><br><span class="line">Ken           <span class="number">60</span>        <span class="number">90</span>     <span class="number">70</span>      <span class="number">73.33</span></span><br><span class="line"></span><br><span class="line">#将上诉信息第二行以后<span class="punctuation">,</span>分别用字符串<span class="punctuation">,</span>整数<span class="punctuation">,</span>小数来显示</span><br><span class="line">[haokaiyang<span class="title">@CentOS7</span> ~]$ printf &#x27;<span class="variable">%10</span>s <span class="variable">%5</span>i <span class="variable">%5</span>i <span class="variable">%5</span>i <span class="variable">%8</span>.<span class="number">2</span>f \n&#x27; $(cat printf.txt | grep -v Name)</span><br><span class="line">    DmTsai    <span class="number">80</span>    <span class="number">60</span>    <span class="number">92</span>    <span class="number">77.33</span> </span><br><span class="line">     VBird    <span class="number">75</span>    <span class="number">55</span>    <span class="number">80</span>    <span class="number">70.00</span> </span><br><span class="line">       Ken    <span class="number">60</span>    <span class="number">90</span>    <span class="number">70</span>    <span class="number">73.33</span> </span><br></pre></td></tr></table></figure>
+
+<h3 id="awk-优良的文本处理工具"><a href="#awk-优良的文本处理工具" class="headerlink" title="awk:优良的文本处理工具"></a>awk:优良的文本处理工具</h3><p>awk中,默认栏位的分割符是 空格键 或 tab键。</p>
+<pre><code>命令:awk &#39;条件类型1&#123;动作1&#125; 条件类型2&#123;动作2&#125; ...&#39; filename
+</code></pre>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line">[haokaiyang<span class="meta">@CentOS7</span> <span class="operator">~</span>]$ last <span class="operator">-</span>n <span class="number">5</span> <span class="operator">|</span>awk &#x27;&#123;print <span class="variable">$1</span> <span class="string">&quot;<span class="subst">\t</span>&quot;</span> <span class="variable">$3</span>&#125;&#x27;</span><br><span class="line">haokaiya    <span class="type">Mon</span></span><br><span class="line">haokaiya    :<span class="number">0</span></span><br><span class="line">haokaiya    :<span class="number">0</span></span><br><span class="line">(unknown    :<span class="number">0</span></span><br><span class="line">reboot  boot</span><br><span class="line"></span><br><span class="line">wtmp    <span class="type">Mon</span></span><br></pre></td></tr></table></figure>
+<h4 id="awk内置变量"><a href="#awk内置变量" class="headerlink" title="awk内置变量"></a>awk内置变量</h4><table>
+<thead>
+<tr>
+<th>变量名称</th>
+<th>意义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>NF</td>
+<td>每一行($0)拥有的栏位总数</td>
+</tr>
+<tr>
+<td>NR</td>
+<td>目前awk所处理的是第几行的资料</td>
+</tr>
+<tr>
+<td>FS</td>
+<td>目前得到分割字符,默认是空格键</td>
+</tr>
+</tbody></table>
+<figure class="highlight pgsql"><table><tr><td class="code"><pre><span class="line">[haokaiyang@CentOS7 ~]$  last -n <span class="number">5</span>| awk <span class="string">&#x27;&#123;print $1 &quot;\t lines: &quot; NR &quot;\t columns: &quot; NF&#125;&#x27;</span></span><br><span class="line">haokaiya     lines: <span class="number">1</span>    <span class="keyword">columns</span>: <span class="number">9</span></span><br><span class="line">haokaiya     lines: <span class="number">2</span>    <span class="keyword">columns</span>: <span class="number">10</span></span><br><span class="line">haokaiya     lines: <span class="number">3</span>    <span class="keyword">columns</span>: <span class="number">10</span></span><br><span class="line">(<span class="type">unknown</span>     lines: <span class="number">4</span>    <span class="keyword">columns</span>: <span class="number">10</span></span><br><span class="line">reboot   lines: <span class="number">5</span>    <span class="keyword">columns</span>: <span class="number">11</span></span><br><span class="line">     lines: <span class="number">6</span>    <span class="keyword">columns</span>: <span class="number">0</span></span><br><span class="line">wtmp     lines: <span class="number">7</span>    <span class="keyword">columns</span>: <span class="number">7</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="awk的逻辑运算符"><a href="#awk的逻辑运算符" class="headerlink" title="awk的逻辑运算符"></a>awk的逻辑运算符</h4><table>
+<thead>
+<tr>
+<th>运算符号</th>
+<th>意义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&gt;</td>
+<td>大于</td>
+</tr>
+<tr>
+<td>&lt;</td>
+<td>小于</td>
+</tr>
+<tr>
+<td>&gt;&#x3D;</td>
+<td>大于或等于</td>
+</tr>
+<tr>
+<td>&lt;&#x3D;</td>
+<td>小于或等于</td>
+</tr>
+<tr>
+<td>&#x3D;&#x3D;</td>
+<td>等于</td>
+</tr>
+<tr>
+<td>!&#x3D;</td>
+<td>不等于</td>
+</tr>
+</tbody></table>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line">#查询第三栏小于<span class="number">10</span>以下的数据,并且仅列出账号与第三栏</span><br><span class="line">[haokaiyang<span class="meta">@CentOS7</span> <span class="operator">~</span>]$ cat <span class="operator">/</span>etc<span class="operator">/</span>passwd <span class="operator">|</span> awk &#x27;&#123;<span class="type">FS</span><span class="operator">=</span><span class="string">&quot;:&quot;</span>&#125; <span class="variable">$3</span> <span class="operator">&lt;</span> <span class="number">10</span> &#123;print <span class="variable">$1</span> <span class="string">&quot;<span class="subst">\t</span> &quot;</span> <span class="variable">$3</span>&#125;&#x27;</span><br><span class="line">root:x:<span class="number">0</span>:<span class="number">0</span>:root:<span class="operator">/</span>root:<span class="operator">/</span>bin<span class="operator">/</span>bash</span><br><span class="line">bin  <span class="number">1</span></span><br><span class="line">daemon   <span class="number">2</span></span><br><span class="line">adm  <span class="number">3</span></span><br><span class="line">lp   <span class="number">4</span></span><br><span class="line">sync     <span class="number">5</span></span><br><span class="line">shutdown     <span class="number">6</span></span><br><span class="line">halt     <span class="number">7</span></span><br><span class="line">mail     <span class="number">8</span></span><br><span class="line">#第一行是因为第一次读入默认还是以空格键位分割符的,虽然定义了<span class="type">FS</span>,但从第二行才开始生效</span><br><span class="line">#预设可以使用<span class="type">BEGIN这个关键字</span></span><br><span class="line">[haokaiyang<span class="meta">@CentOS7</span> <span class="operator">~</span>]$ cat <span class="operator">/</span>etc<span class="operator">/</span>passwd <span class="operator">|</span> awk &#x27;<span class="type">BEGIN</span> &#123;<span class="type">FS</span><span class="operator">=</span><span class="string">&quot;:&quot;</span>&#125; <span class="variable">$3</span> <span class="operator">&lt;</span> <span class="number">10</span> &#123;print <span class="variable">$1</span> <span class="string">&quot;<span class="subst">\t</span> &quot;</span> <span class="variable">$3</span>&#125;&#x27;</span><br><span class="line">root     <span class="number">0</span></span><br><span class="line">bin  <span class="number">1</span></span><br><span class="line">daemon   <span class="number">2</span></span><br><span class="line">adm  <span class="number">3</span></span><br><span class="line">lp   <span class="number">4</span></span><br><span class="line">sync     <span class="number">5</span></span><br><span class="line">shutdown     <span class="number">6</span></span><br><span class="line">halt     <span class="number">7</span></span><br><span class="line">mail     <span class="number">8</span></span><br><span class="line"></span><br><span class="line">#pay.txt</span><br><span class="line"><span class="type">Name</span>    1st     2nd     3th</span><br><span class="line"><span class="type">VBird</span>   <span class="number">23000</span>   <span class="number">24000</span>   <span class="number">25000</span></span><br><span class="line"><span class="type">DMTsai</span>  <span class="number">21000</span>   <span class="number">20000</span>   <span class="number">23000</span></span><br><span class="line"><span class="type">Bird2</span>   <span class="number">43000</span>   <span class="number">42000</span>   <span class="number">41000</span></span><br><span class="line">#计算<span class="type">Total</span></span><br><span class="line">#第一行只是说明,所以第一行不用统计</span><br><span class="line">#第二行以后开始统计</span><br><span class="line">[haokaiyang<span class="meta">@CentOS7</span> <span class="operator">~</span>]$ cat pay.txt <span class="operator">|</span> \</span><br><span class="line"><span class="operator">&gt;</span> awk &#x27;<span class="type">NR</span><span class="operator">==</span><span class="number">1</span>&#123;printf <span class="string">&quot;%10s %10s %10s %10s %10s<span class="subst">\n</span>&quot;</span>,<span class="variable">$1</span>,<span class="variable">$2</span>,<span class="variable">$3</span>,<span class="variable">$4</span>,<span class="string">&quot;Total&quot;</span> &#125;</span><br><span class="line"><span class="operator">&gt;</span> <span class="type">NR</span><span class="operator">&gt;=</span><span class="number">2</span>&#123;total <span class="operator">=</span> <span class="variable">$2</span> <span class="operator">+</span> <span class="variable">$3</span> <span class="operator">+</span> <span class="variable">$4</span></span><br><span class="line"><span class="operator">&gt;</span> printf <span class="string">&quot;%10s %10d %10d %10d %10.2f<span class="subst">\n</span>&quot;</span>, <span class="variable">$1</span>, <span class="variable">$2</span>, <span class="variable">$3</span>, <span class="variable">$4</span>, total&#125;&#x27;</span><br><span class="line">      <span class="type">Name</span>        1st        2nd        3th      <span class="type">Total</span></span><br><span class="line">     <span class="type">VBird</span>      <span class="number">23000</span>      <span class="number">24000</span>      <span class="number">25000</span>   <span class="number">72000.00</span></span><br><span class="line">    <span class="type">DMTsai</span>      <span class="number">21000</span>      <span class="number">20000</span>      <span class="number">23000</span>   <span class="number">64000.00</span></span><br><span class="line">     <span class="type">Bird2</span>      <span class="number">43000</span>      <span class="number">42000</span>      <span class="number">41000</span>  <span class="number">126000.00</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="文件对比工具"><a href="#文件对比工具" class="headerlink" title="文件对比工具"></a>文件对比工具</h3><h4 id="diff"><a href="#diff" class="headerlink" title="diff"></a>diff</h4><pre><code>命令: diff [-bBi] from-file to-file
+选项及参数:
+    from-file
+    to-file
+    from-file和to-file可以用-替换,代表stdin的意思
+    
+    -b 忽略一行中,仅有多个空白的差异(例如&quot;about me&quot; 与 &quot;about     me&quot;视为相同)
+    -B 忽略空白行差异
+    -i 忽略大小写差异
+</code></pre>
+<figure class="highlight elixir"><table><tr><td class="code"><pre><span class="line"><span class="comment">#实验准备</span></span><br><span class="line">[haokaiyang<span class="variable">@CentOS7</span> testpw]<span class="variable">$ </span>cp /etc/passwd passwd.old</span><br><span class="line">[haokaiyang<span class="variable">@CentOS7</span> testpw]<span class="variable">$ </span>cat /etc/passwd | sed -e <span class="string">&#x27;4d&#x27;</span> -e <span class="string">&#x27;6c no six line&#x27;</span> &gt;passwd.new</span><br><span class="line">[haokaiyang<span class="variable">@CentOS7</span> testpw]<span class="variable">$ </span>diff passwd.old passwd.new </span><br><span class="line"><span class="number">4</span>d3           左边第四行被删除(d)了,标准是右边的第三行  </span><br><span class="line">&lt; <span class="symbol">adm:</span><span class="symbol">x:</span><span class="number">3</span><span class="symbol">:</span><span class="number">4</span><span class="symbol">:adm</span><span class="symbol">:/var/adm</span><span class="symbol">:/sbin/nologin</span></span><br><span class="line"><span class="number">6</span>c5           左边的第六行被替换(c)成右边文件的第五行</span><br><span class="line">&lt; <span class="symbol">sync:</span><span class="symbol">x:</span><span class="number">5</span><span class="symbol">:</span><span class="number">0</span><span class="symbol">:sync</span><span class="symbol">:/sbin</span><span class="symbol">:/bin/sync</span> 右边第六行内容</span><br><span class="line">---</span><br><span class="line">&gt; no six line 右边第五行内容</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">[haokaiyang@CentOS7 ~]$  diff <span class="regexp">/etc/</span>rc0.d<span class="regexp">/ /</span>etc<span class="regexp">/rc5.d/</span></span><br><span class="line">只在 <span class="regexp">/etc/</span>rc0.d/ 存在：K90network</span><br><span class="line">只在 <span class="regexp">/etc/</span>rc5.d/ 存在：S10network</span><br></pre></td></tr></table></figure>
+
+<h4 id="cmp"><a href="#cmp" class="headerlink" title="cmp"></a>cmp</h4><pre><code>命令:cmp [-l] file1 file2
+选项及参数:
+    -l 显示十进制的字节数和八进制的不同字节
+</code></pre>
+<h4 id="patch"><a href="#patch" class="headerlink" title="patch"></a>patch</h4><figure class="highlight elixir"><table><tr><td class="code"><pre><span class="line"><span class="comment">#以passwd.old与passwd.new 制作补丁文件</span></span><br><span class="line">[haokaiyang<span class="variable">@CentOS7</span> testpw]<span class="variable">$ </span>diff -<span class="title class_">Naur</span> passwd.old passwd.new &gt; passwd.patch</span><br><span class="line">[haokaiyang<span class="variable">@CentOS7</span> testpw]<span class="variable">$ </span>cat passwd.patch </span><br><span class="line">--- passwd.old  <span class="number">2017</span><span class="number">-03</span><span class="number">-14</span> <span class="number">11</span><span class="symbol">:</span><span class="number">49</span><span class="symbol">:</span><span class="number">47.435808557</span> +<span class="number">0800</span></span><br><span class="line">+++ passwd.new  <span class="number">2017</span><span class="number">-03</span><span class="number">-14</span> <span class="number">11</span><span class="symbol">:</span><span class="number">50</span><span class="symbol">:</span><span class="number">21.191808557</span> +<span class="number">0800</span></span><br><span class="line">@@ <span class="number">-1</span>,<span class="number">9</span> +<span class="number">1</span>,<span class="number">8</span> @@   新旧文件要修改资料的限定范围,旧文件在<span class="number">1</span><span class="number">-9</span>行,新文件在<span class="number">1</span><span class="number">-8</span>行</span><br><span class="line"> <span class="symbol">root:</span><span class="symbol">x:</span><span class="number">0</span><span class="symbol">:</span><span class="number">0</span><span class="symbol">:root</span><span class="symbol">:/root</span><span class="symbol">:/bin/bash</span></span><br><span class="line"> <span class="symbol">bin:</span><span class="symbol">x:</span><span class="number">1</span><span class="symbol">:</span><span class="number">1</span><span class="symbol">:bin</span><span class="symbol">:/bin</span><span class="symbol">:/sbin/nologin</span></span><br><span class="line"> <span class="symbol">daemon:</span><span class="symbol">x:</span><span class="number">2</span><span class="symbol">:</span><span class="number">2</span><span class="symbol">:daemon</span><span class="symbol">:/sbin</span><span class="symbol">:/sbin/nologin</span></span><br><span class="line">-<span class="symbol">adm:</span><span class="symbol">x:</span><span class="number">3</span><span class="symbol">:</span><span class="number">4</span><span class="symbol">:adm</span><span class="symbol">:/var/adm</span><span class="symbol">:/sbin/nologin</span> 左侧文件删除</span><br><span class="line"> <span class="symbol">lp:</span><span class="symbol">x:</span><span class="number">4</span><span class="symbol">:</span><span class="number">7</span><span class="symbol">:lp</span><span class="symbol">:/var/spool/lpd</span><span class="symbol">:/sbin/nologin</span></span><br><span class="line">-<span class="symbol">sync:</span><span class="symbol">x:</span><span class="number">5</span><span class="symbol">:</span><span class="number">0</span><span class="symbol">:sync</span><span class="symbol">:/sbin</span><span class="symbol">:/bin/sync</span>      左侧文件删除</span><br><span class="line">+no six line                          右侧文件增加</span><br><span class="line"> <span class="symbol">shutdown:</span><span class="symbol">x:</span><span class="number">6</span><span class="symbol">:</span><span class="number">0</span><span class="symbol">:shutdown</span><span class="symbol">:/sbin</span><span class="symbol">:/sbin/shutdown</span></span><br><span class="line"> <span class="symbol">halt:</span><span class="symbol">x:</span><span class="number">7</span><span class="symbol">:</span><span class="number">0</span><span class="symbol">:halt</span><span class="symbol">:/sbin</span><span class="symbol">:/sbin/halt</span></span><br><span class="line"> <span class="symbol">mail:</span><span class="symbol">x:</span><span class="number">8</span><span class="symbol">:</span><span class="number">12</span><span class="symbol">:mail</span><span class="symbol">:/var/spool/mail</span><span class="symbol">:/sbin/nologin</span></span><br></pre></td></tr></table></figure>
+
+<pre><code>命令:patch -p0 &lt; patch_file &lt;==更新
+    patch -R -pN &lt; patch_file &lt;==还原
+选项及参数:
+    -p 后面可以接取消几层目录的意思
+    -R 代表还原,将新的档案还原成原来旧的版本
+</code></pre>
+<figure class="highlight crystal"><table><tr><td class="code"><pre><span class="line"><span class="comment">#将刚刚制作的patch file 用来更新旧版资料</span></span><br><span class="line">[haokaiyang<span class="variable">@CentOS7</span> testpw]<span class="variable">$ </span>patch -p0 &lt; passwd.patch </span><br><span class="line">patching file passwd.old</span><br><span class="line">[haokaiyang<span class="variable">@CentOS7</span> testpw]<span class="variable">$ </span>ll passwd*</span><br><span class="line">-rw-rw-r--. <span class="number">1</span> haokaiyang haokaiyang <span class="number">2271</span> <span class="number">3</span>月  <span class="number">14</span> <span class="number">11</span>:<span class="number">50</span> passwd.new</span><br><span class="line">-rw-r--r--. <span class="number">1</span> haokaiyang haokaiyang <span class="number">2271</span> <span class="number">3</span>月  <span class="number">14</span> <span class="number">13</span>:<span class="number">38</span> passwd.old</span><br><span class="line">-rw-rw-r--. <span class="number">1</span> haokaiyang haokaiyang  <span class="number">480</span> <span class="number">3</span>月  <span class="number">14</span> <span class="number">11</span>:<span class="number">54</span> passwd.patch</span><br><span class="line">[haokaiyang<span class="variable">@CentOS7</span> testpw]<span class="variable">$ </span>diff passwd.new passwd.old</span><br><span class="line"><span class="comment">#回复旧版文件的内容</span></span><br><span class="line">[haokaiyang<span class="variable">@CentOS7</span> testpw]<span class="variable">$ </span>patch -R -p0 &lt; passwd.patch </span><br><span class="line">patching file passwd.old</span><br><span class="line">[haokaiyang<span class="variable">@CentOS7</span> testpw]<span class="variable">$ </span>ll passwd*</span><br><span class="line">-rw-rw-r--. <span class="number">1</span> haokaiyang haokaiyang <span class="number">2271</span> <span class="number">3</span>月  <span class="number">14</span> <span class="number">11</span>:<span class="number">50</span> passwd.new</span><br><span class="line">-rw-r--r--. <span class="number">1</span> haokaiyang haokaiyang <span class="number">2328</span> <span class="number">3</span>月  <span class="number">14</span> <span class="number">13</span>:<span class="number">39</span> passwd.old</span><br><span class="line">-rw-rw-r--. <span class="number">1</span> haokaiyang haokaiyang  <span class="number">480</span> <span class="number">3</span>月  <span class="number">14</span> <span class="number">11</span>:<span class="number">54</span> passwd.patch</span><br></pre></td></tr></table></figure>
+
+<h3 id="文件打印准备-pr"><a href="#文件打印准备-pr" class="headerlink" title="文件打印准备:pr"></a>文件打印准备:pr</h3>]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>学习笔记</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>解决CI框架中图片FTP上传图像乱掉的问题</title>
+    <url>/2015/07/18/ci-fix-ftp/</url>
+    <content><![CDATA[<p>最近在使用CI框架做一个项目的时候，由于图片需要上传到另一个服务器，所以需要用到CI框架中的FTP上传类，上传的时候发现将本地暂存文件夹中的图片上传到FTP服务器上，图像会乱掉或者无法查看，找了一下午问题，才发现是CI自己的问题，因为$_FILES数组下的tmp_name中的文件路径中是没有文件后缀名的，CI就会自动加上.txt的后缀，然后上传到服务器上时，我们又转化为图像的格式，所以出现了这个问题。<br>以下是我修改的Ftp类的upload函数.<br>文件位置:system\libraries\Ftp.php</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">upload</span>(<span class="params"><span class="variable">$locpath</span>, <span class="variable">$rempath</span>, <span class="variable">$mode</span> = <span class="string">&#x27;auto&#x27;</span>, <span class="variable">$permissions</span> = <span class="literal">NULL</span></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> ( ! <span class="variable language_">$this</span>-&gt;<span class="title function_ invoke__">_is_conn</span>())</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">FALSE</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> ( ! <span class="title function_ invoke__">file_exists</span>(<span class="variable">$locpath</span>))</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;<span class="title function_ invoke__">_error</span>(<span class="string">&#x27;ftp_no_source_file&#x27;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">FALSE</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Set the mode if not specified</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="variable">$mode</span> == <span class="string">&#x27;auto&#x27;</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// Get the file extension so we can set the upload type</span></span><br><span class="line">        <span class="variable">$ext</span> = <span class="variable language_">$this</span>-&gt;<span class="title function_ invoke__">_getext</span>(<span class="variable">$locpath</span>);</span><br><span class="line">        <span class="variable">$mode</span> = <span class="variable language_">$this</span>-&gt;<span class="title function_ invoke__">_settype</span>(<span class="variable">$ext</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="variable">$mode</span> = (<span class="variable">$mode</span> == <span class="string">&#x27;ascii&#x27;</span>) ? FTP_ASCII : FTP_BINARY;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(<span class="variable">$mode</span> == <span class="string">&#x27;image&#x27;</span>)&#123;</span><br><span class="line">        <span class="variable">$mode</span> = FTP_BINARY;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="variable">$result</span> = @<span class="title function_ invoke__">ftp_put</span>(<span class="variable">$this</span>-&gt;conn_id, <span class="variable">$rempath</span>, <span class="variable">$locpath</span>, <span class="variable">$mode</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="variable">$result</span> === <span class="literal">FALSE</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="variable language_">$this</span>-&gt;debug == <span class="literal">TRUE</span>)</span><br><span class="line">        &#123;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;<span class="title function_ invoke__">_error</span>(<span class="string">&#x27;ftp_unable_to_upload&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">FALSE</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Set file permissions if needed</span></span><br><span class="line"><span class="keyword">if</span> ( ! <span class="title function_ invoke__">is_null</span>(<span class="variable">$permissions</span>))</span><br><span class="line">&#123;</span><br><span class="line">    <span class="variable language_">$this</span>-&gt;<span class="title function_ invoke__">chmod</span>(<span class="variable">$rempath</span>, (<span class="keyword">int</span>)<span class="variable">$permissions</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> <span class="literal">TRUE</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>PHP</category>
@@ -2072,10 +2070,12 @@ n 数字,意思是 要列出最近的n笔命令列出的意思
       </tags>
   </entry>
   <entry>
-    <title>解决CI框架中图片FTP上传图像乱掉的问题</title>
-    <url>/2015/07/18/ci-fix-ftp/</url>
-    <content><![CDATA[<p>最近在使用CI框架做一个项目的时候，由于图片需要上传到另一个服务器，所以需要用到CI框架中的FTP上传类，上传的时候发现将本地暂存文件夹中的图片上传到FTP服务器上，图像会乱掉或者无法查看，找了一下午问题，才发现是CI自己的问题，因为$_FILES数组下的tmp_name中的文件路径中是没有文件后缀名的，CI就会自动加上.txt的后缀，然后上传到服务器上时，我们又转化为图像的格式，所以出现了这个问题。<br>以下是我修改的Ftp类的upload函数.<br>文件位置:system\libraries\Ftp.php</p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">upload</span>(<span class="params"><span class="variable">$locpath</span>, <span class="variable">$rempath</span>, <span class="variable">$mode</span> = <span class="string">&#x27;auto&#x27;</span>, <span class="variable">$permissions</span> = <span class="literal">NULL</span></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> ( ! <span class="variable language_">$this</span>-&gt;<span class="title function_ invoke__">_is_conn</span>())</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">FALSE</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> ( ! <span class="title function_ invoke__">file_exists</span>(<span class="variable">$locpath</span>))</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;<span class="title function_ invoke__">_error</span>(<span class="string">&#x27;ftp_no_source_file&#x27;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">FALSE</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Set the mode if not specified</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="variable">$mode</span> == <span class="string">&#x27;auto&#x27;</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// Get the file extension so we can set the upload type</span></span><br><span class="line">        <span class="variable">$ext</span> = <span class="variable language_">$this</span>-&gt;<span class="title function_ invoke__">_getext</span>(<span class="variable">$locpath</span>);</span><br><span class="line">        <span class="variable">$mode</span> = <span class="variable language_">$this</span>-&gt;<span class="title function_ invoke__">_settype</span>(<span class="variable">$ext</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="variable">$mode</span> = (<span class="variable">$mode</span> == <span class="string">&#x27;ascii&#x27;</span>) ? FTP_ASCII : FTP_BINARY;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(<span class="variable">$mode</span> == <span class="string">&#x27;image&#x27;</span>)&#123;</span><br><span class="line">        <span class="variable">$mode</span> = FTP_BINARY;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="variable">$result</span> = @<span class="title function_ invoke__">ftp_put</span>(<span class="variable">$this</span>-&gt;conn_id, <span class="variable">$rempath</span>, <span class="variable">$locpath</span>, <span class="variable">$mode</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="variable">$result</span> === <span class="literal">FALSE</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="variable language_">$this</span>-&gt;debug == <span class="literal">TRUE</span>)</span><br><span class="line">        &#123;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;<span class="title function_ invoke__">_error</span>(<span class="string">&#x27;ftp_unable_to_upload&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">FALSE</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Set file permissions if needed</span></span><br><span class="line"><span class="keyword">if</span> ( ! <span class="title function_ invoke__">is_null</span>(<span class="variable">$permissions</span>))</span><br><span class="line">&#123;</span><br><span class="line">    <span class="variable language_">$this</span>-&gt;<span class="title function_ invoke__">chmod</span>(<span class="variable">$rempath</span>, (<span class="keyword">int</span>)<span class="variable">$permissions</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> <span class="literal">TRUE</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+    <title>CI框架分页类参数可以是负数的问题</title>
+    <url>/2015/07/01/ci-fix-page/</url>
+    <content><![CDATA[<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="comment">// If something isn&#x27;t quite right, back to the default base page.</span></span><br><span class="line"><span class="keyword">if</span> ( ! <span class="title function_ invoke__">ctype_digit</span>(<span class="variable">$this</span>-&gt;cur_page) <span class="title function_ invoke__">OR</span> (<span class="variable">$this</span>-&gt;use_page_numbers &amp;&amp; (<span class="keyword">int</span>) <span class="variable language_">$this</span>-&gt;cur_page === <span class="number">0</span>))</span><br><span class="line">&#123;</span><br><span class="line">    <span class="variable language_">$this</span>-&gt;cur_page = <span class="variable">$base_page</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// Make sure we&#x27;re using integers for comparisons later.</span></span><br><span class="line">    <span class="variable language_">$this</span>-&gt;cur_page = (<span class="keyword">int</span>) <span class="variable language_">$this</span>-&gt;cur_page;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>应改写为:</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="comment">// If something isn&#x27;t quite right, back to the default base page.</span></span><br><span class="line"><span class="keyword">if</span> ( ! <span class="title function_ invoke__">ctype_digit</span>(<span class="variable">$this</span>-&gt;cur_page) <span class="title function_ invoke__">OR</span> (<span class="variable">$this</span>-&gt;use_page_numbers &amp;&amp; (<span class="keyword">int</span>) <span class="variable language_">$this</span>-&gt;cur_page &lt;= <span class="number">0</span>))</span><br><span class="line">&#123;</span><br><span class="line">    <span class="variable language_">$this</span>-&gt;cur_page = <span class="variable">$base_page</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// Make sure we&#x27;re using integers for comparisons later.</span></span><br><span class="line">    <span class="variable language_">$this</span>-&gt;cur_page = (<span class="keyword">int</span>) <span class="variable language_">$this</span>-&gt;cur_page;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>PHP</category>
@@ -2184,30 +2184,6 @@ n 数字,意思是 要列出最近的n笔命令列出的意思
       <tags>
         <tag>Linux</tag>
         <tag>Docker</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Mac OS X 10.11如何安装Homebrew</title>
-    <url>/2015/10/02/install-homebrew-on-osx/</url>
-    <content><![CDATA[<h2 id="安装homebrew"><a href="#安装homebrew" class="headerlink" title="安装homebrew"></a>安装homebrew</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">/usr/bin/ruby -e <span class="string">&quot;<span class="subst">$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)</span>&quot;</span></span><br></pre></td></tr></table></figure>
-<h2 id="解决报错信息"><a href="#解决报错信息" class="headerlink" title="解决报错信息"></a>解决报错信息</h2><p>我们执行命令,然后报错了<br>出错信息大概如下:</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">error: unable to <span class="built_in">unlink</span> old <span class="string">&#x27;Library/Aliases/0mq&#x27;</span> (Permission denied)</span><br><span class="line">error: unable to <span class="built_in">unlink</span> old <span class="string">&#x27;Library/Aliases/4store&#x27;</span> (Permission denied)</span><br><span class="line">error: unable to <span class="built_in">unlink</span> old <span class="string">&#x27;Library/Aliases/Secret Rabbit Code&#x27;</span> (Permission denied)</span><br><span class="line">error: unable to create symlink Library/Aliases/actor-framework (Permission denied)</span><br><span class="line">error: unable to create symlink Library/Aliases/adwaita-icon-theme (Permission denied)</span><br><span class="line">error: unable to <span class="built_in">unlink</span> old <span class="string">&#x27;Library/Aliases/ag&#x27;</span> (Permission denied)</span><br><span class="line">ed)</span><br><span class="line"><span class="comment">#省略一大段</span></span><br><span class="line">Failed during: git reset --hard origin/master</span><br></pre></td></tr></table></figure>
-<p>查看&#x2F;usr&#x2F;local文件夹是否存在<br>如果存在:</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo <span class="built_in">chown</span> $(<span class="built_in">whoami</span>):admin /usr/local &amp;&amp; sudo <span class="built_in">chown</span> -R $(<span class="built_in">whoami</span>):admin /usr/local</span><br></pre></td></tr></table></figure>
-<p>如果不存在:<br>1.重启进入恢复模式(开机时按住command+R),进入终端Terminal<br>2.执行命令</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">csrutil <span class="built_in">disable</span></span><br></pre></td></tr></table></figure>
-<p>3.重启电脑,进入终端<br>3.执行命令</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo <span class="built_in">mkdir</span> /usr/local &amp;&amp; sudo chflags norestricted /usr/local &amp;&amp; sudo <span class="built_in">chown</span> $(<span class="built_in">whoami</span>):admin /usr/local &amp;&amp; sudo <span class="built_in">chown</span> -R $(<span class="built_in">whoami</span>):admin /usr/local</span><br></pre></td></tr></table></figure>
-<p>4.再次重启进入恢复模式，进入终端<br>5.执行命令</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">csrutil <span class="built_in">enable</span></span><br></pre></td></tr></table></figure>
-<p>6.重启安装homebrew即可</p>
-]]></content>
-      <categories>
-        <category>环境搭建</category>
-      </categories>
-      <tags>
-        <tag>Brew</tag>
-        <tag>Mac</tag>
       </tags>
   </entry>
   <entry>
@@ -2391,67 +2367,9 @@ n 数字,意思是 要列出最近的n笔命令列出的意思
         <category>环境搭建</category>
       </categories>
       <tags>
-        <tag>Mac</tag>
         <tag>环境搭建</tag>
+        <tag>Mac</tag>
         <tag>LNMP</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Mac下安装Yaf</title>
-    <url>/2016/03/12/install-yaf-on-mac/</url>
-    <content><![CDATA[<h2 id="在Mac上安装yaf框架"><a href="#在Mac上安装yaf框架" class="headerlink" title="在Mac上安装yaf框架"></a>在Mac上安装yaf框架</h2><ul>
-<li><p>安装PHP运行环境</p>
-</li>
-<li><p>在PECL官网下载yaf,地址:<a href="http://pecl.php.net/package/yaf">http://pecl.php.net/package/yaf</a>,这里我下载的是3.0.2的beta版本</p>
-</li>
-<li><p>解压缩以及安装</p>
-</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">tar -zvf yaf-3.0.2.tgz <span class="comment">#解压</span></span><br><span class="line"><span class="built_in">cd</span> yaf-3.0.2/</span><br><span class="line"><span class="variable">$PHP_BIN</span>/phpize</span><br><span class="line">./configure --with-php-config=<span class="variable">$PHP_BIN</span>/php-config</span><br><span class="line">sudo make</span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure>
-
-<h2 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h2><ul>
-<li><p><code>$PHP_BIN</code>:PHP的bin目录 例如我的为&#x2F;usr&#x2F;local&#x2F;Cellar&#x2F;php70&#x2F;7.0.0&#x2F;bin&#x2F;  就执行</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">./configure --with-php-config=/usr/local/Cellar/php70/7.0.0/bin/php-config</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>sudo为了命令执行没有权限</p>
-</li>
-<li><p>make install 之后会产生一个yaf.so文件。并且存放在某个文件夹下。具体放在哪里我们不需要关心,php知道就可以了，我们将yaf.so添加到php.ini</p>
-</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vi /usr/local/etc/php/7.0/php.ini</span><br></pre></td></tr></table></figure>
-<p>我们添加代码</p>
-<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="attr">extension</span>=yaf.so</span><br><span class="line"><span class="attr">yaf.environ</span> = product</span><br></pre></td></tr></table></figure>
-
-<p>重启php-fpm 和nginx,使用php -m 或者执行phpinfo()函数查看yaf模块是否载入成功</p>
-<ul>
-<li>生成yaf的例子</li>
-</ul>
-<p><a href="https://github.com/laruence/yaf">https://github.com/laruence/yaf</a><br>我是下载的压缩包（可以直接git clone到本地）</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">tar -xvf yaf-master.zip</span><br><span class="line"><span class="built_in">cd</span> yaf-master/tools/cg</span><br><span class="line"><span class="variable">$PHP_BIN</span>/php yaf_cg yaf_sample 我的是<span class="comment">#/usr/local/Cellar/php70/7.0.0/bin/</span></span><br></pre></td></tr></table></figure>
-<p>将output文件夹下生成的yaf_sample复制到你的项目目录</p>
-<ul>
-<li>配置nginx<br>重写规则</li>
-</ul>
-<p>看到**Hello World! I am Stranger **就可以了</p>
-<blockquote>
-<p>参考文章:</p>
-<blockquote>
-<p>1.<a href="https://segmentfault.com/a/1190000000655886">Yaf安装和配置</a></p>
-</blockquote>
-</blockquote>
-<blockquote>
-<blockquote>
-<p>2.<a href="https://segmentfault.com/a/1190000000613467">Mac从零安装yaf</a></p>
-</blockquote>
-</blockquote>
-]]></content>
-      <categories>
-        <category>环境搭建</category>
-      </categories>
-      <tags>
-        <tag>Mac</tag>
-        <tag>环境搭建</tag>
-        <tag>Yaf</tag>
       </tags>
   </entry>
   <entry>
@@ -2510,6 +2428,64 @@ n 数字,意思是 要列出最近的n笔命令列出的意思
         <tag>Linux</tag>
         <tag>环境搭建</tag>
         <tag>MySQL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Mac下安装Yaf</title>
+    <url>/2016/03/12/install-yaf-on-mac/</url>
+    <content><![CDATA[<h2 id="在Mac上安装yaf框架"><a href="#在Mac上安装yaf框架" class="headerlink" title="在Mac上安装yaf框架"></a>在Mac上安装yaf框架</h2><ul>
+<li><p>安装PHP运行环境</p>
+</li>
+<li><p>在PECL官网下载yaf,地址:<a href="http://pecl.php.net/package/yaf">http://pecl.php.net/package/yaf</a>,这里我下载的是3.0.2的beta版本</p>
+</li>
+<li><p>解压缩以及安装</p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">tar -zvf yaf-3.0.2.tgz <span class="comment">#解压</span></span><br><span class="line"><span class="built_in">cd</span> yaf-3.0.2/</span><br><span class="line"><span class="variable">$PHP_BIN</span>/phpize</span><br><span class="line">./configure --with-php-config=<span class="variable">$PHP_BIN</span>/php-config</span><br><span class="line">sudo make</span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure>
+
+<h2 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h2><ul>
+<li><p><code>$PHP_BIN</code>:PHP的bin目录 例如我的为&#x2F;usr&#x2F;local&#x2F;Cellar&#x2F;php70&#x2F;7.0.0&#x2F;bin&#x2F;  就执行</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">./configure --with-php-config=/usr/local/Cellar/php70/7.0.0/bin/php-config</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>sudo为了命令执行没有权限</p>
+</li>
+<li><p>make install 之后会产生一个yaf.so文件。并且存放在某个文件夹下。具体放在哪里我们不需要关心,php知道就可以了，我们将yaf.so添加到php.ini</p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vi /usr/local/etc/php/7.0/php.ini</span><br></pre></td></tr></table></figure>
+<p>我们添加代码</p>
+<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="attr">extension</span>=yaf.so</span><br><span class="line"><span class="attr">yaf.environ</span> = product</span><br></pre></td></tr></table></figure>
+
+<p>重启php-fpm 和nginx,使用php -m 或者执行phpinfo()函数查看yaf模块是否载入成功</p>
+<ul>
+<li>生成yaf的例子</li>
+</ul>
+<p><a href="https://github.com/laruence/yaf">https://github.com/laruence/yaf</a><br>我是下载的压缩包（可以直接git clone到本地）</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">tar -xvf yaf-master.zip</span><br><span class="line"><span class="built_in">cd</span> yaf-master/tools/cg</span><br><span class="line"><span class="variable">$PHP_BIN</span>/php yaf_cg yaf_sample 我的是<span class="comment">#/usr/local/Cellar/php70/7.0.0/bin/</span></span><br></pre></td></tr></table></figure>
+<p>将output文件夹下生成的yaf_sample复制到你的项目目录</p>
+<ul>
+<li>配置nginx<br>重写规则</li>
+</ul>
+<p>看到**Hello World! I am Stranger **就可以了</p>
+<blockquote>
+<p>参考文章:</p>
+<blockquote>
+<p>1.<a href="https://segmentfault.com/a/1190000000655886">Yaf安装和配置</a></p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>2.<a href="https://segmentfault.com/a/1190000000613467">Mac从零安装yaf</a></p>
+</blockquote>
+</blockquote>
+]]></content>
+      <categories>
+        <category>环境搭建</category>
+      </categories>
+      <tags>
+        <tag>环境搭建</tag>
+        <tag>Mac</tag>
+        <tag>Yaf</tag>
       </tags>
   </entry>
   <entry>
@@ -2641,6 +2617,69 @@ n 数字,意思是 要列出最近的n笔命令列出的意思
       </tags>
   </entry>
   <entry>
+    <title>Mac OS X 10.11如何安装Homebrew</title>
+    <url>/2015/10/02/install-homebrew-on-osx/</url>
+    <content><![CDATA[<h2 id="安装homebrew"><a href="#安装homebrew" class="headerlink" title="安装homebrew"></a>安装homebrew</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">/usr/bin/ruby -e <span class="string">&quot;<span class="subst">$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)</span>&quot;</span></span><br></pre></td></tr></table></figure>
+<h2 id="解决报错信息"><a href="#解决报错信息" class="headerlink" title="解决报错信息"></a>解决报错信息</h2><p>我们执行命令,然后报错了<br>出错信息大概如下:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">error: unable to <span class="built_in">unlink</span> old <span class="string">&#x27;Library/Aliases/0mq&#x27;</span> (Permission denied)</span><br><span class="line">error: unable to <span class="built_in">unlink</span> old <span class="string">&#x27;Library/Aliases/4store&#x27;</span> (Permission denied)</span><br><span class="line">error: unable to <span class="built_in">unlink</span> old <span class="string">&#x27;Library/Aliases/Secret Rabbit Code&#x27;</span> (Permission denied)</span><br><span class="line">error: unable to create symlink Library/Aliases/actor-framework (Permission denied)</span><br><span class="line">error: unable to create symlink Library/Aliases/adwaita-icon-theme (Permission denied)</span><br><span class="line">error: unable to <span class="built_in">unlink</span> old <span class="string">&#x27;Library/Aliases/ag&#x27;</span> (Permission denied)</span><br><span class="line">ed)</span><br><span class="line"><span class="comment">#省略一大段</span></span><br><span class="line">Failed during: git reset --hard origin/master</span><br></pre></td></tr></table></figure>
+<p>查看&#x2F;usr&#x2F;local文件夹是否存在<br>如果存在:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo <span class="built_in">chown</span> $(<span class="built_in">whoami</span>):admin /usr/local &amp;&amp; sudo <span class="built_in">chown</span> -R $(<span class="built_in">whoami</span>):admin /usr/local</span><br></pre></td></tr></table></figure>
+<p>如果不存在:<br>1.重启进入恢复模式(开机时按住command+R),进入终端Terminal<br>2.执行命令</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">csrutil <span class="built_in">disable</span></span><br></pre></td></tr></table></figure>
+<p>3.重启电脑,进入终端<br>3.执行命令</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo <span class="built_in">mkdir</span> /usr/local &amp;&amp; sudo chflags norestricted /usr/local &amp;&amp; sudo <span class="built_in">chown</span> $(<span class="built_in">whoami</span>):admin /usr/local &amp;&amp; sudo <span class="built_in">chown</span> -R $(<span class="built_in">whoami</span>):admin /usr/local</span><br></pre></td></tr></table></figure>
+<p>4.再次重启进入恢复模式，进入终端<br>5.执行命令</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">csrutil <span class="built_in">enable</span></span><br></pre></td></tr></table></figure>
+<p>6.重启安装homebrew即可</p>
+]]></content>
+      <categories>
+        <category>环境搭建</category>
+      </categories>
+      <tags>
+        <tag>Mac</tag>
+        <tag>Brew</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>​Linux下的一些简单命令</title>
+    <url>/2017/02/26/linux-learning-notes/</url>
+    <content><![CDATA[<p>​</p>
+<ol>
+<li><p>日期 date +%Y&#x2F;%m&#x2F;%d&#x2F;%H:%M</p>
+</li>
+<li><p>日历 cal [month] [year]</p>
+</li>
+<li><p>man</p>
+</li>
+<li><p>info</p>
+</li>
+<li><p>who 查看谁在线上</p>
+</li>
+<li><p>sync 强制将内存缓冲区中的数据立即写入磁盘中(root更新整个系统,一般账号更新的仅有自己资料)</p>
+</li>
+<li><p>关机命令<br>shutdown</p>
+<p> 命令:shutdown [-krhc] [时间] [警告信息]<br> 选项及参数:<br> -k 发送警告信息!<br> -r 重启<br> -h 关机<br> -c 取消关机<br> 时间:指定系统关机时间！默认1分钟<br>   now 现在<br>   20:00 下一个20:00<br>   +10 10分钟后</p>
+</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">例子 :</span><br><span class="line">10分钟后关机</span><br><span class="line">[root@study ~]<span class="comment"># /sbin/shutdown -h 10 &#x27;I will shutdown after 10 mins&#x27;</span></span><br></pre></td></tr></table></figure>
+<ol start="8">
+<li>重启reboot</li>
+<li>关机</li>
+</ol>
+<ul>
+<li>halt</li>
+<li>poweroff</li>
+</ul>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>学习笔记</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Linux查看服务器上所有crontab</title>
     <url>/2018/01/18/linux/</url>
     <content><![CDATA[<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">cd <span class="regexp">/var/</span>spool<span class="regexp">/cron/</span>tabs &amp;&amp; ls -la</span><br></pre></td></tr></table></figure>
@@ -2723,45 +2762,6 @@ n 数字,意思是 要列出最近的n笔命令列出的意思
       </tags>
   </entry>
   <entry>
-    <title>​Linux下的一些简单命令</title>
-    <url>/2017/02/26/linux-learning-notes/</url>
-    <content><![CDATA[<p>​</p>
-<ol>
-<li><p>日期 date +%Y&#x2F;%m&#x2F;%d&#x2F;%H:%M</p>
-</li>
-<li><p>日历 cal [month] [year]</p>
-</li>
-<li><p>man</p>
-</li>
-<li><p>info</p>
-</li>
-<li><p>who 查看谁在线上</p>
-</li>
-<li><p>sync 强制将内存缓冲区中的数据立即写入磁盘中(root更新整个系统,一般账号更新的仅有自己资料)</p>
-</li>
-<li><p>关机命令<br>shutdown</p>
-<p> 命令:shutdown [-krhc] [时间] [警告信息]<br> 选项及参数:<br> -k 发送警告信息!<br> -r 重启<br> -h 关机<br> -c 取消关机<br> 时间:指定系统关机时间！默认1分钟<br>   now 现在<br>   20:00 下一个20:00<br>   +10 10分钟后</p>
-</li>
-</ol>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">例子 :</span><br><span class="line">10分钟后关机</span><br><span class="line">[root@study ~]<span class="comment"># /sbin/shutdown -h 10 &#x27;I will shutdown after 10 mins&#x27;</span></span><br></pre></td></tr></table></figure>
-<ol start="8">
-<li>重启reboot</li>
-<li>关机</li>
-</ol>
-<ul>
-<li>halt</li>
-<li>poweroff</li>
-</ul>
-]]></content>
-      <categories>
-        <category>学习笔记</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-        <tag>学习笔记</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>PHP中__FILE__的作用</title>
     <url>/2015/03/06/php-file/</url>
     <content><![CDATA[<p><strong>FILE</strong> 返回当前 路径+文件名<br>dirname(<strong>FILE</strong>) 返回当前文件路径的 路径部分<br>dirname(dirname(<strong>FILE</strong>));得到的是文件上一层目录名（不含最后一个“&#x2F;”号）</p>
@@ -2813,19 +2813,10 @@ n 数字,意思是 要列出最近的n笔命令列出的意思
       </tags>
   </entry>
   <entry>
-    <title>WampServer修改默认网站www目录的方法</title>
-    <url>/2015/03/04/wamp-www-directory/</url>
-    <content><![CDATA[<p>我的版本如下:<br>Wamp版本：2.5<br>安装目录：D:&#x2F;wamp&#x2F;<br>www目录：D:&#x2F;wamp&#x2F;www&#x2F;<br>变更到：E:&#x2F;htdocs&#x2F;</p>
-<h2 id="更换localhost默认路径"><a href="#更换localhost默认路径" class="headerlink" title="更换localhost默认路径"></a>更换localhost默认路径</h2><p>修改D:\wamp\bin\apache\apache2.4.9\conf \httpd.conf<br>查找： DocumentRoot “D:&#x2F;wamp&#x2F;www&#x2F;“(230行左右)</p>
-<p>修改：DocumentRoot “E:&#x2F;htdocs”</p>
-<p>查找： &lt;Directory “D:&#x2F;wamp&#x2F;www&#x2F;“&gt;(252行左右)</p>
-<p>修改： &lt;Directory “E:&#x2F;htdocs”&gt;</p>
-<h2 id="更换状态栏中“www目录”指向文件夹路径"><a href="#更换状态栏中“www目录”指向文件夹路径" class="headerlink" title="更换状态栏中“www目录”指向文件夹路径"></a>更换状态栏中“www目录”指向文件夹路径</h2><p>修改wampmanager.ini和wampmanager.tpl<br>修改D:\wamp\wampmanager.ini:</p>
-<p>查找：Type: item; Caption: “www directory”; Action: shellexecute; FileName: “D:&#x2F;wamp&#x2F;www”;</p>
-<p>修改：Type: item; Caption: “www directory”; Action: shellexecute; FileName: “E:&#x2F;htdocs”;</p>
-<p>修改D:\wamp\wampmanager.tpl:</p>
-<p>查找：Type: item; Caption: “${wwwwDirectory}”; Action: shellexecute; FileName: “${wwwDir}”;</p>
-<p>修改：Type: item; Caption: “${wwwwDirectory}”; Action: shellexecute; FileName: “E:&#x2F;htdocs”;</p>
+    <title>WampServer修改默认时区办法</title>
+    <url>/2015/03/04/wampserver-set-timezone/</url>
+    <content><![CDATA[<p>WAMP默认的时区是格林威治标准时间(GMT)，这就意味着WAMP默认的服务器时区是GMT，但我们可以更改服务器默认时区，以对应北京时间。打开WAMP菜单中的php.ini，在文档中修改代码即可</p>
+<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="attr">date.timezone</span> = &lt;Asia/Shanghai&gt;</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>环境搭建</category>
@@ -2833,7 +2824,6 @@ n 数字,意思是 要列出最近的n笔命令列出的意思
       <tags>
         <tag>环境搭建</tag>
         <tag>WampServer</tag>
-        <tag>Windows</tag>
       </tags>
   </entry>
   <entry>
@@ -2874,20 +2864,6 @@ n 数字,意思是 要列出最近的n笔命令列出的意思
       <tags>
         <tag>Windows</tag>
         <tag>脚本</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>WampServer修改默认时区办法</title>
-    <url>/2015/03/04/wampserver-set-timezone/</url>
-    <content><![CDATA[<p>WAMP默认的时区是格林威治标准时间(GMT)，这就意味着WAMP默认的服务器时区是GMT，但我们可以更改服务器默认时区，以对应北京时间。打开WAMP菜单中的php.ini，在文档中修改代码即可</p>
-<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="attr">date.timezone</span> = &lt;Asia/Shanghai&gt;</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>环境搭建</category>
-      </categories>
-      <tags>
-        <tag>环境搭建</tag>
-        <tag>WampServer</tag>
       </tags>
   </entry>
   <entry>
@@ -2975,33 +2951,27 @@ n 数字,意思是 要列出最近的n笔命令列出的意思
       </tags>
   </entry>
   <entry>
-    <title>Windows下如何列出一个文件夹内所有文件夹和文件</title>
-    <url>/2015/05/29/windows-tree/</url>
-    <content><![CDATA[<p>我们经常要去熟悉一个框架或者一个CMS的目录结构，今天我翻看目录的时候，本来想找一个工具列下文件目录，忽然想到windows中有没有和linux下的tree命令呢，答案是有的。看我演示：<br>我们先切换到E盘下的test目录，为了演示，我在test目录里放了一个PHPExcel：</p>
-<p><img data-src="/images/tree1.jpg" alt="tree1"></p>
-<p>使用tree命令，可以看到我们的目录树了：</p>
-<p><img data-src="/images/tree2.jpg" alt="tree2"></p>
-<p>我们还可以把要目录的结构保存到文件里：</p>
-<p><img data-src="/images/tree3.jpg" alt="tree3"></p>
-<p><img data-src="/images/tree4.jpg" alt="tree4"></p>
+    <title>WampServer修改默认网站www目录的方法</title>
+    <url>/2015/03/04/wamp-www-directory/</url>
+    <content><![CDATA[<p>我的版本如下:<br>Wamp版本：2.5<br>安装目录：D:&#x2F;wamp&#x2F;<br>www目录：D:&#x2F;wamp&#x2F;www&#x2F;<br>变更到：E:&#x2F;htdocs&#x2F;</p>
+<h2 id="更换localhost默认路径"><a href="#更换localhost默认路径" class="headerlink" title="更换localhost默认路径"></a>更换localhost默认路径</h2><p>修改D:\wamp\bin\apache\apache2.4.9\conf \httpd.conf<br>查找： DocumentRoot “D:&#x2F;wamp&#x2F;www&#x2F;“(230行左右)</p>
+<p>修改：DocumentRoot “E:&#x2F;htdocs”</p>
+<p>查找： &lt;Directory “D:&#x2F;wamp&#x2F;www&#x2F;“&gt;(252行左右)</p>
+<p>修改： &lt;Directory “E:&#x2F;htdocs”&gt;</p>
+<h2 id="更换状态栏中“www目录”指向文件夹路径"><a href="#更换状态栏中“www目录”指向文件夹路径" class="headerlink" title="更换状态栏中“www目录”指向文件夹路径"></a>更换状态栏中“www目录”指向文件夹路径</h2><p>修改wampmanager.ini和wampmanager.tpl<br>修改D:\wamp\wampmanager.ini:</p>
+<p>查找：Type: item; Caption: “www directory”; Action: shellexecute; FileName: “D:&#x2F;wamp&#x2F;www”;</p>
+<p>修改：Type: item; Caption: “www directory”; Action: shellexecute; FileName: “E:&#x2F;htdocs”;</p>
+<p>修改D:\wamp\wampmanager.tpl:</p>
+<p>查找：Type: item; Caption: “${wwwwDirectory}”; Action: shellexecute; FileName: “${wwwDir}”;</p>
+<p>修改：Type: item; Caption: “${wwwwDirectory}”; Action: shellexecute; FileName: “E:&#x2F;htdocs”;</p>
 ]]></content>
       <categories>
-        <category>Windows</category>
+        <category>环境搭建</category>
       </categories>
       <tags>
+        <tag>环境搭建</tag>
+        <tag>WampServer</tag>
         <tag>Windows</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>WordPress从本地到服务器搬家(转载)</title>
-    <url>/2015/02/26/wordpress-from-local-to-server/</url>
-    <content><![CDATA[<p>1.把 wp-config 中的数据库信息改成自己空间的；<br>2.整站打包上传到空间；<br>3.把本地的数据库导出，导入到服务器上的数据库；<br>4.修改 wp-options 中的第一行和第46行左右的 home 为自己的域名。</p>
-]]></content>
-      <categories>
-        <category>PHP</category>
-      </categories>
-      <tags>
-        <tag>WordPress</tag>
       </tags>
   </entry>
   <entry>
@@ -3043,6 +3013,36 @@ n 数字,意思是 要列出最近的n笔命令列出的意思
       </categories>
       <tags>
         <tag>2021</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Windows下如何列出一个文件夹内所有文件夹和文件</title>
+    <url>/2015/05/29/windows-tree/</url>
+    <content><![CDATA[<p>我们经常要去熟悉一个框架或者一个CMS的目录结构，今天我翻看目录的时候，本来想找一个工具列下文件目录，忽然想到windows中有没有和linux下的tree命令呢，答案是有的。看我演示：<br>我们先切换到E盘下的test目录，为了演示，我在test目录里放了一个PHPExcel：</p>
+<p><img data-src="/images/tree1.jpg" alt="tree1"></p>
+<p>使用tree命令，可以看到我们的目录树了：</p>
+<p><img data-src="/images/tree2.jpg" alt="tree2"></p>
+<p>我们还可以把要目录的结构保存到文件里：</p>
+<p><img data-src="/images/tree3.jpg" alt="tree3"></p>
+<p><img data-src="/images/tree4.jpg" alt="tree4"></p>
+]]></content>
+      <categories>
+        <category>Windows</category>
+      </categories>
+      <tags>
+        <tag>Windows</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>WordPress从本地到服务器搬家(转载)</title>
+    <url>/2015/02/26/wordpress-from-local-to-server/</url>
+    <content><![CDATA[<p>1.把 wp-config 中的数据库信息改成自己空间的；<br>2.整站打包上传到空间；<br>3.把本地的数据库导出，导入到服务器上的数据库；<br>4.修改 wp-options 中的第一行和第46行左右的 home 为自己的域名。</p>
+]]></content>
+      <categories>
+        <category>PHP</category>
+      </categories>
+      <tags>
+        <tag>WordPress</tag>
       </tags>
   </entry>
 </search>
